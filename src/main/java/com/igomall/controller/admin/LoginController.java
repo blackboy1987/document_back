@@ -31,7 +31,7 @@ public class LoginController extends BaseController {
 	 * 登录页面
 	 */
 	@GetMapping("/login")
-	public String index(@CurrentUser Admin currentUser, ModelMap model) {
+	public String index(@CurrentUser Admin currentUser) {
 		return currentUser != null ? "redirect:/admin/index" : "admin/login/index";
 	}
 
