@@ -120,9 +120,10 @@ public final class SpringUtils implements ApplicationContextAware, DisposableBea
 	public static String getMessage(String code, Object... args) {
 		Assert.hasText(code,"");
 
-		LocaleResolver localeResolver = getBean("localeResolver", LocaleResolver.class);
+		/*LocaleResolver localeResolver = getBean("localeResolver", LocaleResolver.class);
 		Locale locale = localeResolver.resolveLocale(null);
-		return applicationContext.getMessage(code, args, locale);
+		return applicationContext.getMessage(code, args, locale);*/
+		return code;
 	}
 
 	/**
