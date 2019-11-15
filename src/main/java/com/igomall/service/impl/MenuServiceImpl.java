@@ -4,12 +4,15 @@ package com.igomall.service.impl;
 import com.igomall.dao.MenuDao;
 import com.igomall.entity.Menu;
 import com.igomall.service.MenuService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -21,7 +24,7 @@ import java.util.List;
 @Service
 public class MenuServiceImpl extends BaseServiceImpl<Menu, Long> implements MenuService {
 
-	@AutoConfigureOrder
+	@Autowired
 	private MenuDao menuDao;
 
 	@Transactional(readOnly = true)
@@ -35,8 +38,29 @@ public class MenuServiceImpl extends BaseServiceImpl<Menu, Long> implements Menu
 	}
 
 	@Transactional(readOnly = true)
+	@Cacheable(value = "menu", condition = "#useCache")
+	public List<Menu> findRoots(Integer count, boolean useCache) {
+		return menuDao.findRoots(count);
+	}
+
+	@Transactional(readOnly = true)
 	public List<Menu> findParents(Menu menu, boolean recursive, Integer count) {
 		return menuDao.findParents(menu, recursive, count);
+	}
+
+	@Transactional(readOnly = true)
+	@Cacheable(value = "menu", condition = "#useCache")
+	public List<Menu> findParents(Long menuId, boolean recursive, Integer count, boolean useCache) {
+		Menu menu = menuDao.find(menuId);
+		if (menuId != null && menu == null) {
+			return Collections.emptyList();
+		}
+		return menuDao.findParents(menu, recursive, count);
+	}
+
+	@Transactional(readOnly = true)
+	public List<Menu> findTree() {
+		return menuDao.findChildren(null, true, null);
 	}
 
 	@Transactional(readOnly = true)
@@ -44,9 +68,19 @@ public class MenuServiceImpl extends BaseServiceImpl<Menu, Long> implements Menu
 		return menuDao.findChildren(menu, recursive, count);
 	}
 
+	@Transactional(readOnly = true)
+	@Cacheable(value = "menu", condition = "#useCache")
+	public List<Menu> findChildren(Long menuId, boolean recursive, Integer count, boolean useCache) {
+		Menu menu = menuDao.find(menuId);
+		if (menuId != null && menu == null) {
+			return Collections.emptyList();
+		}
+		return menuDao.findChildren(menu, recursive, count);
+	}
+
 	@Override
 	@Transactional
-	@CacheEvict(value = "menu", allEntries = true)
+	@CacheEvict(value = { "permission", "menu" }, allEntries = true)
 	public Menu save(Menu menu) {
 		Assert.notNull(menu,"");
 
@@ -56,7 +90,7 @@ public class MenuServiceImpl extends BaseServiceImpl<Menu, Long> implements Menu
 
 	@Override
 	@Transactional
-	@CacheEvict(value = "menu", allEntries = true)
+	@CacheEvict(value = { "permission", "menu" }, allEntries = true)
 	public Menu update(Menu menu) {
 		Assert.notNull(menu,"");
 
@@ -69,37 +103,37 @@ public class MenuServiceImpl extends BaseServiceImpl<Menu, Long> implements Menu
 
 	@Override
 	@Transactional
-	@CacheEvict(value = "menu", allEntries = true)
+	@CacheEvict(value = { "permission", "menu" }, allEntries = true)
 	public Menu update(Menu menu, String... ignoreProperties) {
 		return super.update(menu, ignoreProperties);
 	}
 
 	@Override
 	@Transactional
-	@CacheEvict(value = "menu", allEntries = true)
+	@CacheEvict(value = { "permission", "menu" }, allEntries = true)
 	public void delete(Long id) {
 		super.delete(id);
 	}
 
 	@Override
 	@Transactional
-	@CacheEvict(value = "menu", allEntries = true)
+	@CacheEvict(value = { "permission", "menu" }, allEntries = true)
 	public void delete(Long... ids) {
 		super.delete(ids);
 	}
 
 	@Override
 	@Transactional
-	@CacheEvict(value = "menu", allEntries = true)
+	@CacheEvict(value = { "permission", "menu" }, allEntries = true)
 	public void delete(Menu menu) {
 		super.delete(menu);
 	}
 
 	/**
 	 * 设置值
-	 * 
+	 *
 	 * @param menu
-	 *            地区
+	 *            商品分类
 	 */
 	private void setValue(Menu menu) {
 		if (menu == null) {

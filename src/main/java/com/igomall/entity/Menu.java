@@ -168,6 +168,14 @@ public class Menu extends OrderedEntity<Long> {
 		this.children = children;
 	}
 
+	public Set<Permission> getPermissions() {
+		return permissions;
+	}
+
+	public void setPermissions(Set<Permission> permissions) {
+		this.permissions = permissions;
+	}
+
 	/**
 	 * 获取所有上级地区ID
 	 * 
