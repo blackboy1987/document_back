@@ -13,10 +13,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.servlet.Filter;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-@Configuration
+//@Configuration
 public class ShiroConfig {
 
     @Bean
@@ -25,12 +26,14 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         shiroFilterFactoryBean.setUnauthorizedUrl("/common/error/unauthorized");
 
-        Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
+
+        Map<String,String> filterChainDefinitionMap = new LinkedHashMap<>();
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 
-        Map<String, Filter> filters = new LinkedHashMap<>();
+        Map<String, Filter> filters = new HashMap<>();
         filters.put("adminAuthc",adminAuthc());
-        filters.put("logout",logout());
+
+
         shiroFilterFactoryBean.setFilters(filters);
 
         return shiroFilterFactoryBean;
