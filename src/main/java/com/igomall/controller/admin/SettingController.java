@@ -1,9 +1,8 @@
 
 package com.igomall.controller.admin;
 
-import com.igomall.FileType;
-import com.igomall.Message;
-import com.igomall.Setting;
+import com.igomall.common.FileType;
+import com.igomall.common.Setting;
 import com.igomall.service.CacheService;
 import com.igomall.service.FileService;
 import com.igomall.util.SystemUtils;

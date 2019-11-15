@@ -26,7 +26,7 @@ import org.im4java.core.IMOperation;
 import org.im4java.core.IdentifyCmd;
 import org.springframework.util.Assert;
 
-import com.igomall.Setting;
+import com.igomall.common.Setting;
 
 /**
  * Utils - 图片处理(支持JDK、GraphicsMagick、ImageMagick)

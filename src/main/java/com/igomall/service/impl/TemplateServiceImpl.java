@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import com.igomall.TemplateConfig;
+import com.igomall.common.TemplateConfig;
 import com.igomall.service.TemplateService;
 import com.igomall.util.SystemUtils;
 

@@ -19,8 +19,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.igomall.FileType;
-import com.igomall.Setting;
+import com.igomall.common.FileType;
+import com.igomall.common.Setting;
 import com.igomall.plugin.StoragePlugin;
 import com.igomall.service.FileService;
 import com.igomall.service.PluginService;

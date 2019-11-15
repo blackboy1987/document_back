@@ -1,7 +1,7 @@
 
 package com.igomall.controller.admin;
 
-import com.igomall.Message;
+import com.igomall.common.Message;
 import com.igomall.util.SpringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;

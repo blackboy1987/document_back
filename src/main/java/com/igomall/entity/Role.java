@@ -17,7 +17,7 @@ import javax.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
 
 
-import com.igomall.BaseAttributeConverter;
+import com.igomall.common.BaseAttributeConverter;
 
 /**
  * Entity - 角色

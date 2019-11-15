@@ -17,8 +17,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.util.Assert;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
-import com.igomall.CommonAttributes;
-import com.igomall.EnumConverter;
+import com.igomall.common.CommonAttributes;
+import com.igomall.common.EnumConverter;
 
 import freemarker.core.Environment;
 import freemarker.ext.beans.BeansWrapper;

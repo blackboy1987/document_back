@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.igomall.Message;
-import com.igomall.Pageable;
+import com.igomall.common.Message;
+import com.igomall.common.Pageable;
 import com.igomall.service.AuditLogService;
 
 /**

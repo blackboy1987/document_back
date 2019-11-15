@@ -26,10 +26,10 @@ import org.dom4j.io.XMLWriter;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.Assert;
 
-import com.igomall.CommonAttributes;
-import com.igomall.EnumConverter;
-import com.igomall.Setting;
-import com.igomall.TemplateConfig;
+import com.igomall.common.CommonAttributes;
+import com.igomall.common.EnumConverter;
+import com.igomall.common.Setting;
+import com.igomall.common.TemplateConfig;
 
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;

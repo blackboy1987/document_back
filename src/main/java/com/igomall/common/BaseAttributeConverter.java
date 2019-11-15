@@ -1,5 +1,5 @@
 
-package com.igomall;
+package com.igomall.common;
 
 import java.lang.reflect.Type;
 import java.util.Collections;

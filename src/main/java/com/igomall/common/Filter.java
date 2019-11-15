@@ -1,5 +1,5 @@
 
-package com.igomall;
+package com.igomall.common;
 
 import java.io.Serializable;
 

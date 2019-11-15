@@ -1,7 +1,7 @@
 
 package com.igomall.service;
 
-import com.igomall.TemplateConfig;
+import com.igomall.common.TemplateConfig;
 
 /**
  * Service - 模板

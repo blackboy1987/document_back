@@ -23,7 +23,7 @@ import org.apache.shiro.web.util.SavedRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 
-import com.igomall.Results;
+import com.igomall.common.Results;
 import com.igomall.entity.User;
 import com.igomall.event.UserLoggedInEvent;
 import com.igomall.service.UserService;

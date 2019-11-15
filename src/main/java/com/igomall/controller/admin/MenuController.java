@@ -1,8 +1,7 @@
 package com.igomall.controller.admin;
 
-import com.igomall.Message;
+import com.igomall.common.Message;
 import com.igomall.entity.Menu;
-import com.igomall.entity.Permission;
 import com.igomall.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

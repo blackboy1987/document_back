@@ -10,7 +10,7 @@ import javax.servlet.ServletContext;
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Component;
 
-import com.igomall.Setting;
+import com.igomall.common.Setting;
 import com.igomall.plugin.StoragePlugin;
 import com.igomall.util.SystemUtils;
 

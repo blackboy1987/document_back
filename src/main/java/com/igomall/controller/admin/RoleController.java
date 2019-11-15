@@ -1,8 +1,8 @@
 
 package com.igomall.controller.admin;
 
-import com.igomall.Message;
-import com.igomall.Pageable;
+import com.igomall.common.Message;
+import com.igomall.common.Pageable;
 import com.igomall.entity.Role;
 import com.igomall.service.RoleService;
 import org.apache.commons.collections.CollectionUtils;

@@ -1,5 +1,5 @@
 
-package com.igomall;
+package com.igomall.common;
 
 import org.apache.commons.beanutils.converters.AbstractConverter;
 import org.springframework.util.Assert;

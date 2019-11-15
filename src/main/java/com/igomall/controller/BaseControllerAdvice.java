@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.igomall.DateEditor;
-import com.igomall.StringEditor;
+import com.igomall.common.DateEditor;
+import com.igomall.common.StringEditor;
 import com.igomall.exception.ResourceNotFoundException;
 import com.igomall.exception.UnauthorizedException;
 

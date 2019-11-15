@@ -3,7 +3,7 @@ package com.igomall.service;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.igomall.FileType;
+import com.igomall.common.FileType;
 
 /**
  * Service - 文件

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.igomall.Message;
+import com.igomall.common.Message;
 import com.igomall.controller.admin.BaseController;
 import com.igomall.entity.PluginConfig;
 import com.igomall.service.PluginConfigService;

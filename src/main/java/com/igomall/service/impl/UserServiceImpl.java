@@ -29,7 +29,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import com.igomall.Setting;
+import com.igomall.common.Setting;
 import com.igomall.dao.UserDao;
 import com.igomall.entity.User;
 import com.igomall.event.UserLoggedInEvent;

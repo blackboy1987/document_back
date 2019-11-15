@@ -1,8 +1,8 @@
 
 package com.igomall.controller.admin;
 
-import com.igomall.Message;
-import com.igomall.Pageable;
+import com.igomall.common.Message;
+import com.igomall.common.Pageable;
 import com.igomall.entity.Admin;
 import com.igomall.entity.BaseEntity;
 import com.igomall.service.AdminService;

@@ -1,5 +1,5 @@
 
-package com.igomall;
+package com.igomall.common;
 
 /**
  * 公共参数

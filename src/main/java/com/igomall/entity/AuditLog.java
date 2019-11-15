@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 
-import com.igomall.BaseAttributeConverter;
+import com.igomall.common.BaseAttributeConverter;
 
 /**
  * Entity - 审计日志

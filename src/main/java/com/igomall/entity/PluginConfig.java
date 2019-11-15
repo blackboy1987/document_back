@@ -12,7 +12,7 @@ import javax.persistence.Transient;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.igomall.BaseAttributeConverter;
+import com.igomall.common.BaseAttributeConverter;
 
 /**
  * Entity - 插件配置

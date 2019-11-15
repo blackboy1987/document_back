@@ -28,10 +28,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.ResolvableType;
 import org.springframework.util.Assert;
 
-import com.igomall.Filter;
-import com.igomall.Order;
-import com.igomall.Page;
-import com.igomall.Pageable;
+import com.igomall.common.Filter;
+import com.igomall.common.Order;
+import com.igomall.common.Page;
+import com.igomall.common.Pageable;
 import com.igomall.dao.BaseDao;
 import com.igomall.entity.BaseEntity;
 import com.igomall.entity.OrderedEntity;

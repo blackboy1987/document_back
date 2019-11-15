@@ -4,10 +4,10 @@ package com.igomall.service;
 import java.io.Serializable;
 import java.util.List;
 
-import com.igomall.Filter;
-import com.igomall.Order;
-import com.igomall.Page;
-import com.igomall.Pageable;
+import com.igomall.common.Filter;
+import com.igomall.common.Order;
+import com.igomall.common.Page;
+import com.igomall.common.Pageable;
 import com.igomall.entity.BaseEntity;
 
 /**

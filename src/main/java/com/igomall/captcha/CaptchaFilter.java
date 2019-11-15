@@ -13,8 +13,8 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.igomall.Results;
-import com.igomall.Setting;
+import com.igomall.common.Results;
+import com.igomall.common.Setting;
 import com.igomall.service.CaptchaService;
 import com.igomall.util.SystemUtils;
 import com.igomall.util.WebUtils;

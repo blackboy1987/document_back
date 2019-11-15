@@ -1,7 +1,7 @@
 
 package com.igomall.plugin.ftpStorage;
 
-import com.igomall.Message;
+import com.igomall.common.Message;
 import com.igomall.controller.admin.BaseController;
 import com.igomall.entity.PluginConfig;
 import com.igomall.service.PluginConfigService;

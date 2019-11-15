@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.igomall.FileType;
-import com.igomall.Message;
+import com.igomall.common.FileType;
+import com.igomall.common.Message;
 import com.igomall.service.FileService;
 
 /**

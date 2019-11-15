@@ -12,7 +12,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.igomall.Results;
+import com.igomall.common.Results;
 import com.igomall.util.WebUtils;
 
 /**
