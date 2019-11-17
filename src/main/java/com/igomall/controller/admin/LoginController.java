@@ -1,13 +1,11 @@
 
 package com.igomall.controller.admin;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.igomall.entity.Admin;
 import com.igomall.security.CurrentUser;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * Controller - 管理员登录
@@ -32,7 +30,10 @@ public class LoginController extends BaseController {
 	 */
 	@GetMapping("/login")
 	public String index(@CurrentUser Admin currentUser) {
-		return currentUser != null ? "redirect:/admin/index" : "admin/login/index";
+		String url = currentUser != null ? "redirect:/admin/index" : "admin/login/index";
+		System.out.println(url);
+		System.out.println(currentUser==null);
+		return url;
 	}
 
 }

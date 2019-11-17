@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 /**
  * Security - 当前用户注解
  * 
- * @author blackboy
+ * @author IGOMALL  Team
  * @version 1.0
  */
 @Retention(RetentionPolicy.RUNTIME)

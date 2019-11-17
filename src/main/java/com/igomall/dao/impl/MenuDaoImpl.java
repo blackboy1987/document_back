@@ -43,11 +43,11 @@ public class MenuDaoImpl extends BaseDaoImpl<Menu, Long> implements MenuDao {
 		}
 		TypedQuery<Menu> query;
 		if (recursive) {
-			String jpql = "select menu from Menu area where menu.id in (:ids) order by menu.grade asc";
+			String jpql = "select menu from Menu menu where menu.id in (:ids) order by menu.grade asc";
 			query = entityManager.createQuery(jpql, Menu.class).setParameter("ids", Arrays.asList(menu.getParentIds()));
 		} else {
-			String jpql = "select menu from Menu menu where area = :area";
-			query = entityManager.createQuery(jpql, Menu.class).setParameter("area", menu.getParent());
+			String jpql = "select menu from Menu menu where menu = :menu";
+			query = entityManager.createQuery(jpql, Menu.class).setParameter("menu", menu.getParent());
 		}
 		if (count != null) {
 			query.setMaxResults(count);
@@ -62,7 +62,7 @@ public class MenuDaoImpl extends BaseDaoImpl<Menu, Long> implements MenuDao {
 				String jpql = "select menu from Menu menu where menu.treePath like :treePath order by menu.grade asc, menu.order asc";
 				query = entityManager.createQuery(jpql, Menu.class).setParameter("treePath", "%" + Menu.TREE_PATH_SEPARATOR + menu.getId() + Menu.TREE_PATH_SEPARATOR + "%");
 			} else {
-				String jpql = "select menu from Menu menu order by area.grade asc, menu.order asc";
+				String jpql = "select menu from Menu menu order by menu.grade asc, menu.order asc";
 				query = entityManager.createQuery(jpql, Menu.class);
 			}
 			if (count != null) {

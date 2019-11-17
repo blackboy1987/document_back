@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-//@Configuration
+@Configuration
 public class ShiroConfig {
 
     @Bean
@@ -25,17 +25,16 @@ public class ShiroConfig {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         shiroFilterFactoryBean.setUnauthorizedUrl("/common/error/unauthorized");
-
-
+        shiroFilterFactoryBean.setLoginUrl("/common/error/unauthorized");
         Map<String,String> filterChainDefinitionMap = new LinkedHashMap<>();
+        filterChainDefinitionMap.put("/admin","anon");
+        filterChainDefinitionMap.put("/admin/","anon");
+        filterChainDefinitionMap.put("/admin/logout","logout");
+        filterChainDefinitionMap.put("/admin/menu/list","perms[admin:menu:list]");
+
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
-
         Map<String, Filter> filters = new HashMap<>();
-        filters.put("adminAuthc",adminAuthc());
-
-
         shiroFilterFactoryBean.setFilters(filters);
-
         return shiroFilterFactoryBean;
     }
 

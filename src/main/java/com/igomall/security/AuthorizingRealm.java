@@ -1,24 +1,22 @@
 
 package com.igomall.security;
 
-import java.util.Set;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
+import com.igomall.entity.User;
+import com.igomall.service.UserService;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import com.igomall.entity.User;
-import com.igomall.service.UserService;
+import java.util.Set;
 
 /**
  * Security - 授权域
  * 
- * @author blackboy
+ * @author IGOMALL  Team
  * @version 1.0
  */
 public class AuthorizingRealm extends org.apache.shiro.realm.AuthorizingRealm {

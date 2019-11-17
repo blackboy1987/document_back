@@ -1,14 +1,13 @@
 
 package com.igomall.security;
 
-import org.apache.shiro.authc.UsernamePasswordToken;
-
 import com.igomall.entity.User;
+import org.apache.shiro.authc.UsernamePasswordToken;
 
 /**
  * Security - 用户认证令牌
  * 
- * @author blackboy
+ * @author IGOMALL  Team
  * @version 1.0
  */
 public class UserAuthenticationToken extends UsernamePasswordToken {

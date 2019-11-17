@@ -1,5 +1,6 @@
 package com.igomall.controller.admin;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.igomall.common.Message;
 import com.igomall.entity.Menu;
 import com.igomall.service.MenuService;
@@ -61,6 +62,15 @@ public class MenuController extends BaseController {
      */
     @PostMapping("/list")
     public List<Menu> list() {
+        return menuService.findTree();
+    }
+
+    /**
+     * 列表
+     */
+    @PostMapping("/tree")
+    @JsonView(Menu.TreeView.class)
+    public List<Menu> tree() {
         return menuService.findTree();
     }
 

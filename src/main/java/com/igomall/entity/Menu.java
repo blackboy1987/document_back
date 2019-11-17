@@ -1,6 +1,8 @@
 
 package com.igomall.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.Length;
 
@@ -17,6 +19,7 @@ import java.util.Set;
  * @author IGOMALL  Team
  * @version 1.0
  */
+@JsonInclude(JsonInclude.Include	.NON_NULL)
 @Entity
 public class Menu extends OrderedEntity<Long> {
 
@@ -33,6 +36,7 @@ public class Menu extends OrderedEntity<Long> {
 	@NotEmpty
 	@Length(max = 200)
 	@Column(nullable = false)
+	@JsonView({IdView.class})
 	private String name;
 
 	private String url;
@@ -60,6 +64,7 @@ public class Menu extends OrderedEntity<Long> {
 	 */
 	@OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	@OrderBy("order asc")
+	@JsonView({IdView.class})
 	private Set<Menu> children = new HashSet<>();
 
 	@OneToMany(mappedBy = "menu",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
@@ -220,5 +225,9 @@ public class Menu extends OrderedEntity<Long> {
 			parents.add(0, parent);
 			recursiveParents(parents, parent);
 		}
+	}
+
+	public interface TreeView extends IdView {
+
 	}
 }

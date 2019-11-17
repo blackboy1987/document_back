@@ -6,7 +6,7 @@ import com.igomall.entity.User;
 /**
  * Event - 用户注册
  * 
- * @author blackboy
+ * @author IGOMALL  Team
  * @version 1.0
  */
 public class UserRegisteredEvent extends UserEvent {

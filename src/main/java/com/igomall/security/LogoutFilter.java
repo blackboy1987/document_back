@@ -1,20 +1,19 @@
 
 package com.igomall.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-
-import org.springframework.context.ApplicationEventPublisher;
-
 import com.igomall.entity.User;
 import com.igomall.event.UserLoggedOutEvent;
 import com.igomall.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
+
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 
 /**
  * Security - 注销过滤器
  * 
- * @author blackboy
+ * @author IGOMALL  Team
  * @version 1.0
  */
 public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter {

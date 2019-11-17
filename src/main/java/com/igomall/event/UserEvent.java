@@ -1,14 +1,13 @@
 
 package com.igomall.event;
 
-import org.springframework.context.ApplicationEvent;
-
 import com.igomall.entity.User;
+import org.springframework.context.ApplicationEvent;
 
 /**
  * Event - 用户
  * 
- * @author blackboy
+ * @author IGOMALL  Team
  * @version 1.0
  */
 public abstract class UserEvent extends ApplicationEvent {

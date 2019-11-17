@@ -1,14 +1,14 @@
 
 package com.igomall.security;
 
-import java.util.Set;
-
 import com.igomall.entity.User;
+
+import java.util.Set;
 
 /**
  * Security - 认证Provider
  * 
- * @author blackboy
+ * @author IGOMALL  Team
  * @version 1.0
  */
 public interface AuthenticationProvider {
