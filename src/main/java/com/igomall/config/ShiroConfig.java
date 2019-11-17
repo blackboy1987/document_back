@@ -21,7 +21,7 @@ import java.util.Map;
 public class ShiroConfig {
 
     @Bean
-    public ShiroFilterFactoryBean shiroFilter(@Qualifier("securityManager") DefaultWebSecurityManager securityManager){
+    public ShiroFilterFactoryBean shiroFilter(@Qualifier("securityManager") DefaultWebSecurityManager securityManager,@Qualifier("adminAuthc") AuthenticationFilter adminAuthc){
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         shiroFilterFactoryBean.setUnauthorizedUrl("/common/error/unauthorized");
@@ -30,10 +30,10 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/admin","anon");
         filterChainDefinitionMap.put("/admin/","anon");
         filterChainDefinitionMap.put("/admin/logout","logout");
-        filterChainDefinitionMap.put("/admin/menu/list","perms[admin:menu:list]");
-
+        //filterChainDefinitionMap.put("/admin/menu/list","adminAuthc,perms[admin:menu:list]");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         Map<String, Filter> filters = new HashMap<>();
+        filters.put("adminAuthc",adminAuthc);
         shiroFilterFactoryBean.setFilters(filters);
         return shiroFilterFactoryBean;
     }

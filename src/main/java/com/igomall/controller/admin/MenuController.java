@@ -5,6 +5,7 @@ import com.igomall.common.Message;
 import com.igomall.entity.Menu;
 import com.igomall.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -60,7 +61,7 @@ public class MenuController extends BaseController {
     /**
      * 列表
      */
-    @PostMapping("/list")
+    @GetMapping("/list")
     public List<Menu> list() {
         return menuService.findTree();
     }
