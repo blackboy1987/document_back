@@ -1,6 +1,8 @@
 
 package com.igomall.controller.admin;
 
+import com.igomall.entity.Admin;
+import com.igomall.security.CurrentUser;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -16,20 +18,17 @@ import javax.servlet.ServletContext;
  * @author IGOMALL  Team
  * @version 1.0
  */
-@RestController("adminIndexController")
-@RequestMapping("/admin/index")
+@RestController
+@RequestMapping("/admin")
 public class IndexController {
 
 
 	/**
 	 * 首页
 	 */
-	@GetMapping
-	public String index(ModelMap model) {
-		model.addAttribute("javaVersion", System.getProperty("java.version"));
-		model.addAttribute("javaHome", System.getProperty("java.home"));
-		model.addAttribute("osName", System.getProperty("os.name"));
-		model.addAttribute("osArch", System.getProperty("os.arch"));
+	@GetMapping("/currentUser")
+	public String currentUser(@CurrentUser Admin admin) {
+		System.out.println("=============================="+admin);
 		return "admin/index";
 	}
 
