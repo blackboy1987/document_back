@@ -1,50 +1,51 @@
 
 package com.igomall.dao;
 
-import java.util.List;
-
 import com.igomall.entity.Menu;
 
+import java.util.List;
+
 /**
- * Dao - 地区
+ * Dao - 菜单
  * 
- * @author IGOMALL  Team
+ * @author blackboy
  * @version 1.0
  */
 public interface MenuDao extends BaseDao<Menu, Long> {
 
+
 	/**
-	 * 查找顶级地区
+	 * 查找顶级菜单
 	 * 
 	 * @param count
 	 *            数量
-	 * @return 顶级地区
+	 * @return 顶级菜单
 	 */
 	List<Menu> findRoots(Integer count);
 
 	/**
-	 * 查找上级地区
+	 * 查找上级菜单
 	 * 
 	 * @param menu
-	 *            地区
+	 *            菜单
 	 * @param recursive
 	 *            是否递归
 	 * @param count
 	 *            数量
-	 * @return 上级地区
+	 * @return 上级菜单
 	 */
 	List<Menu> findParents(Menu menu, boolean recursive, Integer count);
 
 	/**
-	 * 查找下级地区
+	 * 查找下级菜单
 	 * 
 	 * @param menu
-	 *            地区
+	 *            菜单
 	 * @param recursive
 	 *            是否递归
 	 * @param count
 	 *            数量
-	 * @return 下级地区
+	 * @return 下级菜单
 	 */
 	List<Menu> findChildren(Menu menu, boolean recursive, Integer count);
 

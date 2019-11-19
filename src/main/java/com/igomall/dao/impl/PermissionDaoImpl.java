@@ -1,0 +1,28 @@
+
+package com.igomall.dao.impl;
+
+import com.igomall.dao.PermissionDao;
+import com.igomall.entity.Permission;
+import org.springframework.stereotype.Repository;
+
+import javax.persistence.TypedQuery;
+
+/**
+ * Dao - 权限
+ * 
+ * @author blackboy
+ * @version 1.0
+ */
+@Repository
+public class PermissionDaoImpl extends BaseDaoImpl<Permission, Long> implements PermissionDao {
+
+	@Override
+	public Boolean exists(String attributeName,String attributeValue,Long id){
+		if(id==null){
+			return exists(attributeName,attributeValue);
+		}
+		String jpql = "select permissions from Permission permissions where permissions."+attributeName+" = :attributeValue and id != :id";
+		TypedQuery<Permission> query = entityManager.createQuery(jpql, Permission.class).setParameter("attributeValue", attributeValue).setParameter("id",id);
+		return query.getResultList().size()>0;
+	}
+}

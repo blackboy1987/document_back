@@ -5,7 +5,6 @@ import com.igomall.dao.MenuDao;
 import com.igomall.entity.Menu;
 import com.igomall.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -16,9 +15,9 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Service - 地区
+ * Service - 菜单
  * 
- * @author IGOMALL  Team
+ * @author blackboy
  * @version 1.0
  */
 @Service
@@ -27,29 +26,35 @@ public class MenuServiceImpl extends BaseServiceImpl<Menu, Long> implements Menu
 	@Autowired
 	private MenuDao menuDao;
 
+
 	@Transactional(readOnly = true)
+	@Override
 	public List<Menu> findRoots() {
 		return menuDao.findRoots(null);
 	}
 
 	@Transactional(readOnly = true)
+	@Override
 	public List<Menu> findRoots(Integer count) {
 		return menuDao.findRoots(count);
 	}
 
 	@Transactional(readOnly = true)
+	@Override
 	@Cacheable(value = "menu", condition = "#useCache")
 	public List<Menu> findRoots(Integer count, boolean useCache) {
 		return menuDao.findRoots(count);
 	}
 
 	@Transactional(readOnly = true)
+	@Override
 	public List<Menu> findParents(Menu menu, boolean recursive, Integer count) {
 		return menuDao.findParents(menu, recursive, count);
 	}
 
 	@Transactional(readOnly = true)
 	@Cacheable(value = "menu", condition = "#useCache")
+	@Override
 	public List<Menu> findParents(Long menuId, boolean recursive, Integer count, boolean useCache) {
 		Menu menu = menuDao.find(menuId);
 		if (menuId != null && menu == null) {
@@ -59,16 +64,19 @@ public class MenuServiceImpl extends BaseServiceImpl<Menu, Long> implements Menu
 	}
 
 	@Transactional(readOnly = true)
+	@Override
 	public List<Menu> findTree() {
 		return menuDao.findChildren(null, true, null);
 	}
 
 	@Transactional(readOnly = true)
+	@Override
 	public List<Menu> findChildren(Menu menu, boolean recursive, Integer count) {
 		return menuDao.findChildren(menu, recursive, count);
 	}
 
 	@Transactional(readOnly = true)
+	@Override
 	@Cacheable(value = "menu", condition = "#useCache")
 	public List<Menu> findChildren(Long menuId, boolean recursive, Integer count, boolean useCache) {
 		Menu menu = menuDao.find(menuId);
@@ -80,7 +88,7 @@ public class MenuServiceImpl extends BaseServiceImpl<Menu, Long> implements Menu
 
 	@Override
 	@Transactional
-	@CacheEvict(value = { "permission", "menu" }, allEntries = true)
+	@CacheEvict(value = { "menu" }, allEntries = true)
 	public Menu save(Menu menu) {
 		Assert.notNull(menu,"");
 
@@ -90,7 +98,7 @@ public class MenuServiceImpl extends BaseServiceImpl<Menu, Long> implements Menu
 
 	@Override
 	@Transactional
-	@CacheEvict(value = { "permission", "menu" }, allEntries = true)
+	@CacheEvict(value = { "menu" }, allEntries = true)
 	public Menu update(Menu menu) {
 		Assert.notNull(menu,"");
 
@@ -103,37 +111,37 @@ public class MenuServiceImpl extends BaseServiceImpl<Menu, Long> implements Menu
 
 	@Override
 	@Transactional
-	@CacheEvict(value = { "permission", "menu" }, allEntries = true)
+	@CacheEvict(value = { "menu" }, allEntries = true)
 	public Menu update(Menu menu, String... ignoreProperties) {
 		return super.update(menu, ignoreProperties);
 	}
 
 	@Override
 	@Transactional
-	@CacheEvict(value = { "permission", "menu" }, allEntries = true)
+	@CacheEvict(value = { "menu" }, allEntries = true)
 	public void delete(Long id) {
 		super.delete(id);
 	}
 
 	@Override
 	@Transactional
-	@CacheEvict(value = { "permission", "menu" }, allEntries = true)
+	@CacheEvict(value = { "menu" }, allEntries = true)
 	public void delete(Long... ids) {
 		super.delete(ids);
 	}
 
 	@Override
 	@Transactional
-	@CacheEvict(value = { "permission", "menu" }, allEntries = true)
+	@CacheEvict(value = { "menu" }, allEntries = true)
 	public void delete(Menu menu) {
 		super.delete(menu);
 	}
 
 	/**
 	 * 设置值
-	 *
+	 * 
 	 * @param menu
-	 *            商品分类
+	 *            菜单
 	 */
 	private void setValue(Menu menu) {
 		if (menu == null) {

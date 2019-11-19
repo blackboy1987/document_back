@@ -1,33 +1,27 @@
 
 package com.igomall.dao.impl;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import javax.persistence.TypedQuery;
-
+import com.igomall.dao.MenuDao;
+import com.igomall.entity.Menu;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.springframework.stereotype.Repository;
 
-import com.igomall.dao.MenuDao;
-import com.igomall.entity.Menu;
+import javax.persistence.TypedQuery;
+import java.util.*;
 
 /**
- * Dao - 地区
+ * Dao - 菜单
  * 
- * @author IGOMALL  Team
+ * @author blackboy
  * @version 1.0
  */
 @Repository
 public class MenuDaoImpl extends BaseDaoImpl<Menu, Long> implements MenuDao {
 
+
+	@Override
 	public List<Menu> findRoots(Integer count) {
 		String jpql = "select menu from Menu menu where menu.parent is null order by menu.order asc";
 		TypedQuery<Menu> query = entityManager.createQuery(jpql, Menu.class);
@@ -37,6 +31,7 @@ public class MenuDaoImpl extends BaseDaoImpl<Menu, Long> implements MenuDao {
 		return query.getResultList();
 	}
 
+	@Override
 	public List<Menu> findParents(Menu menu, boolean recursive, Integer count) {
 		if (menu == null || menu.getParent() == null) {
 			return Collections.emptyList();
@@ -55,6 +50,7 @@ public class MenuDaoImpl extends BaseDaoImpl<Menu, Long> implements MenuDao {
 		return query.getResultList();
 	}
 
+	@Override
 	public List<Menu> findChildren(Menu menu, boolean recursive, Integer count) {
 		TypedQuery<Menu> query;
 		if (recursive) {
@@ -82,10 +78,10 @@ public class MenuDaoImpl extends BaseDaoImpl<Menu, Long> implements MenuDao {
 	}
 
 	/**
-	 * 排序地区
+	 * 排序菜单
 	 * 
 	 * @param menus
-	 *            地区
+	 *            菜单
 	 */
 	private void sort(List<Menu> menus) {
 		if (CollectionUtils.isEmpty(menus)) {

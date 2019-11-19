@@ -1,6 +1,7 @@
 package com.igomall.config;
 
 import com.igomall.interceptor.CorsInterceptor;
+import com.igomall.interceptor.LoginInterceptor;
 import com.igomall.interceptor.ValidateLoginInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +27,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
         return corsInterceptor;
     }
 
+    @Bean
+    public LoginInterceptor loginInterceptor() {
+        LoginInterceptor loginInterceptor = new LoginInterceptor();
+        return loginInterceptor;
+    }
+
 
     @Bean
     public ValidateLoginInterceptor validateLoginInterceptor() {
@@ -38,7 +45,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addInterceptor(corsInterceptor())
                 .addPathPatterns("/**");
 
-        registry.addInterceptor(validateLoginInterceptor())
+        registry.addInterceptor(loginInterceptor())
                 .addPathPatterns("/admin/menu/list");
     }
 

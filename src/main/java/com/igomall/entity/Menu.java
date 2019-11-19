@@ -1,8 +1,6 @@
 
 package com.igomall.entity;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonView;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.Length;
 
@@ -14,16 +12,16 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Entity - 地区
+ * Entity - 菜单
  * 
- * @author IGOMALL  Team
+ * @author blackboy
  * @version 1.0
  */
-@JsonInclude(JsonInclude.Include	.NON_NULL)
 @Entity
 public class Menu extends OrderedEntity<Long> {
 
-	private static final long serialVersionUID = -2158109459123036967L;
+	private static final long serialVersionUID = 5095521437302782717L;
+
 
 	/**
 	 * 树路径分隔符
@@ -36,10 +34,7 @@ public class Menu extends OrderedEntity<Long> {
 	@NotEmpty
 	@Length(max = 200)
 	@Column(nullable = false)
-	@JsonView({IdView.class})
 	private String name;
-
-	private String url;
 
 	/**
 	 * 树路径
@@ -54,21 +49,37 @@ public class Menu extends OrderedEntity<Long> {
 	private Integer grade;
 
 	/**
-	 * 上级地区
+	 * 上级菜单
 	 */
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Menu parent;
 
+	private Boolean isEnabled;
+
 	/**
-	 * 下级地区
+	 * 下级菜单
 	 */
-	@OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
 	@OrderBy("order asc")
-	@JsonView({IdView.class})
 	private Set<Menu> children = new HashSet<>();
 
-	@OneToMany(mappedBy = "menu",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	/**
+	 * 权限
+	 */
+	@OneToMany(mappedBy = "menu",fetch = FetchType.LAZY)
 	private Set<Permission> permissions = new HashSet<>();
+
+	/**
+	 * 菜单跳转路径
+	 */
+	@NotEmpty
+	private String url;
+
+	/**
+	 * 菜单的权限名称
+	 */
+	@NotEmpty
+	private String permission;
 
 	/**
 	 * 获取名称
@@ -77,14 +88,6 @@ public class Menu extends OrderedEntity<Long> {
 	 */
 	public String getName() {
 		return name;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
 	}
 
 	/**
@@ -136,55 +139,112 @@ public class Menu extends OrderedEntity<Long> {
 	}
 
 	/**
-	 * 获取上级地区
+	 * 获取上级菜单
 	 * 
-	 * @return 上级地区
+	 * @return 上级菜单
 	 */
 	public Menu getParent() {
 		return parent;
 	}
 
+	public Boolean getIsEnabled() {
+		return isEnabled;
+	}
+
+	public void setIsEnabled(Boolean isEnabled) {
+		this.isEnabled = isEnabled;
+	}
+
 	/**
-	 * 设置上级地区
+	 * 设置上级菜单
 	 * 
 	 * @param parent
-	 *            上级地区
+	 *            上级菜单
 	 */
 	public void setParent(Menu parent) {
 		this.parent = parent;
 	}
 
 	/**
-	 * 获取下级地区
+	 * 获取下级菜单
 	 * 
-	 * @return 下级地区
+	 * @return 下级菜单
 	 */
 	public Set<Menu> getChildren() {
 		return children;
 	}
 
 	/**
-	 * 设置下级地区
+	 * 设置下级菜单
 	 * 
 	 * @param children
-	 *            下级地区
+	 *            下级菜单
 	 */
 	public void setChildren(Set<Menu> children) {
 		this.children = children;
 	}
 
+	/**
+	 * 获取权限
+	 *
+	 * @return 权限
+	 */
 	public Set<Permission> getPermissions() {
 		return permissions;
 	}
 
-	public void setPermissions(Set<Permission> permissions) {
+
+	/**
+	 * 设置权限
+	 *
+	 * @param permissions
+	 *            权限
+	 */
+	public void setPermissionses(Set<Permission> permissions) {
 		this.permissions = permissions;
 	}
 
 	/**
-	 * 获取所有上级地区ID
+	 * 获取菜单跳转路径
+	 * @return
+	 * 		菜单跳转路径
+	 */
+	public String getUrl() {
+		return url;
+	}
+
+	/**
+	 * 设置菜单跳转路径
+	 * @param url
+	 * 		菜单跳转路径
+	 */
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	/**
+	 * 获取菜单权限名称
+	 * @return
+	 * 		菜单权限名称
+	 */
+	public String getPermission() {
+		return permission;
+	}
+
+	/**
+	 * 设置菜单的权限名称
+	 *
+	 * @param permission
+	 * 		菜单权限名称
+	 */
+	public void setPermission(String permission) {
+		this.permission = permission;
+	}
+
+	/**
+	 * 获取所有上级分类ID
 	 * 
-	 * @return 所有上级地区ID
+	 * @return 所有上级分类ID
 	 */
 	@Transient
 	public Long[] getParentIds() {
@@ -197,9 +257,9 @@ public class Menu extends OrderedEntity<Long> {
 	}
 
 	/**
-	 * 获取所有上级地区
+	 * 获取所有上级菜单
 	 * 
-	 * @return 所有上级地区
+	 * @return 所有上级菜单
 	 */
 	@Transient
 	public List<Menu> getParents() {
@@ -209,25 +269,30 @@ public class Menu extends OrderedEntity<Long> {
 	}
 
 	/**
-	 * 递归上级地区
+	 * 递归上级菜单
 	 * 
 	 * @param parents
-	 *            上级地区
-	 * @param area
-	 *            地区
+	 *            上级菜单
+	 * @param menu
+	 *            菜单
 	 */
-	private void recursiveParents(List<Menu> parents, Menu area) {
-		if (area == null) {
+	private void recursiveParents(List<Menu> parents, Menu menu) {
+		if (menu == null) {
 			return;
 		}
-		Menu parent = area.getParent();
+		Menu parent = menu.getParent();
 		if (parent != null) {
 			parents.add(0, parent);
 			recursiveParents(parents, parent);
 		}
 	}
 
-	public interface TreeView extends IdView {
 
+	@Transient
+	public Long getParentId(){
+		if(parent!=null){
+			return parent.getId();
+		}
+		return null;
 	}
 }

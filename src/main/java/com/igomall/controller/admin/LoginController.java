@@ -1,13 +1,14 @@
 
 package com.igomall.controller.admin;
 
+import com.igomall.common.Message;
 import com.igomall.entity.Admin;
-import com.igomall.entity.Role;
 import com.igomall.security.UserAuthenticationToken;
 import com.igomall.service.AdminService;
-import com.igomall.service.RoleService;
 import com.igomall.service.UserService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,65 +16,54 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
+
 /**
- * Controller - 管理员登录
+ * Controller - 登陆
  * 
- * @author blackboy
+ * @author 夏黎
  * @version 1.0
  */
 @RestController("adminLoginController")
-@RequestMapping("/admin/login")
+@RequestMapping("/admin/api/login")
 public class LoginController extends BaseController {
 
-	@Autowired
-	private UserService userService;
 	@Autowired
 	private AdminService adminService;
 
 	@Autowired
-	private RoleService roleService;
+	private UserService userService;
 
 	/**
-	 * 登录页面
+	 *  老师的登陆
 	 */
 	@PostMapping
-	public Map<String,String> index(String username, String password, HttpServletRequest request) {
-		Admin admin = null;
+	public ResponseEntity<?> index(HttpServletRequest request, String username, String password, String type) {
+		Map<String,Object> data = new HashMap<>();
+		data.put("type",type);
 
-		if(!adminService.usernameExists(username)){
-			List<Role> roles = roleService.findAll();
-			if(roles.isEmpty()){
-				Role role = new Role();
-				role.setIsSystem(true);
-				role.setDescription("aa");
-				role.setName("admin");
-				List<String> permissions = new ArrayList<>();
-				permissions.add("admin:menu:list");
-				role.setPermissions(permissions);
-				roleService.save(role);
-			}
-
-
-			admin = new Admin();
-			admin.setEmail(username+"@qq.com");
-			admin.setUsername(username);
-			admin.setPassword(password);
-			admin.setIsLocked(false);
-			admin.setLockDate(null);
-			admin.setLastLoginIp(null);
-			admin.setLastLoginDate(null);
-			admin.setIsEnabled(true);
-			admin.setRoles(new HashSet<>(roles));
-			adminService.save(admin);
-		}else {
-			admin = adminService.findByUsername(username);
+		if(StringUtils.isEmpty(username)|| StringUtils.isEmpty(password)){
+			data.put("status","error");
+			data.put("message", Message.error("请填写用户名/密码"));
+			return ResponseEntity.ok(data);
 		}
-		userService.login(new UserAuthenticationToken(Admin.class, admin.getUsername(), password, false, request.getRemoteAddr()));
-		Map<String,String> data = new HashMap<>();
-		data.put("status","ok");
-		data.put("currentAuthority","admin");
-		data.put("type","account");
-		return data;
-	}
+		Admin admin = adminService.findByUsername(username);
+		if(admin==null||!admin.isValidCredentials(password)){
+			data.put("status","error");
+			data.put("message", Message.error("用户不存在"));
+			return ResponseEntity.ok(data);
+		}
 
+		admin.setLastLoginDate(new Date());
+		admin.setLastLoginIp(request.getRemoteAddr());
+		admin.setIsLocked(false);
+		admin.setLockDate(null);
+		adminService.update(admin);
+		userService.login(new UserAuthenticationToken(Admin.class, username, password, false, request.getRemoteAddr()));
+		List<String> currentAuthorities = new ArrayList<>();
+		currentAuthorities.addAll(adminService.getPermissions(admin));
+		data.put("status","ok");
+		data.put("currentAuthority",currentAuthorities);
+		data.put("message",Message.success("ok"));
+		return ResponseEntity.ok(data);
+	}
 }
