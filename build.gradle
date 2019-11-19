@@ -9,7 +9,9 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
 repositories {
-    mavenCentral()
+    maven {
+        url  'http://maven.aliyun.com/nexus/content/groups/public/'
+    }
 }
 
 dependencies {
@@ -38,6 +40,7 @@ dependencies {
     compile group: 'commons-io', name: 'commons-io', version: '2.6'
 
     compile group: 'org.hibernate', name: 'hibernate-search-orm', version: '5.11.3.Final'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-cache'
 
 
 
