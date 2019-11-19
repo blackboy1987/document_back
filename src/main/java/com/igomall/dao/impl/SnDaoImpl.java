@@ -1,22 +1,19 @@
 
 package com.igomall.dao.impl;
 
-import java.io.IOException;
-
-import javax.persistence.EntityManager;
-import javax.persistence.LockModeType;
-import javax.persistence.PersistenceContext;
-
+import com.igomall.dao.SnDao;
+import com.igomall.entity.Sn;
+import com.igomall.util.FreeMarkerUtils;
+import freemarker.template.TemplateException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
-import com.igomall.dao.SnDao;
-import com.igomall.entity.Sn;
-import com.igomall.util.FreeMarkerUtils;
-
-import freemarker.template.TemplateException;
+import javax.persistence.EntityManager;
+import javax.persistence.LockModeType;
+import javax.persistence.PersistenceContext;
+import java.io.IOException;
 
 /**
  * Dao - 序列号
@@ -28,94 +25,25 @@ import freemarker.template.TemplateException;
 public class SnDaoImpl implements SnDao, InitializingBean {
 
 	/**
-	 * 商品编号生成器
-	 */
-	private HiloOptimizer productHiloOptimizer;
-
-	/**
 	 * 订单编号生成器
 	 */
 	private HiloOptimizer orderHiloOptimizer;
 
-	/**
-	 * 订单支付编号生成器
-	 */
-	private HiloOptimizer orderPaymentHiloOptimizer;
-
-	/**
-	 * 订单退款编号生成器
-	 */
-	private HiloOptimizer orderRefundsHiloOptimizer;
-
-	/**
-	 * 订单发货编号生成器
-	 */
-	private HiloOptimizer orderShippingHiloOptimizer;
-
-	/**
-	 * 订单退货编号生成器
-	 */
-	private HiloOptimizer orderReturnsHiloOptimizer;
-
-	/**
-	 * 支付事务编号生成器
-	 */
-	private HiloOptimizer paymentTransactionHiloOptimizer;
-
-	/**
-	 * 平台服务编号生成器
-	 */
-	private HiloOptimizer platformServiceHiloOptimizer;
 
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	@Value("${sn.product.prefix}")
-	private String productPrefix;
-	@Value("${sn.product.maxLo}")
-	private int productMaxLo;
 	@Value("${sn.order.prefix}")
 	private String orderPrefix;
 	@Value("${sn.order.maxLo}")
 	private int orderMaxLo;
-	@Value("${sn.orderPayment.prefix}")
-	private String orderPaymentPrefix;
-	@Value("${sn.orderPayment.maxLo}")
-	private int orderPaymentMaxLo;
-	@Value("${sn.orderRefunds.prefix}")
-	private String orderRefundsPrefix;
-	@Value("${sn.orderRefunds.maxLo}")
-	private int orderRefundsMaxLo;
-	@Value("${sn.orderShipping.prefix}")
-	private String orderShippingPrefix;
-	@Value("${sn.orderShipping.maxLo}")
-	private int orderShippingMaxLo;
-	@Value("${sn.orderReturns.prefix}")
-	private String orderReturnsPrefix;
-	@Value("${sn.orderReturns.maxLo}")
-	private int orderReturnsMaxLo;
-	@Value("${sn.paymentTransaction.prefix}")
-	private String paymentTransactionPrefix;
-	@Value("${sn.paymentTransaction.maxLo}")
-	private int paymentTransactionMaxLo;
-	@Value("${sn.platformService.prefix}")
-	private String platformServicePrefix;
-	@Value("${sn.platformService.maxLo}")
-	private int platformServiceMaxLo;
 
 	/**
 	 * 初始化
 	 */
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		productHiloOptimizer = new HiloOptimizer(Sn.Type.product, productPrefix, productMaxLo);
 		orderHiloOptimizer = new HiloOptimizer(Sn.Type.order, orderPrefix, orderMaxLo);
-		orderPaymentHiloOptimizer = new HiloOptimizer(Sn.Type.orderPayment, orderPaymentPrefix, orderPaymentMaxLo);
-		orderRefundsHiloOptimizer = new HiloOptimizer(Sn.Type.orderRefunds, orderRefundsPrefix, orderRefundsMaxLo);
-		orderShippingHiloOptimizer = new HiloOptimizer(Sn.Type.orderShipping, orderShippingPrefix, orderShippingMaxLo);
-		orderReturnsHiloOptimizer = new HiloOptimizer(Sn.Type.orderReturns, orderReturnsPrefix, orderReturnsMaxLo);
-		paymentTransactionHiloOptimizer = new HiloOptimizer(Sn.Type.paymentTransaction, paymentTransactionPrefix, paymentTransactionMaxLo);
-		platformServiceHiloOptimizer = new HiloOptimizer(Sn.Type.platformService, platformServicePrefix, platformServiceMaxLo);
 	}
 
 	/**
@@ -130,22 +58,8 @@ public class SnDaoImpl implements SnDao, InitializingBean {
 		Assert.notNull(type,"");
 
 		switch (type) {
-		case product:
-			return productHiloOptimizer.generate();
 		case order:
 			return orderHiloOptimizer.generate();
-		case orderPayment:
-			return orderPaymentHiloOptimizer.generate();
-		case orderRefunds:
-			return orderRefundsHiloOptimizer.generate();
-		case orderShipping:
-			return orderShippingHiloOptimizer.generate();
-		case orderReturns:
-			return orderReturnsHiloOptimizer.generate();
-		case paymentTransaction:
-			return paymentTransactionHiloOptimizer.generate();
-		case platformService:
-			return platformServiceHiloOptimizer.generate();
 			default:
 				return null;
 		}
