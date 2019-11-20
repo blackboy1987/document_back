@@ -1,6 +1,8 @@
 
 package com.igomall.common;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.igomall.entity.BaseEntity;
 import com.igomall.util.SpringUtils;
 
 /**
@@ -14,6 +16,7 @@ public class Message {
 	/**
 	 * 类型
 	 */
+	@JsonView({BaseEntity.BaseView.class})
 	public enum Type {
 
 		/**
@@ -40,6 +43,7 @@ public class Message {
 	/**
 	 * 内容
 	 */
+	@JsonView({BaseEntity.BaseView.class})
 	private String content;
 
 	/**

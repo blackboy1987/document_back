@@ -1,7 +1,9 @@
 
 package com.igomall.controller.admin;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.igomall.common.Message;
+import com.igomall.common.Page;
 import com.igomall.common.Pageable;
 import com.igomall.entity.Admin;
 import com.igomall.entity.BaseEntity;
@@ -13,10 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.HashSet;
@@ -27,7 +26,7 @@ import java.util.HashSet;
  * @author blackboy
  * @version 1.0
  */
-@Controller("adminAdminController")
+@RestController
 @RequestMapping("/admin/admin")
 public class AdminController extends BaseController {
 
@@ -67,74 +66,69 @@ public class AdminController extends BaseController {
 	 * 保存
 	 */
 	@PostMapping("/save")
-	public String save(Admin admin, Long[] roleIds, RedirectAttributes redirectAttributes) {
+	public Message save(Admin admin, Long[] roleIds, Boolean unlock) {
 		admin.setRoles(new HashSet<>(roleService.findList(roleIds)));
-		if (!isValid(admin, BaseEntity.Save.class)) {
-			return ERROR_VIEW;
+		if(admin.isNew()){
+			if (!isValid(admin, BaseEntity.Save.class)) {
+				return ERROR_MESSAGE;
+			}
+			if (adminService.usernameExists(admin.getUsername())) {
+				return ERROR_MESSAGE;
+			}
+			if (adminService.emailExists(admin.getEmail())) {
+				return ERROR_MESSAGE;
+			}
+			admin.setIsLocked(false);
+			admin.setLockDate(null);
+			admin.setLastLoginIp(null);
+			admin.setLastLoginDate(null);
+			adminService.save(admin);
+			return SUCCESS_MESSAGE;
+		}else {
+			admin.setRoles(new HashSet<>(roleService.findList(roleIds)));
+			if (!isValid(admin)) {
+				return ERROR_MESSAGE;
+			}
+			if (!adminService.emailUnique(admin.getId(), admin.getEmail())) {
+				return ERROR_MESSAGE;
+			}
+			Admin pAdmin = adminService.find(admin.getId());
+			if (pAdmin == null) {
+				return ERROR_MESSAGE;
+			}
+			if (BooleanUtils.isTrue(pAdmin.getIsLocked()) && BooleanUtils.isTrue(unlock)) {
+				userService.unlock(admin);
+				adminService.update(admin, "username", "encodedPassword", "lastLoginIp", "lastLoginDate");
+			} else {
+				adminService.update(admin, "username", "encodedPassword", "isLocked", "lockDate", "lastLoginIp", "lastLoginDate");
+			}
+			return SUCCESS_MESSAGE;
 		}
-		if (adminService.usernameExists(admin.getUsername())) {
-			return ERROR_VIEW;
-		}
-		if (adminService.emailExists(admin.getEmail())) {
-			return ERROR_VIEW;
-		}
-		admin.setIsLocked(false);
-		admin.setLockDate(null);
-		admin.setLastLoginIp(null);
-		admin.setLastLoginDate(null);
-		adminService.save(admin);
-		return "redirect:list";
+
 	}
 
 	/**
 	 * 编辑
 	 */
-	@GetMapping("/edit")
-	public String edit(Long id, ModelMap model) {
-		model.addAttribute("roles", roleService.findAll());
-		model.addAttribute("admin", adminService.find(id));
-		return "admin/admin/edit";
-	}
-
-	/**
-	 * 更新
-	 */
-	@PostMapping("/update")
-	public String update(Admin admin, Long id, Long[] roleIds, Boolean unlock, RedirectAttributes redirectAttributes) {
-		admin.setRoles(new HashSet<>(roleService.findList(roleIds)));
-		if (!isValid(admin)) {
-			return ERROR_VIEW;
-		}
-		if (!adminService.emailUnique(id, admin.getEmail())) {
-			return ERROR_VIEW;
-		}
-		Admin pAdmin = adminService.find(id);
-		if (pAdmin == null) {
-			return ERROR_VIEW;
-		}
-		if (BooleanUtils.isTrue(pAdmin.getIsLocked()) && BooleanUtils.isTrue(unlock)) {
-			userService.unlock(admin);
-			adminService.update(admin, "username", "encodedPassword", "lastLoginIp", "lastLoginDate", "paymentTransactions");
-		} else {
-			adminService.update(admin, "username", "encodedPassword", "isLocked", "lockDate", "lastLoginIp", "lastLoginDate", "paymentTransactions");
-		}
-		return "redirect:list";
+	@PostMapping("/edit")
+	public Admin edit(Long id) {
+		return adminService.find(id);
 	}
 
 	/**
 	 * 列表
 	 */
-	@GetMapping("/list")
-	public String list(Pageable pageable, ModelMap model) {
-		model.addAttribute("page", adminService.findPage(pageable));
-		return "admin/admin/list";
+	@PostMapping("/list")
+	@JsonView(Admin.ListView.class)
+	public Page<Admin> list(Pageable pageable) {
+		return adminService.findPage(pageable);
 	}
 
 	/**
 	 * 删除
 	 */
 	@PostMapping("/delete")
-	public @ResponseBody Message delete(Long[] ids) {
+	public Message delete(Long[] ids) {
 		if (ids.length >= adminService.count()) {
 			return Message.error("admin.common.deleteAllNotAllowed");
 		}

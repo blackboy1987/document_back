@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.igomall.entity.BaseEntity;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -22,11 +24,13 @@ public class Page<T> implements Serializable {
 	/**
 	 * 内容
 	 */
+	@JsonView({BaseEntity.BaseView.class})
 	private final List<T> content = new ArrayList<>();
 
 	/**
 	 * 总记录数
 	 */
+	@JsonView({BaseEntity.BaseView.class})
 	private final long total;
 
 	/**
@@ -63,6 +67,7 @@ public class Page<T> implements Serializable {
 	 * 
 	 * @return 页码
 	 */
+	@JsonView({BaseEntity.BaseView.class})
 	public int getPageNumber() {
 		return pageable.getPageNumber();
 	}
@@ -72,6 +77,7 @@ public class Page<T> implements Serializable {
 	 * 
 	 * @return 每页记录数
 	 */
+	@JsonView({BaseEntity.BaseView.class})
 	public int getPageSize() {
 		return pageable.getPageSize();
 	}

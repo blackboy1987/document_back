@@ -15,6 +15,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -39,6 +40,7 @@ public class Admin extends User {
 	@Length(min = 4, max = 20)
 	@Pattern.List({ @Pattern(regexp = "^[0-9a-zA-Z_\\u4e00-\\u9fa5]+$"), @Pattern(regexp = "^.*[^\\d].*$") })
 	@Column(nullable = false, updatable = false, unique = true)
+	@JsonView({ListView.class})
 	private String username;
 
 	/**
@@ -62,18 +64,21 @@ public class Admin extends User {
 	@Email
 	@Length(max = 200)
 	@Column(nullable = false, unique = true)
+	@JsonView({ListView.class})
 	private String email;
 
 	/**
 	 * 姓名
 	 */
 	@Length(max = 200)
+	@JsonView({ListView.class})
 	private String name;
 
 	/**
 	 * 部门
 	 */
 	@Length(max = 200)
+	@JsonView({ListView.class})
 	private String department;
 
 	/**
@@ -258,6 +263,10 @@ public class Admin extends User {
 	@PreUpdate
 	public void preUpdate() {
 		setEmail(StringUtils.lowerCase(getEmail()));
+	}
+
+	public interface ListView extends BaseView{
+
 	}
 
 }

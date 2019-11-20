@@ -3,14 +3,14 @@ package com.igomall.controller.admin;
 
 import com.igomall.entity.Admin;
 import com.igomall.security.CurrentUser;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
+import com.igomall.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.ServletContext;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Controller - 首页
@@ -22,14 +22,24 @@ import javax.servlet.ServletContext;
 @RequestMapping("/admin")
 public class IndexController {
 
-
 	/**
 	 * 首页
 	 */
 	@GetMapping("/currentUser")
-	public String currentUser(@CurrentUser Admin admin) {
-		System.out.println("=============================="+admin);
-		return "admin/index";
+	public Map<String,Object> currentUser(@CurrentUser Admin admin) {
+		Map<String,Object> data = new HashMap<>();
+		if(admin==null){
+			data.put("code",299);
+		}else{
+			data.put("id",admin.getId());
+			data.put("name",admin.getName());
+			data.put("email",admin.getEmail());
+			data.put("username",admin.getUsername());
+			data.put("department",admin.getDepartment());
+			data.put("displayName",admin.getDisplayName());
+		}
+
+		return data;
 	}
 
 }

@@ -32,7 +32,16 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setUnauthorizedUrl("/common/error/unauthorized");
 
         Map<String,String> filterChainDefinitionMap = new LinkedHashMap<>();
-
+        filterChainDefinitionMap.put("/admin","anon");
+        filterChainDefinitionMap.put("/admin/","anon");
+        filterChainDefinitionMap.put("/admin/login","adminAuthc");
+        filterChainDefinitionMap.put("/admin/logout","logout");
+        filterChainDefinitionMap.put("/admin/audit_log/**","adminAuthc,perms[admin:auditLog]");
+        filterChainDefinitionMap.put("/admin/setting/**","logout");
+        filterChainDefinitionMap.put("/admin/storage_plugin/**","adminAuthc,perms[admin:storagePlugin]");
+        filterChainDefinitionMap.put("/admin/admin/**","adminAuthc,perms[admin:admin]");
+        filterChainDefinitionMap.put("/admin/role/**","adminAuthc,perms[admin:role]");
+        filterChainDefinitionMap.put("/admin/**","adminAuthc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 
         Map<String, Filter > filters = new HashMap<>();

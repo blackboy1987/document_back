@@ -24,7 +24,7 @@ import java.util.*;
  * @version 1.0
  */
 @RestController("adminLoginController")
-@RequestMapping("/admin/api/login")
+@RequestMapping("/admin/login")
 public class LoginController extends BaseController {
 
 	@Autowired
@@ -39,31 +39,7 @@ public class LoginController extends BaseController {
 	@PostMapping
 	public ResponseEntity<?> index(HttpServletRequest request, String username, String password, String type) {
 		Map<String,Object> data = new HashMap<>();
-		data.put("type",type);
-
-		if(StringUtils.isEmpty(username)|| StringUtils.isEmpty(password)){
-			data.put("status","error");
-			data.put("message", Message.error("请填写用户名/密码"));
-			return ResponseEntity.ok(data);
-		}
-		Admin admin = adminService.findByUsername(username);
-		if(admin==null||!admin.isValidCredentials(password)){
-			data.put("status","error");
-			data.put("message", Message.error("用户不存在"));
-			return ResponseEntity.ok(data);
-		}
-
-		admin.setLastLoginDate(new Date());
-		admin.setLastLoginIp(request.getRemoteAddr());
-		admin.setIsLocked(false);
-		admin.setLockDate(null);
-		adminService.update(admin);
-		userService.login(new UserAuthenticationToken(Admin.class, username, password, false, request.getRemoteAddr()));
-		List<String> currentAuthorities = new ArrayList<>();
-		currentAuthorities.addAll(adminService.getPermissions(admin));
-		data.put("status","ok");
-		data.put("currentAuthority",currentAuthorities);
-		data.put("message",Message.success("ok"));
+		data.put("code",299);
 		return ResponseEntity.ok(data);
 	}
 }
