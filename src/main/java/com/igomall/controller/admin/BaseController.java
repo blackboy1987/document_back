@@ -10,9 +10,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Controller - 基类
@@ -44,6 +42,22 @@ public class BaseController {
 
 	@Autowired
 	private Validator validator;
+
+
+	protected Map<String,String> isValid1(Object target, Class<?>... groups) {
+		Assert.notNull(target,"");
+		Map<String,String> result = new HashMap<>();
+
+		Set<ConstraintViolation<Object>> constraintViolations = validator.validate(target, groups);
+
+		Iterator<ConstraintViolation<Object>> iterator = constraintViolations.iterator();
+		while (iterator.hasNext()){
+			ConstraintViolation<Object> constraintViolation = iterator.next();
+			result.put(constraintViolation.getPropertyPath().toString(),constraintViolation.getMessage());
+		}
+		return result;
+	}
+
 
 	/**
 	 * 数据验证

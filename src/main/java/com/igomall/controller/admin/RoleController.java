@@ -1,6 +1,7 @@
 
 package com.igomall.controller.admin;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.igomall.common.Message;
 import com.igomall.common.Pageable;
 import com.igomall.entity.Role;
@@ -9,11 +10,10 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 /**
  * Controller - 角色
@@ -21,7 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  * @author blackboy
  * @version 1.0
  */
-@Controller("adminRoleController")
+@RestController("adminRoleController")
 @RequestMapping("/admin/role")
 public class RoleController extends BaseController {
 
@@ -78,7 +78,7 @@ public class RoleController extends BaseController {
 	/**
 	 * 列表
 	 */
-	@GetMapping("/list")
+	@PostMapping("/list")
 	public String list(Pageable pageable, ModelMap model) {
 		model.addAttribute("page", roleService.findPage(pageable));
 		return "admin/role/list";
@@ -99,6 +99,15 @@ public class RoleController extends BaseController {
 			roleService.delete(ids);
 		}
 		return SUCCESS_MESSAGE;
+	}
+
+	/**
+	 * 列表
+	 */
+	@PostMapping("/listAll")
+	@JsonView(Role.ListAll.class)
+	public List<Role> listAll() {
+		return roleService.findAll();
 	}
 
 }

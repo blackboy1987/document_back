@@ -8,6 +8,7 @@ import com.igomall.common.Pageable;
 import com.igomall.entity.Admin;
 import com.igomall.entity.BaseEntity;
 import com.igomall.service.AdminService;
+import com.igomall.service.DepartmentService;
 import com.igomall.service.RoleService;
 import com.igomall.service.UserService;
 import org.apache.commons.lang3.BooleanUtils;
@@ -18,7 +19,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Date;
 import java.util.HashSet;
+import java.util.Map;
 
 /**
  * Controller - 管理员
@@ -36,6 +39,8 @@ public class AdminController extends BaseController {
 	private UserService userService;
 	@Autowired
 	private RoleService roleService;
+	@Autowired
+	private DepartmentService departmentService;
 
 	/**
 	 * 检查用户名是否存在
@@ -54,53 +59,70 @@ public class AdminController extends BaseController {
 	}
 
 	/**
-	 * 添加
-	 */
-	@GetMapping("/add")
-	public String add(ModelMap model) {
-		model.addAttribute("roles", roleService.findAll());
-		return "admin/admin/add";
-	}
-
-	/**
 	 * 保存
 	 */
 	@PostMapping("/save")
-	public Message save(Admin admin, Long[] roleIds, Boolean unlock) {
+	public Message save(Admin admin, Long[] roleIds,Long departmentId, Boolean unlock) {
 		admin.setRoles(new HashSet<>(roleService.findList(roleIds)));
+		admin.setDepartment(departmentService.find(departmentId));
 		if(admin.isNew()){
-			if (!isValid(admin, BaseEntity.Save.class)) {
-				return ERROR_MESSAGE;
+			if(admin.getIsEnabled()==null){
+				admin.setIsEnabled(true);
 			}
+			admin.setEmail(admin.getUsername()+"@qq.com");
+			admin.setPassword("123456");
+
+			Map<String,String> validResults = isValid1(admin, BaseEntity.Save.class);
+			if(!validResults.isEmpty()){
+				return Message.error1("参数错误",validResults);
+			}
+
 			if (adminService.usernameExists(admin.getUsername())) {
-				return ERROR_MESSAGE;
+				return Message.error("用户名已存在");
 			}
 			if (adminService.emailExists(admin.getEmail())) {
-				return ERROR_MESSAGE;
+				return Message.error("邮箱已存在");
 			}
 			admin.setIsLocked(false);
 			admin.setLockDate(null);
 			admin.setLastLoginIp(null);
 			admin.setLastLoginDate(null);
+
+
 			adminService.save(admin);
 			return SUCCESS_MESSAGE;
 		}else {
+			if(admin.getIsEnabled()==null){
+				admin.setIsEnabled(false);
+			}
+			if(admin.getIsLocked()==null){
+				admin.setIsLocked(false);
+				unlock=true;
+			}
+			if(admin.getIsLocked()){
+				admin.setLockDate(new Date());
+				unlock=false;
+			}
+
+			admin.setEmail(admin.getUsername()+"@qq.com");
 			admin.setRoles(new HashSet<>(roleService.findList(roleIds)));
-			if (!isValid(admin)) {
-				return ERROR_MESSAGE;
+			Map<String,String> validResults = isValid1(admin);
+			if(!validResults.isEmpty()){
+				return Message.error1("参数错误",validResults);
 			}
 			if (!adminService.emailUnique(admin.getId(), admin.getEmail())) {
-				return ERROR_MESSAGE;
+				return Message.error("邮箱已存在");
 			}
 			Admin pAdmin = adminService.find(admin.getId());
 			if (pAdmin == null) {
-				return ERROR_MESSAGE;
+				return Message.error("对象为空");
 			}
 			if (BooleanUtils.isTrue(pAdmin.getIsLocked()) && BooleanUtils.isTrue(unlock)) {
 				userService.unlock(admin);
 				adminService.update(admin, "username", "encodedPassword", "lastLoginIp", "lastLoginDate");
 			} else {
-				adminService.update(admin, "username", "encodedPassword", "isLocked", "lockDate", "lastLoginIp", "lastLoginDate");
+				// adminService.update(admin, "username", "encodedPassword", "isLocked", "lockDate", "lastLoginIp", "lastLoginDate");
+				adminService.update(admin, "username", "encodedPassword", "lastLoginIp", "lastLoginDate");
 			}
 			return SUCCESS_MESSAGE;
 		}
@@ -111,6 +133,7 @@ public class AdminController extends BaseController {
 	 * 编辑
 	 */
 	@PostMapping("/edit")
+	@JsonView(Admin.EditView.class)
 	public Admin edit(Long id) {
 		return adminService.find(id);
 	}

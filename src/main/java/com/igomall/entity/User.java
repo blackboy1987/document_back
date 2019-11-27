@@ -1,6 +1,8 @@
 
 package com.igomall.entity;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -55,27 +57,32 @@ public abstract class User extends BaseEntity<Long> {
 	 */
 	@NotNull
 	@Column(nullable = false)
+	@JsonView({BaseView.class})
 	private Boolean isEnabled;
 
 	/**
 	 * 是否锁定
 	 */
 	@Column(nullable = false)
+	@JsonView({BaseView.class})
 	private Boolean isLocked;
 
 	/**
 	 * 锁定日期
 	 */
+	@JsonView({BaseView.class})
 	private Date lockDate;
 
 	/**
 	 * 最后登录IP
 	 */
+	@JsonView({BaseView.class})
 	private String lastLoginIp;
 
 	/**
 	 * 最后登录日期
 	 */
+	@JsonView({BaseView.class})
 	private Date lastLoginDate;
 
 	/**

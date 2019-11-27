@@ -1,16 +1,12 @@
 
 package com.igomall.entity;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToMany;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
@@ -40,7 +36,7 @@ public class Admin extends User {
 	@Length(min = 4, max = 20)
 	@Pattern.List({ @Pattern(regexp = "^[0-9a-zA-Z_\\u4e00-\\u9fa5]+$"), @Pattern(regexp = "^.*[^\\d].*$") })
 	@Column(nullable = false, updatable = false, unique = true)
-	@JsonView({ListView.class})
+	@JsonView({ListView.class,EditView.class})
 	private String username;
 
 	/**
@@ -64,22 +60,21 @@ public class Admin extends User {
 	@Email
 	@Length(max = 200)
 	@Column(nullable = false, unique = true)
-	@JsonView({ListView.class})
+	@JsonView({ListView.class,EditView.class})
 	private String email;
 
 	/**
 	 * 姓名
 	 */
 	@Length(max = 200)
-	@JsonView({ListView.class})
+	@JsonView({ListView.class,EditView.class})
 	private String name;
 
 	/**
 	 * 部门
 	 */
-	@Length(max = 200)
-	@JsonView({ListView.class})
-	private String department;
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Department department;
 
 	/**
 	 * 角色
@@ -186,22 +181,11 @@ public class Admin extends User {
 		this.name = name;
 	}
 
-	/**
-	 * 获取部门
-	 * 
-	 * @return 部门
-	 */
-	public String getDepartment() {
+	public Department getDepartment() {
 		return department;
 	}
 
-	/**
-	 * 设置部门
-	 * 
-	 * @param department
-	 *            部门
-	 */
-	public void setDepartment(String department) {
+	public void setDepartment(Department department) {
 		this.department = department;
 	}
 
@@ -248,6 +232,45 @@ public class Admin extends User {
 		return credentials != null && DigestUtils.md5Hex(credentials instanceof char[] ? new String((char[]) credentials) : credentials.toString()).equals(getEncodedPassword());
 	}
 
+	@Transient
+	@JsonView({ListView.class,EditView.class})
+	public List<Long> getRoleIds() {
+		List<Long> roleIds = new ArrayList<>();
+		for (Role role:roles) {
+			roleIds.add(role.getId());
+		}
+		return roleIds;
+	}
+
+	@Transient
+	@JsonView({ListView.class,EditView.class})
+	public List<String> getRoleNames() {
+		List<String> roleNames = new ArrayList<>();
+		for (Role role:roles) {
+			roleNames.add(role.getName());
+		}
+		return roleNames;
+	}
+
+
+	@Transient
+	@JsonView({ListView.class,EditView.class})
+	public Long getDepartmentId() {
+		if(department!=null){
+			return department.getId();
+		}
+		return null;
+	}
+
+	@Transient
+	@JsonView({ListView.class,EditView.class})
+	public String getDepartmentName() {
+		if(department!=null){
+			return department.getName();
+		}
+		return null;
+	}
+
 	/**
 	 * 持久化前处理
 	 */
@@ -269,4 +292,5 @@ public class Admin extends User {
 
 	}
 
+	public interface EditView extends IdView{}
 }

@@ -46,6 +46,9 @@ public class Message {
 	@JsonView({BaseEntity.BaseView.class})
 	private String content;
 
+	@JsonView({BaseEntity.BaseView.class})
+	private Object data;
+
 	/**
 	 * 构造方法
 	 */
@@ -75,8 +78,9 @@ public class Message {
 	 * @param args
 	 *            参数
 	 */
-	public Message(Type type, String content, Object... args) {
+	public Message(Type type, String content,Object data, Object... args) {
 		this.type = type;
+		this.data = data;
 		this.content = SpringUtils.getMessage(content, args);
 	}
 
@@ -118,6 +122,47 @@ public class Message {
 	public static Message error(String content, Object... args) {
 		return new Message(Type.error, content, args);
 	}
+
+
+	/**
+	 * 返回成功消息
+	 *
+	 * @param content
+	 *            内容
+	 * @param args
+	 *            参数
+	 * @return 成功消息
+	 */
+	public static Message success1(String content,Object data, Object... args) {
+		return new Message(Type.success, content,data, args);
+	}
+
+	/**
+	 * 返回警告消息
+	 *
+	 * @param content
+	 *            内容
+	 * @param args
+	 *            参数
+	 * @return 警告消息
+	 */
+	public static Message warn1(String content,Object data, Object... args) {
+		return new Message(Type.warn, content,data, args);
+	}
+
+	/**
+	 * 返回错误消息
+	 *
+	 * @param content
+	 *            内容
+	 * @param args
+	 *            参数
+	 * @return 错误消息
+	 */
+	public static Message error1(String content, Object data,Object... args) {
+		return new Message(Type.error, content,data, args);
+	}
+
 
 	/**
 	 * 获取类型
@@ -167,4 +212,11 @@ public class Message {
 		return SpringUtils.getMessage(content);
 	}
 
+	public Object getData() {
+		return data;
+	}
+
+	public void setData(Object data) {
+		this.data = data;
+	}
 }

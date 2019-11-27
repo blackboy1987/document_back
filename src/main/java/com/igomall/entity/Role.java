@@ -14,6 +14,7 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import org.hibernate.validator.constraints.Length;
 
 
@@ -36,6 +37,7 @@ public class Role extends BaseEntity<Long> {
 	@NotEmpty
 	@Length(max = 200)
 	@Column(nullable = false)
+	@JsonView({ListAll.class})
 	private String name;
 
 	/**
@@ -168,5 +170,8 @@ public class Role extends BaseEntity<Long> {
 	@Converter
 	public static class PermissionConverter extends BaseAttributeConverter<List<String>> {
 	}
+
+
+	public interface ListAll extends IdView{}
 
 }
