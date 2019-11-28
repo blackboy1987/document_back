@@ -143,8 +143,8 @@ public class AdminController extends BaseController {
 	 */
 	@PostMapping("/list")
 	@JsonView(Admin.ListView.class)
-	public Page<Admin> list(Pageable pageable) {
-		return adminService.findPage(pageable);
+	public Page<Admin> list(Pageable pageable,String name,String username,String email,Long departmentId,Date beginDate,Date endDate) {
+		return adminService.findPage(pageable,name,username,email,departmentService.find(departmentId),beginDate,endDate);
 	}
 
 	/**

@@ -1,8 +1,13 @@
 
 package com.igomall.service;
 
+import com.igomall.common.Page;
+import com.igomall.common.Pageable;
 import com.igomall.entity.Admin;
+import com.igomall.entity.Department;
 import com.igomall.security.AuthenticationProvider;
+
+import java.util.Date;
 
 /**
  * Service - 管理员
@@ -58,5 +63,7 @@ public interface AdminService extends BaseService<Admin, Long>, AuthenticationPr
 	 * @return 管理员，若不存在则返回null
 	 */
 	Admin findByEmail(String email);
+
+	Page<Admin> findPage(Pageable pageable, String name, String username, String email, Department department, Date beginDate, Date endDate);
 
 }

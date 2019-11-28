@@ -1,9 +1,13 @@
 
 package com.igomall.service.impl;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.igomall.common.Page;
+import com.igomall.common.Pageable;
+import com.igomall.entity.Department;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.apache.commons.lang3.StringUtils;
@@ -135,4 +139,8 @@ public class AdminServiceImpl extends BaseServiceImpl<Admin, Long> implements Ad
 		super.delete(admin);
 	}
 
+	@Override
+	public Page<Admin> findPage(Pageable pageable, String name, String username, String email, Department department, Date beginDate, Date endDate) {
+		return adminDao.findPage(pageable,name,username,email,department,beginDate,endDate);
+	}
 }
