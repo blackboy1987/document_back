@@ -3,8 +3,10 @@ package com.igomall.controller.admin;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.igomall.common.Message;
+import com.igomall.common.Page;
 import com.igomall.common.Pageable;
 import com.igomall.entity.Role;
+import com.igomall.service.DepartmentService;
 import com.igomall.service.RoleService;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,60 +30,54 @@ public class RoleController extends BaseController {
 	@Autowired
 	private RoleService roleService;
 
-	/**
-	 * 添加
-	 */
-	@GetMapping("/add")
-	public String add() {
-		return "admin/role/add";
-	}
+	@Autowired
+	private DepartmentService departmentService;
 
 	/**
 	 * 保存
 	 */
 	@PostMapping("/save")
-	public String save(Role role, RedirectAttributes redirectAttributes) {
-		if (!isValid(role)) {
-			return ERROR_VIEW;
+	public Message save(Role role,Long departmentId) {
+		if(role.getIsSystem()==null){
+			role.setIsSystem(false);
 		}
-		role.setIsSystem(false);
-		role.setAdmins(null);
-		roleService.save(role);
-		return "redirect:list";
+		if(role.getIsEnabled()==null){
+			role.setIsEnabled(false);
+		}
+		role.getPermissions().add("admin");
+		if (!isValid(role)) {
+			return Message.error("参数错误");
+		}
+		if(role.isNew()){
+			role.setDepartment(departmentService.find(departmentId));
+			role.setAdmins(null);
+			roleService.save(role);
+		}else {
+			Role pRole = roleService.find(role.getId());
+			if (pRole == null) {
+				return Message.error("对象不存在");
+			}
+			roleService.update(role, "permissions","isSystem","admins","department");
+		}
+		return SUCCESS_MESSAGE;
 	}
 
 	/**
 	 * 编辑
 	 */
 	@GetMapping("/edit")
-	public String edit(Long id, ModelMap model) {
-		model.addAttribute("role", roleService.find(id));
-		return "admin/role/edit";
-	}
-
-	/**
-	 * 更新
-	 */
-	@PostMapping("/update")
-	public String update(Role role, RedirectAttributes redirectAttributes) {
-		if (!isValid(role)) {
-			return ERROR_VIEW;
-		}
-		Role pRole = roleService.find(role.getId());
-		if (pRole == null || pRole.getIsSystem()) {
-			return ERROR_VIEW;
-		}
-		roleService.update(role, "isSystem", "admins");
-		return "redirect:list";
+	@JsonView(Role.EditView.class)
+	public Role edit(Long id) {
+		return roleService.find(id);
 	}
 
 	/**
 	 * 列表
 	 */
 	@PostMapping("/list")
-	public String list(Pageable pageable, ModelMap model) {
-		model.addAttribute("page", roleService.findPage(pageable));
-		return "admin/role/list";
+	@JsonView(Role.ListView.class)
+	public Page<Role> list(Pageable pageable) {
+		return roleService.findPage(pageable);
 	}
 
 	/**

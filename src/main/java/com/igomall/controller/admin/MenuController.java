@@ -1,7 +1,10 @@
 
 package com.igomall.controller.admin;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.igomall.common.Message;
+import com.igomall.common.Page;
+import com.igomall.common.Pageable;
 import com.igomall.entity.Menu;
 import com.igomall.service.MenuService;
 import org.apache.commons.collections.CollectionUtils;
@@ -20,7 +23,7 @@ import java.util.List;
  * @version 1.0
  */
 @RestController("adminMenuController")
-@RequestMapping("/admin/api/menu")
+@RequestMapping("/admin/menu")
 public class MenuController extends BaseController {
 
 	@Autowired
@@ -72,8 +75,11 @@ public class MenuController extends BaseController {
 	 * 列表
 	 */
 	@PostMapping("/list")
-	public List<Menu> list() {
-		return menuService.findRoots();
+	@JsonView(Menu.ListView.class)
+	public Page<Menu> list(Pageable pageable) {
+		pageable.setPageSize(5000);
+		List<Menu> menus = menuService.findRoots();
+		return new Page(menus,menus.size(),pageable);
 	}
 
 	/**

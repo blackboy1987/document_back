@@ -61,6 +61,9 @@ public class Department extends OrderedEntity<Long> {
 	@OneToMany(mappedBy = "department", fetch = FetchType.LAZY)
 	private Set<Admin> admins = new HashSet<>();
 
+	@OneToMany(mappedBy = "department", fetch = FetchType.LAZY)
+	private Set<Role> roles = new HashSet<>();
+
 	/**
 	 * 下级部门
 	 */
@@ -179,6 +182,14 @@ public class Department extends OrderedEntity<Long> {
 
 	public void setAdmins(Set<Admin> admins) {
 		this.admins = admins;
+	}
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
 	}
 
 	/**

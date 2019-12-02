@@ -36,7 +36,7 @@ public class IndexController {
 			data.put("name",admin.getName());
 			data.put("email",admin.getEmail());
 			data.put("username",admin.getUsername());
-			data.put("department",admin.getDepartment());
+			data.put("department",admin.getDepartmentName());
 			data.put("displayName",admin.getDisplayName());
 		}
 

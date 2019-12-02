@@ -101,6 +101,6 @@ public interface DepartmentService extends BaseService<Department, Long> {
 	 *            是否使用缓存
 	 * @return 下级部门
 	 */
-	List<Department> findChildren(Long department, boolean recursive, Integer count, boolean useCache);
+	List<Department> findChildren(Long departmentId, boolean recursive, Integer count, boolean useCache);
 
 }

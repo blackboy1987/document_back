@@ -64,12 +64,14 @@ public class DepartmentServiceImpl extends BaseServiceImpl<Department, Long> imp
 	}
 
 	@Transactional(readOnly = true)
+	@Cacheable(value = "department")
 	@Override
 	public List<Department> findTree() {
 		return departmentDao.findChildren(null, true, null);
 	}
 
 	@Transactional(readOnly = true)
+	@Cacheable(value = "department", condition = "#useCache")
 	@Override
 	public List<Department> findChildren(Department department, boolean recursive, Integer count) {
 		return departmentDao.findChildren(department, recursive, count);

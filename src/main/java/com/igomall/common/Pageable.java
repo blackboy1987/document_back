@@ -31,7 +31,7 @@ public class Pageable implements Serializable {
 	/**
 	 * 最大每页记录数
 	 */
-	private static final int MAX_PAGE_SIZE = 1000;
+	private static final int MAX_PAGE_SIZE = 5000;
 
 	/**
 	 * 页码

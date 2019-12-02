@@ -1,6 +1,7 @@
 
 package com.igomall.entity;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.Length;
 
@@ -34,6 +35,7 @@ public class Menu extends OrderedEntity<Long> {
 	@NotEmpty
 	@Length(max = 200)
 	@Column(nullable = false)
+	@JsonView({ListView.class})
 	private String name;
 
 	/**
@@ -54,6 +56,7 @@ public class Menu extends OrderedEntity<Long> {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Menu parent;
 
+	@JsonView({ListView.class})
 	private Boolean isEnabled;
 
 	/**
@@ -61,6 +64,7 @@ public class Menu extends OrderedEntity<Long> {
 	 */
 	@OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
 	@OrderBy("order asc")
+	@JsonView({ListView.class})
 	private Set<Menu> children = new HashSet<>();
 
 	/**
@@ -73,12 +77,14 @@ public class Menu extends OrderedEntity<Long> {
 	 * 菜单跳转路径
 	 */
 	@NotEmpty
+	@JsonView({ListView.class})
 	private String url;
 
 	/**
 	 * 菜单的权限名称
 	 */
 	@NotEmpty
+	@JsonView({ListView.class})
 	private String permission;
 
 	/**
@@ -287,7 +293,6 @@ public class Menu extends OrderedEntity<Long> {
 		}
 	}
 
-
 	@Transient
 	public Long getParentId(){
 		if(parent!=null){
@@ -295,4 +300,6 @@ public class Menu extends OrderedEntity<Long> {
 		}
 		return null;
 	}
+
+	public interface ListView extends BaseView {}
 }

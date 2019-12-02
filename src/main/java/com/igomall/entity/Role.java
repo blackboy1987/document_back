@@ -1,24 +1,16 @@
 
 package com.igomall.entity;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.igomall.common.BaseAttributeConverter;
+import org.hibernate.validator.constraints.Length;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.Converter;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToMany;
-import javax.validation.constraints.NotEmpty;
-
-import com.fasterxml.jackson.annotation.JsonView;
-import org.hibernate.validator.constraints.Length;
-
-
-import com.igomall.common.BaseAttributeConverter;
 
 /**
  * Entity - 角色
@@ -37,19 +29,28 @@ public class Role extends BaseEntity<Long> {
 	@NotEmpty
 	@Length(max = 200)
 	@Column(nullable = false)
-	@JsonView({ListAll.class})
+	@JsonView({ListAll.class,ListView.class,EditView.class})
 	private String name;
 
 	/**
 	 * 是否内置
 	 */
 	@Column(nullable = false, updatable = false)
+	@JsonView({ListView.class,EditView.class})
 	private Boolean isSystem;
+
+	/**
+	 * 是否内置
+	 */
+	@Column(nullable = false, updatable = false)
+	@JsonView({ListView.class,EditView.class})
+	private Boolean isEnabled;
 
 	/**
 	 * 描述
 	 */
 	@Length(max = 200)
+	@JsonView({ListView.class,EditView.class})
 	private String description;
 
 	/**
@@ -65,6 +66,10 @@ public class Role extends BaseEntity<Long> {
 	 */
 	@ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
 	private Set<Admin> admins = new HashSet<>();
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(updatable = false)
+	private Department department;
 
 	/**
 	 * 获取名称
@@ -161,6 +166,40 @@ public class Role extends BaseEntity<Long> {
 		this.admins = admins;
 	}
 
+	public Boolean getIsEnabled() {
+		return isEnabled;
+	}
+
+	public void setIsEnabled(Boolean isEnabled) {
+		this.isEnabled = isEnabled;
+	}
+
+	public Department getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
+
+	@Transient
+	@JsonView({Role.ListView.class, Role.EditView.class})
+	public Long getDepartmentId() {
+		if(department!=null){
+			return department.getId();
+		}
+		return null;
+	}
+
+	@Transient
+	@JsonView({Role.ListView.class, Role.EditView.class})
+	public String getDepartmentName() {
+		if(department!=null){
+			return department.getName();
+		}
+		return null;
+	}
+
 	/**
 	 * 类型转换 - 权限
 	 * 
@@ -173,5 +212,7 @@ public class Role extends BaseEntity<Long> {
 
 
 	public interface ListAll extends IdView{}
+	public interface ListView extends BaseView{}
+	public interface EditView extends IdView{}
 
 }
