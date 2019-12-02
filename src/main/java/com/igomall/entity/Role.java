@@ -56,10 +56,8 @@ public class Role extends BaseEntity<Long> {
 	/**
 	 * 权限
 	 */
-	@NotEmpty
-	@Column(nullable = false, length = 4000)
-	@Convert(converter = PermissionConverter.class)
-	private List<String> permissions = new ArrayList<>();
+	@ManyToMany(fetch = FetchType.LAZY)
+	private Set<Permission> permissions = new HashSet<>();
 
 	/**
 	 * 管理员
@@ -133,7 +131,7 @@ public class Role extends BaseEntity<Long> {
 	 * 
 	 * @return 权限
 	 */
-	public List<String> getPermissions() {
+	public Set<Permission> getPermissions() {
 		return permissions;
 	}
 
@@ -143,7 +141,7 @@ public class Role extends BaseEntity<Long> {
 	 * @param permissions
 	 *            权限
 	 */
-	public void setPermissions(List<String> permissions) {
+	public void setPermissions(Set<Permission> permissions) {
 		this.permissions = permissions;
 	}
 
@@ -200,14 +198,14 @@ public class Role extends BaseEntity<Long> {
 		return null;
 	}
 
-	/**
-	 * 类型转换 - 权限
-	 * 
-	 * @author blackboy
-	 * @version 1.0
-	 */
-	@Converter
-	public static class PermissionConverter extends BaseAttributeConverter<List<String>> {
+	public List<String> getPermissionUrls(){
+		List<String> urls = new ArrayList<>();
+		if(getPermissions()!=null && getPermissions().size()>0){
+			for (Permission permission:getPermissions()) {
+				urls.addAll(permission.getUrls());
+			}
+		}
+		return urls;
 	}
 
 

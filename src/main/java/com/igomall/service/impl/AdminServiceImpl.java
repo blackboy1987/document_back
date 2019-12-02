@@ -7,7 +7,7 @@ import java.util.Set;
 
 import com.igomall.common.Page;
 import com.igomall.common.Pageable;
-import com.igomall.entity.Department;
+import com.igomall.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.apache.commons.lang3.StringUtils;
@@ -17,9 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import com.igomall.dao.AdminDao;
-import com.igomall.entity.Admin;
-import com.igomall.entity.Role;
-import com.igomall.entity.User;
 import com.igomall.service.AdminService;
 
 /**
@@ -54,7 +51,7 @@ public class AdminServiceImpl extends BaseServiceImpl<Admin, Long> implements Ad
 		if (admin != null && admin.getRoles() != null) {
 			for (Role role : admin.getRoles()) {
 				if (role.getPermissions() != null) {
-					result.addAll(role.getPermissions());
+					result.addAll(role.getPermissionUrls());
 				}
 			}
 		}

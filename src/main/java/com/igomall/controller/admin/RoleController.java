@@ -44,7 +44,6 @@ public class RoleController extends BaseController {
 		if(role.getIsEnabled()==null){
 			role.setIsEnabled(false);
 		}
-		role.getPermissions().add("admin");
 		if (!isValid(role)) {
 			return Message.error("参数错误");
 		}

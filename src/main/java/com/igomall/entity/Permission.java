@@ -1,11 +1,16 @@
 
 package com.igomall.entity;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.igomall.common.BaseAttributeConverter;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Entity - 权限
@@ -24,8 +29,10 @@ public class Permission extends OrderedEntity<Long> {
 	@NotEmpty
 	@Length(max = 200)
 	@Column(nullable = false)
+	@JsonView({ListView.class})
 	private String name;
 
+	@JsonView({ListView.class})
 	private Boolean isEnabled;
 
 	/**
@@ -37,18 +44,24 @@ public class Permission extends OrderedEntity<Long> {
 	private Menu menu;
 
 	/**
-	 * 控制的方法
-	 */
-	@NotNull
-	@Column(nullable = false)
-	private String method;
-
-	/**
 	 * url
 	 */
+	@NotEmpty
+	@Column(nullable = false, length = 4000)
+	@Convert(converter = UrlConverter.class)
+	@JsonView({ListView.class})
+	private List<String> urls;
+
+	/**
+	 * 描述
+	 */
 	@NotNull
 	@Column(nullable = false)
-	private String url;
+	@JsonView({ListView.class})
+	private String memo;
+
+	@ManyToMany(mappedBy = "permissions", fetch = FetchType.LAZY)
+	private Set<Role> roles = new HashSet<>();
 
 	/**
 	 * 获取名称
@@ -85,25 +98,32 @@ public class Permission extends OrderedEntity<Long> {
 		this.menu = menu;
 	}
 
-
-	public String getMethod() {
-		return method;
+	public List<String> getUrls() {
+		return urls;
 	}
 
-	public void setMethod(String method) {
-		this.method = method;
+	public void setUrls(List<String> urls) {
+		this.urls = urls;
 	}
 
-	public String getUrl() {
-		return url;
+	public String getMemo() {
+		return memo;
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
+	public void setMemo(String memo) {
+		this.memo = memo;
 	}
 
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
 
 	@Transient
+	@JsonView({ListView.class})
 	public String getMenuName(){
 		if(menu!=null){
 			return menu.getName();
@@ -116,5 +136,17 @@ public class Permission extends OrderedEntity<Long> {
 			return menu.getId();
 		}
 		return null;
+	}
+
+	public interface ListView extends BaseView {}
+
+	/**
+	 * 类型转换 - 可选项
+	 *
+	 * @author blackboy
+	 * @version 1.0
+	 */
+	@Converter
+	public static class UrlConverter extends BaseAttributeConverter<List<String>> {
 	}
 }

@@ -70,9 +70,9 @@ public class PermissionServiceImpl extends BaseServiceImpl<Permission, Long> imp
 	@Override
 	public Boolean exists(Permission permission){
 		if(permission.isNew()){
-			return permissionsDao.exists("url",permission.getUrl());
+			return permissionsDao.exists(permission.getName(),permission.getMenu());
 		}
-		return permissionsDao.exists("url",permission.getUrl(),permission.getId());
+		return permissionsDao.exists(permission.getName(),permission.getMenu(),permission.getId());
 	}
 
 }

@@ -1,6 +1,7 @@
 
 package com.igomall.controller.admin;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.igomall.common.Message;
 import com.igomall.common.Page;
 import com.igomall.common.Pageable;
@@ -21,8 +22,8 @@ import java.util.List;
  * @author blackboy
  * @version 1.0
  */
-@RestController("adminPermissionsController")
-@RequestMapping("/admin/api/permissions")
+@RestController("adminPermissionController")
+@RequestMapping("/admin/permission")
 public class PermissionController extends BaseController {
 
 	@Autowired
@@ -40,8 +41,6 @@ public class PermissionController extends BaseController {
 			permission.setIsEnabled(false);
 		}
 
-		permission.setUrl(permission.getMenu().getPermission()+":"+permission.getMethod());
-
 		if(permissionsService.exists(permission)){
 			return Message.error("权限已存在");
 		}
@@ -53,7 +52,7 @@ public class PermissionController extends BaseController {
 		if(permission.isNew()){
 			permissionsService.save(permission);
 		}else{
-			permissionsService.update(permission,"children");
+			permissionsService.update(permission,"menu");
 		}
 
 		return Message.success("操作成功");
@@ -71,7 +70,8 @@ public class PermissionController extends BaseController {
 	 * 列表
 	 */
 	@PostMapping("/list")
-	public Page<Permission> list(Pageable pageable) {
+	@JsonView(Permission.ListView.class)
+	public Page<Permission> list(Pageable pageable,Long menuId) {
 		return permissionsService.findPage(pageable);
 	}
 
