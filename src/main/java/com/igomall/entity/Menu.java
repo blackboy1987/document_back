@@ -35,7 +35,7 @@ public class Menu extends OrderedEntity<Long> {
 	@NotEmpty
 	@Length(max = 200)
 	@Column(nullable = false)
-	@JsonView({ListView.class})
+	@JsonView({ListView.class,TreeView.class})
 	private String name;
 
 	/**
@@ -64,7 +64,7 @@ public class Menu extends OrderedEntity<Long> {
 	 */
 	@OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
 	@OrderBy("order asc")
-	@JsonView({ListView.class})
+	@JsonView({TreeView.class})
 	private Set<Menu> children = new HashSet<>();
 
 	/**
@@ -294,6 +294,7 @@ public class Menu extends OrderedEntity<Long> {
 	}
 
 	@Transient
+	@JsonView({ListView.class})
 	public Long getParentId(){
 		if(parent!=null){
 			return parent.getId();
@@ -301,5 +302,16 @@ public class Menu extends OrderedEntity<Long> {
 		return null;
 	}
 
+	@Transient
+	@JsonView({ListView.class})
+	public String getParentName(){
+		if(parent!=null){
+			return parent.getName();
+		}
+		return null;
+	}
+
 	public interface ListView extends BaseView {}
+
+	public interface TreeView extends IdView{}
 }

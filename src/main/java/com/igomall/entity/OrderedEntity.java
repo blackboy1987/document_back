@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.Min;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
@@ -37,6 +38,7 @@ public abstract class OrderedEntity<ID extends Serializable> extends BaseEntity<
 	@NumericField
 	@Min(0)
 	@Column(name = "orders")
+	@JsonView(BaseView.class)
 	private Integer order;
 
 	/**

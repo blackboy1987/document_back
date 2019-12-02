@@ -3,10 +3,11 @@ package com.igomall.controller.admin;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.igomall.common.Message;
+import com.igomall.common.Page;
+import com.igomall.common.Pageable;
 import com.igomall.entity.Department;
 import com.igomall.service.DepartmentService;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -65,8 +66,17 @@ public class DepartmentController extends BaseController {
 	 * 列表
 	 */
 	@PostMapping("/list")
-	public List<Department> list() {
-		return departmentService.findRoots();
+	@JsonView(Department.ListView.class)
+	public Page<Department> list(Pageable pageable, Long parentId) {
+		pageable.setPageSize(5000);
+		List<Department> departments;
+		if(parentId==null){
+			departments = departmentService.findRoots();
+		}else {
+			departments = departmentService.findChildren(departmentService.find(parentId),false,null);
+		}
+		return new Page(departments,departments.size(),pageable);
+
 	}
 
 	/**
@@ -92,7 +102,7 @@ public class DepartmentController extends BaseController {
 	@PostMapping("/tree")
 	@JsonView(Department.TreeView.class)
 	public List<Department> tree() {
-		return departmentService.findTree();
+		return departmentService.findRoots();
 	}
 
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -76,10 +77,26 @@ public class MenuController extends BaseController {
 	 */
 	@PostMapping("/list")
 	@JsonView(Menu.ListView.class)
-	public Page<Menu> list(Pageable pageable) {
+	public Page<Menu> list(Pageable pageable,Long parentId) {
 		pageable.setPageSize(5000);
-		List<Menu> menus = menuService.findRoots();
+		List<Menu> menus;
+		if(parentId==null){
+			menus = menuService.findRoots();
+		}else {
+			menus = menuService.findChildren(menuService.find(parentId),false,null);
+		}
 		return new Page(menus,menus.size(),pageable);
+
+	}
+
+
+	/**
+	 * 列表
+	 */
+	@PostMapping("/tree")
+	@JsonView(Menu.TreeView.class)
+	public List<Menu> tree() {
+		return menuService.findRoots();
 	}
 
 	/**
