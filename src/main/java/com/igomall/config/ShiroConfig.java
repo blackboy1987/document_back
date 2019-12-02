@@ -1,9 +1,11 @@
 package com.igomall.config;
 
 import com.igomall.entity.Admin;
+import com.igomall.entity.Permission;
 import com.igomall.security.AuthenticationFilter;
 import com.igomall.security.AuthorizingRealm;
 import com.igomall.security.LogoutFilter;
+import com.igomall.service.PermissionService;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
@@ -16,14 +18,17 @@ import org.springframework.context.annotation.Configuration;
 import javax.servlet.Filter;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 @Configuration
 public class ShiroConfig {
 
-
     @Autowired
     private EhCacheManagerFactoryBean ehCacheManagerFactoryBean;
+
+    @Autowired
+    private PermissionService permissionService;
 
     @Bean
     public ShiroFilterFactoryBean shiroFilter(){
@@ -36,12 +41,14 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/admin/","anon");
         filterChainDefinitionMap.put("/admin/login","adminAuthc");
         filterChainDefinitionMap.put("/admin/logout","logout");
-        filterChainDefinitionMap.put("/admin/audit_log/**","adminAuthc,perms[admin:auditLog]");
-        filterChainDefinitionMap.put("/admin/setting/**","logout");
-        filterChainDefinitionMap.put("/admin/storage_plugin/**","adminAuthc,perms[admin:storagePlugin]");
-        filterChainDefinitionMap.put("/admin/admin/**","adminAuthc,perms[admin:admin]");
-        filterChainDefinitionMap.put("/admin/role/**","adminAuthc,perms[admin:role]");
         filterChainDefinitionMap.put("/admin/**","adminAuthc");
+        List<Permission> permissions = permissionService.findAll();
+        for (Permission permission:permissions) {
+            for (String url:permission.getUrls()) {
+                filterChainDefinitionMap.put(url,"perms["+url+"]");
+            }
+        }
+
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 
         Map<String, Filter > filters = new HashMap<>();
