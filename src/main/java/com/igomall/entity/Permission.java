@@ -55,8 +55,6 @@ public class Permission extends OrderedEntity<Long> {
 	/**
 	 * 描述
 	 */
-	@NotNull
-	@Column(nullable = false)
 	@JsonView({ListView.class})
 	private String memo;
 
@@ -131,6 +129,7 @@ public class Permission extends OrderedEntity<Long> {
 		return null;
 	}
 	@Transient
+	@JsonView({ListView.class})
 	public Long getMenuId(){
 		if(menu!=null){
 			return menu.getId();

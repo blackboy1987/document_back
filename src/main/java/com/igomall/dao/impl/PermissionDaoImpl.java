@@ -35,7 +35,7 @@ public class PermissionDaoImpl extends BaseDaoImpl<Permission, Long> implements 
 			return query.getResultList().size()>0;
 		}
 		String jpql = "select permissions from Permission permissions where permissions.name = :name and permissions.menu = :menu and id != :id";
-		TypedQuery<Permission> query = entityManager.createQuery(jpql, Permission.class).setParameter(name, name).setParameter("menu",menu).setParameter("id",id);
+		TypedQuery<Permission> query = entityManager.createQuery(jpql, Permission.class).setParameter("name", name).setParameter("menu",menu).setParameter("id",id);
 		return query.getResultList().size()>0;
 	}
 }
