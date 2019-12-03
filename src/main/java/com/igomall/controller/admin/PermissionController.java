@@ -99,18 +99,20 @@ public class PermissionController extends BaseController {
 			shiroFilterFactoryBean.getFilterChainDefinitionMap().clear();
 
 			// 刷新权限配置
-			List<Permission> permissions1 = permissionService.findAll();
 			Map<String,String> filterChainDefinitionMap = new LinkedHashMap<>();
 			filterChainDefinitionMap.put("/admin","anon");
 			filterChainDefinitionMap.put("/admin/","anon");
+			filterChainDefinitionMap.put("/admin/currentUser","anon");
 			filterChainDefinitionMap.put("/admin/login","adminAuthc");
 			filterChainDefinitionMap.put("/admin/logout","logout");
-			filterChainDefinitionMap.put("/admin/**","adminAuthc");
-			for (Permission permission1:permissions1) {
-				for (String key:permission1.getPermissions().keySet()) {
-					filterChainDefinitionMap.put(key,"adminAuthc,perms["+permission1.getPermissions().get(key)+"]");
+			List<Permission> permissions = permissionService.findAll();
+			for (Permission permission:permissions) {
+				Map<String,String> permissions1 = permission.getPermissions();
+				for (String key:permissions1.keySet()) {
+					filterChainDefinitionMap.put(key,"adminAuthc,perms["+permissions1.get(key)+"]");
 				}
 			}
+			filterChainDefinitionMap.put("/admin/**","adminAuthc");
 			shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 			// 重新构建生成
 			Map<String, String> chains = shiroFilterFactoryBean.getFilterChainDefinitionMap();

@@ -44,8 +44,9 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/admin/logout","logout");
         List<Permission> permissions = permissionService.findAll();
         for (Permission permission:permissions) {
-            for (String url:permission.getUrls()) {
-                filterChainDefinitionMap.put(url,"adminAuthc,perms["+url+"]");
+            Map<String,String> permissions1 = permission.getPermissions();
+            for (String key:permissions1.keySet()) {
+                filterChainDefinitionMap.put(key,"adminAuthc,perms["+permissions1.get(key)+"]");
             }
         }
         filterChainDefinitionMap.put("/admin/**","adminAuthc");
