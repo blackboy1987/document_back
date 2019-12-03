@@ -105,8 +105,8 @@ public final class WebUtils {
 	 */
 	public static boolean isAjaxRequest(HttpServletRequest request) {
 		Assert.notNull(request,"");
-
-		return StringUtils.equalsIgnoreCase(request.getHeader("X-Requested-With"), "XMLHttpRequest");
+		return true;
+		// return StringUtils.equalsIgnoreCase(request.getHeader("X-Requested-With"), "XMLHttpRequest");
 	}
 
 	/**

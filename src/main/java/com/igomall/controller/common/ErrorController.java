@@ -2,9 +2,12 @@
 package com.igomall.controller.common;
 
 import com.igomall.common.Results;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 /**
  * Controller - 错误
@@ -12,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author blackboy
  * @version 1.0
  */
-@RestController("commonErrorController")
+@Controller("commonErrorController")
 @RequestMapping("/common/error")
 public class ErrorController {
 
@@ -20,8 +23,8 @@ public class ErrorController {
 	 * 无此访问权限
 	 */
 	@GetMapping("/unauthorized")
-	public void unauthorized() {
-		Results.unauthorized("无访问权限");
+	public ResponseEntity<Map<String, String>> unauthorized() {
+		return Results.unauthorized("无访问权限");
 	}
 
 	/**

@@ -39,32 +39,17 @@ public class ShiroConfig {
         Map<String,String> filterChainDefinitionMap = new LinkedHashMap<>();
         filterChainDefinitionMap.put("/admin","anon");
         filterChainDefinitionMap.put("/admin/","anon");
+        filterChainDefinitionMap.put("/admin/currentUser","anon");
         filterChainDefinitionMap.put("/admin/login","adminAuthc");
         filterChainDefinitionMap.put("/admin/logout","logout");
-        filterChainDefinitionMap.put("/admin/**","adminAuthc");
         List<Permission> permissions = permissionService.findAll();
-        for (Permission permission1:permissions) {
-            for (String key:permission1.getPermissions().keySet()) {
-                filterChainDefinitionMap.put(key,"adminAuthc,perms["+permission1.getPermissions().get(key)+"]");
+        for (Permission permission:permissions) {
+            for (String url:permission.getUrls()) {
+                filterChainDefinitionMap.put(url,"adminAuthc,perms["+url+"]");
             }
         }
-
+        filterChainDefinitionMap.put("/admin/**","adminAuthc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                System.out.println(shiroFilterFactoryBean.getFilterChainDefinitionMap().size());
-                try {
-                    Thread.sleep(3000);
-                }catch (Exception e){
-
-                }
-            }
-        }).start();
-
-
-
         Map<String, Filter > filters = new HashMap<>();
 
         filters.put("adminAuthc",adminAuthc());
