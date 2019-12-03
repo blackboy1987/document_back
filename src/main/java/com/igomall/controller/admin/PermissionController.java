@@ -9,12 +9,17 @@ import com.igomall.entity.Permission;
 import com.igomall.service.MenuService;
 import com.igomall.service.PermissionService;
 import com.igomall.service.PermissionService;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.filter.mgt.DefaultFilterChainManager;
+import org.apache.shiro.web.filter.mgt.PathMatchingFilterChainResolver;
+import org.apache.shiro.web.servlet.AbstractShiroFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * Controller - 权限
@@ -27,9 +32,13 @@ import java.util.List;
 public class PermissionController extends BaseController {
 
 	@Autowired
-	private PermissionService permissionsService;
+	private PermissionService permissionService;
+
 	@Autowired
 	private MenuService menuService;
+
+	@Autowired
+	private ShiroFilterFactoryBean shiroFilterFactoryBean;
 
 	/**
 	 * 保存
@@ -41,29 +50,87 @@ public class PermissionController extends BaseController {
 			permission.setIsEnabled(false);
 		}
 
-		if(permissionsService.exists(permission)){
+		if(permissionService.exists(permission)){
 			return Message.error("权限已存在");
 		}
 
-
+		Map<String,String> permissions = new HashMap<>();
+		for (String url:permission.getUrls()) {
+			String url1 = url;
+			if(StringUtils.startsWith(url1,"/")){
+				url1 = url1.substring(1);
+			}
+			if(StringUtils.endsWith(url1,"/")){
+				url1 = url1.substring(0,url1.length()-1);
+			}
+			permissions.put(url,url1.replace("/",":"));
+		}
+		permission.setPermissions(permissions);
 		if (!isValid(permission)) {
 			return Message.error("参数错误");
 		}
+
+
+
 		if(permission.isNew()){
-			permissionsService.save(permission);
+			permissionService.save(permission);
 		}else{
-			permissionsService.update(permission,"menu");
+			permissionService.update(permission,"menu");
 		}
+
+		updatePermission();
 
 		return Message.success("操作成功");
 	}
+
+
+	private void updatePermission() {
+		synchronized (shiroFilterFactoryBean) {
+			AbstractShiroFilter shiroFilter;
+			try {
+				shiroFilter = (AbstractShiroFilter) shiroFilterFactoryBean.getObject();
+			} catch (Exception e) {
+				throw new RuntimeException("get ShiroFilter from shiroFilterFactoryBean error!");
+			}
+			PathMatchingFilterChainResolver filterChainResolver = (PathMatchingFilterChainResolver)    shiroFilter.getFilterChainResolver();
+			DefaultFilterChainManager manager = (DefaultFilterChainManager) filterChainResolver.getFilterChainManager();
+			// 清空老的权限控制
+			manager.getFilterChains().clear();
+			shiroFilterFactoryBean.getFilterChainDefinitionMap().clear();
+
+			// 刷新权限配置
+			List<Permission> permissions1 = permissionService.findAll();
+			Map<String,String> filterChainDefinitionMap = new LinkedHashMap<>();
+			filterChainDefinitionMap.put("/admin","anon");
+			filterChainDefinitionMap.put("/admin/","anon");
+			filterChainDefinitionMap.put("/admin/login","adminAuthc");
+			filterChainDefinitionMap.put("/admin/logout","logout");
+			filterChainDefinitionMap.put("/admin/**","adminAuthc");
+			for (Permission permission1:permissions1) {
+				for (String key:permission1.getPermissions().keySet()) {
+					filterChainDefinitionMap.put(key,"adminAuthc,perms["+permission1.getPermissions().get(key)+"]");
+				}
+			}
+			shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
+			// 重新构建生成
+			Map<String, String> chains = shiroFilterFactoryBean.getFilterChainDefinitionMap();
+			for (Map.Entry<String, String> entry : chains.entrySet()) {
+				String url = entry.getKey();
+				String chainDefinition = entry.getValue().trim().replace(" ", "");
+				manager.createChain(url, chainDefinition);
+			}
+			System.out.println("更新权限成功！！");
+		}
+	}
+
+
 
 	/**
 	 * 编辑
 	 */
 	@PostMapping("/edit")
 	public Permission edit(Long id) {
-		return permissionsService.find(id);
+		return permissionService.find(id);
 	}
 
 	/**
@@ -72,7 +139,7 @@ public class PermissionController extends BaseController {
 	@PostMapping("/list")
 	@JsonView(Permission.ListView.class)
 	public Page<Permission> list(Pageable pageable,Long menuId) {
-		return permissionsService.findPage(pageable);
+		return permissionService.findPage(pageable);
 	}
 
 	/**
@@ -80,7 +147,7 @@ public class PermissionController extends BaseController {
 	 */
 	@PostMapping("/delete")
 	public Message delete(Long[] ids) {
-		permissionsService.delete(ids);
+		permissionService.delete(ids);
 		return Message.success("操作成功");
 	}
 
@@ -89,7 +156,7 @@ public class PermissionController extends BaseController {
 	 */
 	@PostMapping("/getAll")
 	public List<Permission> getAll() {
-		return permissionsService.findAll();
+		return permissionService.findAll();
 	}
 
 }

@@ -10,6 +10,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -46,6 +47,11 @@ public class Permission extends OrderedEntity<Long> {
 	/**
 	 * url
 	 */
+	@NotEmpty
+	@Column(nullable = false, length = 4000)
+	@Convert(converter = PermissionConverter.class)
+	private Map<String,String> permissions;
+
 	@NotEmpty
 	@Column(nullable = false, length = 4000)
 	@Convert(converter = UrlConverter.class)
@@ -96,12 +102,12 @@ public class Permission extends OrderedEntity<Long> {
 		this.menu = menu;
 	}
 
-	public List<String> getUrls() {
-		return urls;
+	public Map<String, String> getPermissions() {
+		return permissions;
 	}
 
-	public void setUrls(List<String> urls) {
-		this.urls = urls;
+	public void setPermissions(Map<String, String> permissions) {
+		this.permissions = permissions;
 	}
 
 	public String getMemo() {
@@ -118,6 +124,14 @@ public class Permission extends OrderedEntity<Long> {
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
+	}
+
+	public List<String> getUrls() {
+		return urls;
+	}
+
+	public void setUrls(List<String> urls) {
+		this.urls = urls;
 	}
 
 	@Transient
@@ -145,6 +159,9 @@ public class Permission extends OrderedEntity<Long> {
 	 * @author blackboy
 	 * @version 1.0
 	 */
+	@Converter
+	public static class PermissionConverter extends BaseAttributeConverter<Map<String,String>> {
+	}
 	@Converter
 	public static class UrlConverter extends BaseAttributeConverter<List<String>> {
 	}

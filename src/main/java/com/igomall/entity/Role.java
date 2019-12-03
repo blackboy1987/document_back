@@ -202,7 +202,7 @@ public class Role extends BaseEntity<Long> {
 		List<String> urls = new ArrayList<>();
 		if(getPermissions()!=null && getPermissions().size()>0){
 			for (Permission permission:getPermissions()) {
-				urls.addAll(permission.getUrls());
+				urls.addAll(permission.getPermissions().values());
 			}
 		}
 		return urls;
