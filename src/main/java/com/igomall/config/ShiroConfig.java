@@ -34,7 +34,7 @@ public class ShiroConfig {
     public ShiroFilterFactoryBean shiroFilter(){
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager());
-        shiroFilterFactoryBean.setUnauthorizedUrl("/common/error/unauthorized");
+        // shiroFilterFactoryBean.setUnauthorizedUrl("/common/error/unauthorized");
 
         Map<String,String> filterChainDefinitionMap = new LinkedHashMap<>();
         filterChainDefinitionMap.put("/admin","anon");
