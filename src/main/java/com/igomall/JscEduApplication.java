@@ -8,10 +8,10 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @SpringBootApplication
 @EnableCaching
 @EnableAsync
-public class JscDemoApplication {
+public class JscEduApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(JscDemoApplication.class, args);
+        SpringApplication.run(JscEduApplication.class, args);
     }
 
 }

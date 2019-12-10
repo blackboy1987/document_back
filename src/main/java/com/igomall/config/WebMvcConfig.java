@@ -36,14 +36,14 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(corsInterceptor())
-                .addPathPatterns("/api/**","/admin/**","/common/**");
-        registry.addInterceptor(loginInterceptor())
+                .addPathPatterns("/**");
+        /*registry.addInterceptor(loginInterceptor())
                 .addPathPatterns("/api/**","/admin/**")
-                .excludePathPatterns("/api/login","/api/logout","/admin/login","/common/**");
+                .excludePathPatterns("/api/login","/api/logout","/admin/login","/common/**");*/
 
 
-        registry.addInterceptor(currentUserHandlerInterceptor())
-                .addPathPatterns("/admin/**");
+        /*registry.addInterceptor(currentUserHandlerInterceptor())
+                .addPathPatterns("/admin/**");*/
 
     }
 

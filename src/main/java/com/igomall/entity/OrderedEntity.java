@@ -38,7 +38,7 @@ public abstract class OrderedEntity<ID extends Serializable> extends BaseEntity<
 	@NumericField
 	@Min(0)
 	@Column(name = "orders")
-	@JsonView(BaseView.class)
+	@JsonView({BaseView.class,IdView.class})
 	private Integer order;
 
 	/**
