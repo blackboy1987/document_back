@@ -3,12 +3,7 @@ package com.igomall.entity;
 
 import java.util.Map;
 
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.Converter;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 import com.igomall.common.BaseAttributeConverter;
 
@@ -19,6 +14,7 @@ import com.igomall.common.BaseAttributeConverter;
  * @version 1.0
  */
 @Entity
+@Table(name = "edu_audit_log")
 public class AuditLog extends BaseEntity<Long> {
 
 	private static final long serialVersionUID = -4494144902110236826L;

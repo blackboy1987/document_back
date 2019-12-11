@@ -46,7 +46,7 @@ public class CourseTag extends OrderedEntity<Long> {
 	/**
 	 * 商品
 	 */
-	@ManyToMany(mappedBy = "categoryTags", fetch = FetchType.LAZY)
+	@ManyToMany(mappedBy = "courseTags", fetch = FetchType.LAZY)
 	private Set<Course> courses = new HashSet<>();
 
 	/**

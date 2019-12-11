@@ -3,6 +3,7 @@ package com.igomall.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * Entity - 序列号
@@ -11,6 +12,7 @@ import javax.persistence.Entity;
  * @version 1.0
  */
 @Entity
+@Table(name = "edu_sn")
 public class Sn extends BaseEntity<Long> {
 
 	private static final long serialVersionUID = -2330598144835706164L;

@@ -4,11 +4,7 @@ package com.igomall.entity;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.Converter;
-import javax.persistence.Entity;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -21,6 +17,7 @@ import com.igomall.common.BaseAttributeConverter;
  * @version 1.0
  */
 @Entity
+@Table(name = "edu_plugin_config")
 public class PluginConfig extends OrderedEntity<Long> {
 
 	private static final long serialVersionUID = -4357367409438384806L;

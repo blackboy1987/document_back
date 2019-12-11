@@ -19,6 +19,7 @@ import java.util.Set;
  * @version 1.0
  */
 @Entity
+@Table(name = "edu_role")
 public class Role extends BaseEntity<Long> {
 
 	private static final long serialVersionUID = -6614052029623997372L;
