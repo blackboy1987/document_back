@@ -6,7 +6,6 @@ import com.igomall.security.UserAuthenticationToken;
 import com.igomall.service.UserService;
 import com.igomall.service.member.MemberService;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.authc.AuthenticationToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
