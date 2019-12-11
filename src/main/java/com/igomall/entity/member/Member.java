@@ -1,7 +1,8 @@
 
-package com.igomall.entity;
+package com.igomall.entity.member;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.igomall.entity.*;
 import com.igomall.util.JsonUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.codec.digest.DigestUtils;

@@ -1,11 +1,12 @@
 
-package com.igomall.entity;
+package com.igomall.entity.member;
 
 import java.math.BigDecimal;
 
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.igomall.entity.BaseEntity;
 
 /**
  * Entity - 会员预存款记录

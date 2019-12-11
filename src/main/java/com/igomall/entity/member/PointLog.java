@@ -1,9 +1,11 @@
 
-package com.igomall.entity;
+package com.igomall.entity.member;
 
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.igomall.entity.BaseEntity;
+import com.igomall.entity.member.Member;
 
 /**
  * Entity - 积分记录

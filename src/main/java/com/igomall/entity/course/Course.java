@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -46,6 +47,22 @@ public class Course extends OrderedEntity<Long> {
     @Column(nullable = false)
     @JsonView({ListView.class,EditView.class})
     private String author;
+
+    /**
+     * 商品分类
+     */
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false)
+    private CourseCategory courseCategory;
+
+    /**
+     * 商品标签
+     */
+    @ManyToMany(fetch = FetchType.LAZY)
+    @OrderBy("order asc")
+    private Set<CourseTag> courseTags = new HashSet<>();
+
 
     public Set<Part> getParts() {
         return parts;
@@ -101,6 +118,22 @@ public class Course extends OrderedEntity<Long> {
 
     public void setMemo(String memo) {
         this.memo = memo;
+    }
+
+    public CourseCategory getCourseCategory() {
+        return courseCategory;
+    }
+
+    public void setCourseCategory(CourseCategory courseCategory) {
+        this.courseCategory = courseCategory;
+    }
+
+    public Set<CourseTag> getCourseTags() {
+        return courseTags;
+    }
+
+    public void setCourseTags(Set<CourseTag> courseTags) {
+        this.courseTags = courseTags;
     }
 
     public interface ListView extends BaseView{}

@@ -1,6 +1,7 @@
 
-package com.igomall.entity;
+package com.igomall.entity.member;
 
+import com.igomall.entity.BaseEntity;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
