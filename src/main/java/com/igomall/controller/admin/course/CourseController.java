@@ -6,9 +6,8 @@ import com.igomall.common.Page;
 import com.igomall.common.Pageable;
 import com.igomall.controller.admin.BaseController;
 import com.igomall.entity.course.Course;
-import com.igomall.service.course.ChapterService;
 import com.igomall.service.course.CourseService;
-import com.igomall.service.course.PartService;
+import com.igomall.service.teacher.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,20 +24,18 @@ public class CourseController extends BaseController {
     private CourseService courseService;
 
     @Autowired
-    private PartService partService;
-
-    @Autowired
-    private ChapterService chapterService;
+    private TeacherService teacherService;
 
     @PostMapping("/save")
-    public Message save(Course course){
+    public Message save(Course course,Long teacherId){
+        course.setTeacher(teacherService.find(teacherId));
         if(!isValid(course)){
             return Message.error("参数错误");
         }
         if(course.isNew()){
             courseService.save(course);
         }else {
-            courseService.update(course,"chapters","parts");
+            courseService.update(course,"chapters","parts","teacher");
         }
         return Message.success("操作成功");
     }

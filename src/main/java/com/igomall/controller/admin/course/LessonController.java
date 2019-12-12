@@ -33,7 +33,7 @@ public class LessonController extends BaseController {
         if(lesson.isNew()){
             lessonService.save(lesson);
         }else {
-            lessonService.update(lesson);
+            lessonService.update(lesson,"teacher","chapter");
         }
         return SUCCESS_MESSAGE;
     }

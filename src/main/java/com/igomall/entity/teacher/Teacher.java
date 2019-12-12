@@ -2,13 +2,14 @@ package com.igomall.entity.teacher;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.igomall.entity.OrderedEntity;
+import com.igomall.entity.course.Course;
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "edu_teacher")
@@ -20,7 +21,7 @@ public class Teacher extends OrderedEntity<Long> {
     @NotEmpty
     @Length(max = 10)
     @Column(nullable = false,length = 10)
-    @JsonView({ListView.class,EditView.class})
+    @JsonView({ListView.class,EditView.class,AllView.class})
     private String name;
 
     /**
@@ -28,7 +29,7 @@ public class Teacher extends OrderedEntity<Long> {
      */
     @Length(max = 500)
     @Column(nullable = false,length = 500)
-    @JsonView({EditView.class})
+    @JsonView({EditView.class,ListView.class})
     private String introduction;
 
     /**
@@ -37,9 +38,9 @@ public class Teacher extends OrderedEntity<Long> {
      * 1： 首席讲师
      */
     @NotNull
-    @Column(nullable = false)
-    @JsonView({ListView.class,EditView.class})
-    private Integer level;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false)
+    private TeacherRank teacherRank;
 
     /**
      * 头像
@@ -48,6 +49,9 @@ public class Teacher extends OrderedEntity<Long> {
     @Column(length = 300)
     @JsonView({ListView.class,EditView.class})
     private String avatar;
+
+    @OneToMany(mappedBy = "teacher", fetch = FetchType.LAZY)
+    private Set<Course> courses = new HashSet<>();
 
     /**
      * 是否可用
@@ -73,12 +77,12 @@ public class Teacher extends OrderedEntity<Long> {
         this.introduction = introduction;
     }
 
-    public Integer getLevel() {
-        return level;
+    public TeacherRank getTeacherRank() {
+        return teacherRank;
     }
 
-    public void setLevel(Integer level) {
-        this.level = level;
+    public void setTeacherRank(TeacherRank teacherRank) {
+        this.teacherRank = teacherRank;
     }
 
     public String getAvatar() {
@@ -97,6 +101,31 @@ public class Teacher extends OrderedEntity<Long> {
         this.isEnabled = isEnabled;
     }
 
+    public Set<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(Set<Course> courses) {
+        this.courses = courses;
+    }
+
+    @JsonView({EditView.class})
+    public Long getTeacherRankId(){
+        if(teacherRank!=null){
+            return teacherRank.getId();
+        }
+        return null;
+    }
+
+    @JsonView({ListView.class})
+    public String getTeacherRankName(){
+        if(teacherRank!=null){
+            return teacherRank.getName();
+        }
+        return null;
+    }
+
     public interface ListView extends BaseView {}
     public interface EditView extends IdView {}
+    public interface AllView extends IdView{}
 }

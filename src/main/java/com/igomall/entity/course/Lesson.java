@@ -3,10 +3,12 @@ package com.igomall.entity.course;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.igomall.entity.OrderedEntity;
 import com.igomall.entity.course.Chapter;
+import com.igomall.entity.teacher.Teacher;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 /**
  * 章节的视频
@@ -34,6 +36,11 @@ public class Lesson extends OrderedEntity<Long> {
     @Column(nullable = false,length = 500)
     @JsonView({ListView.class,EditView.class})
     private String videoImage;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false)
+    private Teacher teacher;
 
 
     public Chapter getChapter() {
@@ -66,6 +73,14 @@ public class Lesson extends OrderedEntity<Long> {
 
     public void setVideoImage(String videoImage) {
         this.videoImage = videoImage;
+    }
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 
     @JsonView({ListView.class})

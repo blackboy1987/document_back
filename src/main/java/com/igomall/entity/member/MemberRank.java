@@ -57,6 +57,10 @@ public class MemberRank extends BaseEntity<Long> {
 	@Column(nullable = false)
 	private Boolean isDefault;
 
+	@NotNull
+	@Column(nullable = false)
+	private Boolean isEnabled;
+
 	/**
 	 * 是否特殊
 	 */
@@ -144,6 +148,13 @@ public class MemberRank extends BaseEntity<Long> {
 	 */
 	public void setIsDefault(Boolean isDefault) {
 		this.isDefault = isDefault;
+	}
+	public Boolean getIsEnabled() {
+		return isEnabled;
+	}
+
+	public void setIsEnabled(Boolean isEnabled) {
+		this.isEnabled = isEnabled;
 	}
 
 	/**

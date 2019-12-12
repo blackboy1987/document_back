@@ -2,6 +2,7 @@ package com.igomall.entity.course;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.igomall.entity.OrderedEntity;
+import com.igomall.entity.teacher.Teacher;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -62,6 +63,11 @@ public class Course extends OrderedEntity<Long> {
     @ManyToMany(fetch = FetchType.LAZY)
     @OrderBy("order asc")
     private Set<CourseTag> courseTags = new HashSet<>();
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false)
+    private Teacher teacher;
 
 
     public Set<Part> getParts() {
@@ -134,6 +140,14 @@ public class Course extends OrderedEntity<Long> {
 
     public void setCourseTags(Set<CourseTag> courseTags) {
         this.courseTags = courseTags;
+    }
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 
     public interface ListView extends BaseView{}
