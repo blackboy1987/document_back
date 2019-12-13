@@ -23,7 +23,7 @@ import java.util.List;
  * @version 1.0
  */
 @RestController("adminDepartmentController")
-@RequestMapping("/admin/department")
+@RequestMapping("/department")
 public class DepartmentController extends BaseController {
 
 	@Autowired

@@ -1,12 +1,14 @@
 
 package com.igomall.entity.course;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.igomall.entity.OrderedEntity;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -35,6 +37,7 @@ public class CourseCategory extends OrderedEntity<Long> {
 	@NotEmpty
 	@Length(max = 200)
 	@Column(nullable = false)
+	@JsonView({AllView.class,ListView.class,EditView.class})
 	private String name;
 
 	/**
@@ -47,6 +50,7 @@ public class CourseCategory extends OrderedEntity<Long> {
 	 * 层级
 	 */
 	@Column(nullable = false)
+	@JsonView({ListView.class})
 	private Integer grade;
 
 	/**
@@ -67,6 +71,10 @@ public class CourseCategory extends OrderedEntity<Long> {
 	 */
 	@OneToMany(mappedBy = "courseCategory", fetch = FetchType.LAZY)
 	private Set<Course> courses = new HashSet<>();
+
+	@NotNull
+	@Column(nullable = false)
+	private Boolean isEnabled;
 
 	/**
 	 * 获取名称
@@ -165,12 +173,21 @@ public class CourseCategory extends OrderedEntity<Long> {
 		this.courses = courses;
 	}
 
+	public Boolean getIsEnabled() {
+		return isEnabled;
+	}
+
+	public void setIsEnabled(Boolean isEnabled) {
+		this.isEnabled = isEnabled;
+	}
+
 	/**
 	 * 获取所有上级分类ID
 	 * 
 	 * @return 所有上级分类ID
 	 */
 	@Transient
+	@JsonView({EditView.class})
 	public Long[] getParentIds() {
 		String[] parentIds = StringUtils.split(getTreePath(), TREE_PATH_SEPARATOR);
 		Long[] result = new Long[parentIds.length];
@@ -210,4 +227,8 @@ public class CourseCategory extends OrderedEntity<Long> {
 			recursiveParents(parents, parent);
 		}
 	}
+
+	public interface AllView extends IdView{}
+	public interface ListView extends BaseView{}
+	public interface EditView extends IdView{}
 }

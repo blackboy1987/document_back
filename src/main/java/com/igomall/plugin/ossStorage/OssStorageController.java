@@ -1,25 +1,18 @@
 
 package com.igomall.plugin.ossStorage;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.igomall.common.Message;
 import com.igomall.controller.admin.BaseController;
 import com.igomall.entity.PluginConfig;
 import com.igomall.service.PluginConfigService;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Controller - 阿里云存储
@@ -27,7 +20,7 @@ import com.igomall.service.PluginConfigService;
  * @author blackboy
  * @version 1.0
  */
-@Controller("adminOssStorageController")
+@RestController("adminOssStorageController")
 @RequestMapping("/admin/storage_plugin/oss_storage")
 public class OssStorageController extends BaseController {
 

@@ -1,19 +1,18 @@
 
 package com.igomall.controller.admin;
 
+import com.igomall.common.TemplateConfig;
+import com.igomall.service.TemplateService;
+import com.igomall.util.SystemUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
-
-import com.igomall.common.TemplateConfig;
-import com.igomall.service.TemplateService;
-import com.igomall.util.SystemUtils;
 
 /**
  * Controller - 模板
@@ -21,8 +20,8 @@ import com.igomall.util.SystemUtils;
  * @author blackboy
  * @version 1.0
  */
-@Controller("adminTemplateController")
-@RequestMapping("/admin/template")
+@RestController("adminTemplateController")
+@RequestMapping("/template")
 public class TemplateController extends BaseController {
 
 	@Autowired

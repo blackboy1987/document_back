@@ -3,9 +3,9 @@ package com.igomall.controller.common;
 
 import com.igomall.common.Results;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
@@ -15,7 +15,7 @@ import java.util.Map;
  * @author blackboy
  * @version 1.0
  */
-@Controller("commonErrorController")
+@RestController("commonErrorController")
 @RequestMapping("/common/error")
 public class ErrorController {
 

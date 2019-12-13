@@ -24,7 +24,7 @@ import java.util.*;
  * @version 1.0
  */
 @RestController("adminLoginController")
-@RequestMapping("/admin/login")
+@RequestMapping("/login")
 public class LoginController extends BaseController {
 
 	@Autowired

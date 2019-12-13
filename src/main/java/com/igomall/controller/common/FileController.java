@@ -7,10 +7,10 @@ import com.igomall.controller.admin.BaseController;
 import com.igomall.service.FileService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
@@ -22,7 +22,7 @@ import java.util.Map;
  * @author blackboy
  * @version 1.0
  */
-@Controller("commonFileController")
+@RestController("commonFileController")
 @RequestMapping("/common/file")
 public class FileController extends BaseController {
 

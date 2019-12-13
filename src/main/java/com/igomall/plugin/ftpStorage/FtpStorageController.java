@@ -7,7 +7,6 @@ import com.igomall.entity.PluginConfig;
 import com.igomall.service.PluginConfigService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -21,7 +20,7 @@ import java.util.Map;
  * @author blackboy
  * @version 1.0
  */
-@Controller("adminFtpStorageController")
+@RestController("adminFtpStorageController")
 @RequestMapping("/admin/storage_plugin/ftp_storage")
 public class FtpStorageController extends BaseController {
 

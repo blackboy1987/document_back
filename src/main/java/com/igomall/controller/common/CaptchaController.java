@@ -1,18 +1,16 @@
 
 package com.igomall.controller.common;
 
-import java.awt.image.BufferedImage;
-
+import com.igomall.service.CaptchaService;
 import org.springframework.beans.factory.annotation.Autowired;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.igomall.service.CaptchaService;
+import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
 
 /**
  * Controller - 验证码
@@ -20,7 +18,7 @@ import com.igomall.service.CaptchaService;
  * @author blackboy
  * @version 1.0
  */
-@Controller("commonCaptchaController")
+@RestController("commonCaptchaController")
 @RequestMapping("/common/captcha")
 public class CaptchaController {
 

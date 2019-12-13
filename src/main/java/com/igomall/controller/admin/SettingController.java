@@ -8,11 +8,11 @@ import com.igomall.service.FileService;
 import com.igomall.util.SystemUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -22,8 +22,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  * @author blackboy
  * @version 1.0
  */
-@Controller("adminstingController")
-@RequestMapping("/admin/setting")
+@RestController("adminstingController")
+@RequestMapping("/setting")
 public class SettingController extends BaseController {
 
 	@Autowired

@@ -44,11 +44,6 @@ public class Course extends OrderedEntity<Long> {
     @JsonView({ListView.class,EditView.class})
     private String image;
 
-    @NotEmpty
-    @Column(nullable = false)
-    @JsonView({ListView.class,EditView.class})
-    private String author;
-
     /**
      * 商品分类
      */
@@ -108,14 +103,6 @@ public class Course extends OrderedEntity<Long> {
 
     public void setImage(String image) {
         this.image = image;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
     }
 
     public String getMemo() {

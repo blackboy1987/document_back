@@ -1,18 +1,12 @@
 
 package com.igomall.controller.admin;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.igomall.common.Message;
 import com.igomall.common.Pageable;
 import com.igomall.service.AuditLogService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Controller - 审计日志
@@ -20,8 +14,8 @@ import com.igomall.service.AuditLogService;
  * @author blackboy
  * @version 1.0
  */
-@Controller("adminAuditLogController")
-@RequestMapping("/admin/audit_log")
+@RestController("adminAuditLogController")
+@RequestMapping("/audit_log")
 public class AuditLogController extends BaseController {
 
 	@Autowired

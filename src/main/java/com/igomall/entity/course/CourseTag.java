@@ -17,7 +17,7 @@ import java.util.Set;
  * @version 1.0
  */
 @Entity
-@Table(name = "edu_tag")
+@Table(name = "edu_course_tag")
 public class CourseTag extends OrderedEntity<Long> {
 
 	private static final long serialVersionUID = 4136507336496569742L;

@@ -6,6 +6,8 @@ import com.igomall.common.Page;
 import com.igomall.common.Pageable;
 import com.igomall.controller.admin.BaseController;
 import com.igomall.entity.course.Course;
+import com.igomall.entity.course.CourseCategory;
+import com.igomall.service.course.CourseCategoryService;
 import com.igomall.service.course.CourseService;
 import com.igomall.service.teacher.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +27,13 @@ public class CourseController extends BaseController {
 
     @Autowired
     private TeacherService teacherService;
+    @Autowired
+    private CourseCategoryService courseCategoryService;
 
     @PostMapping("/save")
-    public Message save(Course course,Long teacherId){
+    public Message save(Course course,Long teacherId,Long courseCategoryId){
         course.setTeacher(teacherService.find(teacherId));
+        course.setCourseCategory(courseCategoryService.find(courseCategoryId));
         if(!isValid(course)){
             return Message.error("参数错误");
         }

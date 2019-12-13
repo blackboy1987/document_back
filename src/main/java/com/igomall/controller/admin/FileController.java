@@ -1,21 +1,19 @@
 
 package com.igomall.controller.admin;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.igomall.common.FileType;
 import com.igomall.common.Message;
 import com.igomall.service.FileService;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Controller - 文件
@@ -23,8 +21,8 @@ import com.igomall.service.FileService;
  * @author blackboy
  * @version 1.0
  */
-@Controller("adminFileController")
-@RequestMapping("/admin/file")
+@RestController("adminFileController")
+@RequestMapping("/file")
 public class FileController extends BaseController {
 
 	@Autowired

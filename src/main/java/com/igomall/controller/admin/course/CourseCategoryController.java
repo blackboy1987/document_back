@@ -1,17 +1,14 @@
 
 package com.igomall.controller.admin.course;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.igomall.common.Message;
 import com.igomall.controller.admin.BaseController;
 import com.igomall.entity.course.Course;
 import com.igomall.entity.course.CourseCategory;
 import com.igomall.service.course.CourseCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
 import java.util.List;
@@ -23,8 +20,8 @@ import java.util.Set;
  * @author blackboy
  * @version 1.0
  */
-@Controller("adminProductCategoryController")
-@RequestMapping("/admin/product_category")
+@RestController("adminCourseCategoryController")
+@RequestMapping("/course_category")
 public class CourseCategoryController extends BaseController {
 
 	@Autowired
@@ -35,23 +32,27 @@ public class CourseCategoryController extends BaseController {
 	 * 保存
 	 */
 	@PostMapping("/save")
-	public String save(CourseCategory courseCategory, Long parentId) {
+	public Message save(CourseCategory courseCategory, Long parentId) {
 		courseCategory.setParent(courseCategoryService.find(parentId));
+		if(courseCategory.getIsEnabled()==null){
+			courseCategory.setIsEnabled(false);
+		}
 		if (!isValid(courseCategory)) {
-			return ERROR_VIEW;
+			return Message.error("参数错误");
 		}
 		courseCategory.setTreePath(null);
 		courseCategory.setGrade(null);
 		courseCategory.setChildren(null);
 		courseCategory.setCourses(new HashSet<>());
 		courseCategoryService.save(courseCategory);
-		return "redirect:list";
+		return Message.success("操作成功");
 	}
 
 	/**
 	 * 编辑
 	 */
-	@GetMapping("/edit")
+	@PostMapping("/edit")
+	@JsonView(CourseCategory.EditView.class)
 	public CourseCategory edit(Long id) {
 		return courseCategoryService.find(id);
 	}
@@ -60,29 +61,33 @@ public class CourseCategoryController extends BaseController {
 	 * 更新
 	 */
 	@PostMapping("/update")
-	public String update(CourseCategory courseCategory, Long parentId) {
+	public Message update(CourseCategory courseCategory, Long parentId) {
 		courseCategory.setParent(courseCategoryService.find(parentId));
+		if(courseCategory.getIsEnabled()==null){
+			courseCategory.setIsEnabled(false);
+		}
 		if (!isValid(courseCategory)) {
-			return ERROR_VIEW;
+			return Message.error("参数错误");
 		}
 		if (courseCategory.getParent() != null) {
 			CourseCategory parent = courseCategory.getParent();
 			if (parent.equals(courseCategory)) {
-				return ERROR_VIEW;
+				return Message.error("参数错误");
 			}
 			List<CourseCategory> children = courseCategoryService.findChildren(parent, true, null);
 			if (children != null && children.contains(parent)) {
-				return ERROR_VIEW;
+				return Message.error("参数错误");
 			}
 		}
 		courseCategoryService.update(courseCategory, "treePath", "grade", "children", "courses");
-		return "redirect:list";
+		return Message.success("操作成功");
 	}
 
 	/**
 	 * 列表
 	 */
-	@GetMapping("/list")
+	@PostMapping("/list")
+	@JsonView(CourseCategory.ListView.class)
 	public List<CourseCategory> list() {
 		return courseCategoryService.findTree();
 	}
@@ -107,6 +112,12 @@ public class CourseCategoryController extends BaseController {
 		}
 		courseCategoryService.delete(id);
 		return SUCCESS_MESSAGE;
+	}
+
+	@PostMapping("/all")
+	@JsonView(CourseCategory.AllView.class)
+	public List<CourseCategory> all(){
+		return courseCategoryService.findRoots();
 	}
 
 }
