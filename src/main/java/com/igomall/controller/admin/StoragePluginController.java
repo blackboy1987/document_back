@@ -31,4 +31,8 @@ public class StoragePluginController extends BaseController {
 		return pluginService.getStoragePlugins();
 	}
 
+	@PostMapping("/setting")
+	public StoragePlugin setting(String storagePluginId) {
+		return pluginService.getStoragePlugin(storagePluginId);
+	}
 }
