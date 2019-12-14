@@ -27,6 +27,7 @@ public class LessonController extends BaseController {
     public Message save(Lesson lesson,Long chapterId){
 
         lesson.setChapter(chapterService.find(chapterId));
+        lesson.setTeacher(lesson.getChapter().getCourse().getTeacher());
         if(!isValid(lesson)){
             return Message.error("参数错误");
         }
