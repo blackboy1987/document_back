@@ -21,7 +21,7 @@ import java.util.Map;
  * @version 1.0
  */
 @RestController("adminOssStorageController")
-@RequestMapping("/admin/storage_plugin/oss_storage")
+@RequestMapping("/api/storage_plugin/oss_storage")
 public class OssStorageController extends BaseController {
 
 	@Autowired
@@ -58,18 +58,16 @@ public class OssStorageController extends BaseController {
 	/**
 	 * 设置
 	 */
-	@GetMapping("/setting")
-	public String setting(ModelMap model) {
-		PluginConfig pluginConfig = ossStoragePlugin.getPluginConfig();
-		model.addAttribute("pluginConfig", pluginConfig);
-		return "/com/igomall/plugin/ossStorage/setting";
+	@PostMapping("/setting")
+	public PluginConfig setting() {
+		return ossStoragePlugin.getPluginConfig();
 	}
 
 	/**
 	 * 更新
 	 */
 	@PostMapping("/update")
-	public String update(String endpoint, String accessId, String accessKey, String bucketName, String urlPrefix, @RequestParam(defaultValue = "false") Boolean isEnabled, Integer order, RedirectAttributes redirectAttributes) {
+	public Message update(String endpoint, String accessId, String accessKey, String bucketName, String urlPrefix, @RequestParam(defaultValue = "false") Boolean isEnabled, Integer order, RedirectAttributes redirectAttributes) {
 		PluginConfig pluginConfig = ossStoragePlugin.getPluginConfig();
 		Map<String, String> attributes = new HashMap<>();
 		attributes.put("endpoint", endpoint);
@@ -81,7 +79,7 @@ public class OssStorageController extends BaseController {
 		pluginConfig.setIsEnabled(isEnabled);
 		pluginConfig.setOrder(order);
 		pluginConfigService.update(pluginConfig);
-		return "redirect:/admin/storage_plugin/list";
+		return SUCCESS_MESSAGE;
 	}
 
 }
