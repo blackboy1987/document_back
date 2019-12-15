@@ -33,6 +33,7 @@ public class ChapterController extends BaseController {
     public Message save(Chapter chapter,Long partId, Long courseId){
         chapter.setPart(partService.find(partId));
         chapter.setCourse(courseService.find(courseId));
+        chapter.setTeacher(chapter.getCourse().getTeacher());
         if(!isValid(chapter)){
             return Message.error("参数错误");
         }

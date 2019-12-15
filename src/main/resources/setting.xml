@@ -33,7 +33,7 @@
 	<settingConfig name="maxFailedLoginAttempts" value="5"/>  
 	<settingConfig name="passwordLockTime" value="10"/>  
 	<settingConfig name="safeKeyExpiryTime" value="1440"/>  
-	<settingConfig name="uploadMaxSize" value="10"/>  
+	<settingConfig name="uploadMaxSize" value="5000"/>
 	<settingConfig name="uploadImageExtension" value="jpg,jpeg,bmp,gif,png"/>  
 	<settingConfig name="uploadMediaExtension" value="swf,flv,mp3,wav,avi,rm,rmvb,mp4"/>
 	<settingConfig name="uploadFileExtension" value="zip,rar,7z,doc,docx,xls,xlsx,ppt,pptx"/>  
