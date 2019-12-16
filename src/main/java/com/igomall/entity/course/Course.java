@@ -7,6 +7,7 @@ import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Store;
+import org.apache.commons.lang3.ArrayUtils;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -43,7 +44,7 @@ public class Course extends OrderedEntity<Long> {
     private String title;
 
 
-    @JsonView({EditView.class})
+    @JsonView({EditView.class,EditView.class})
     private String memo;
 
     @Lob
@@ -166,6 +167,43 @@ public class Course extends OrderedEntity<Long> {
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
     }
+
+    @Transient
+    @JsonView({ListView.class})
+    public String getTeacherName(){
+        if(teacher!=null){
+            return teacher.getName();
+        }
+        return null;
+    }
+
+    @Transient
+    @JsonView({EditView.class})
+    public Long getTeacherId(){
+        if(teacher!=null){
+            return teacher.getId();
+        }
+        return null;
+    }
+
+    @Transient
+    @JsonView({ListView.class})
+    public String getCourseCategoryName(){
+        if(courseCategory!=null){
+            return courseCategory.getName();
+        }
+        return null;
+    }
+
+    @Transient
+    @JsonView({EditView.class})
+    public Long[] getCourseCategoryIds(){
+        if(courseCategory!=null){
+            return ArrayUtils.add(courseCategory.getParentIds(),courseCategory.getId());
+        }
+        return null;
+    }
+
 
     public interface ListView extends BaseView{}
     public interface EditView extends IdView{}

@@ -129,6 +129,22 @@ public class Lesson extends OrderedEntity<Long> {
         return null;
     }
 
+    @JsonView({ListView.class})
+    public String getCourseTitle(){
+        if(chapter!=null){
+            return chapter.getCourseTitle();
+        }
+        return null;
+    }
+
+    @JsonView({EditView.class})
+    public Long getCourseId(){
+        if(chapter!=null){
+            return chapter.getCourseId();
+        }
+        return null;
+    }
+
 
     public interface ListView extends BaseView{}
     public interface EditView extends IdView{}

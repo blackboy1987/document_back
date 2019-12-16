@@ -64,6 +64,7 @@ public class CourseCategory extends OrderedEntity<Long> {
 	 */
 	@OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
 	@OrderBy("order asc")
+	@JsonView({AllView.class})
 	private Set<CourseCategory> children = new HashSet<>();
 
 	/**

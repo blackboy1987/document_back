@@ -36,13 +36,11 @@ public class CourseCategoryServiceImpl extends BaseServiceImpl<CourseCategory, L
 	}
 
 	@Transactional(readOnly = true)
-	@Cacheable(value = "courseCategory")
 	public List<CourseCategory> findRoots() {
 		return courseCategoryDao.findRoots(null);
 	}
 
 	@Transactional(readOnly = true)
-	@Cacheable(value = "courseCategory")
 	public List<CourseCategory> findRoots(Integer count) {
 		return courseCategoryDao.findRoots(count);
 	}

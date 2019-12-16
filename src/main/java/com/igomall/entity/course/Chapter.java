@@ -6,11 +6,13 @@ import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Store;
+import com.igomall.entity.teacher.Teacher;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,7 +32,6 @@ public class Chapter extends OrderedEntity<Long> {
     private String sn;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false,updatable = false)
     private Part part;
 
 
@@ -67,6 +68,11 @@ public class Chapter extends OrderedEntity<Long> {
         this.sn = sn;
     }
 
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false)
+    private Teacher teacher;
+
     public Part getPart() {
         return part;
     }
@@ -99,6 +105,13 @@ public class Chapter extends OrderedEntity<Long> {
         this.lessons = lessons;
     }
 
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }
 
     @JsonView({Part.ListView.class, EditView.class})
     public Long getCourseId(){
@@ -112,6 +125,22 @@ public class Chapter extends OrderedEntity<Long> {
     public String getCourseTitle(){
         if(course!=null){
             return course.getTitle();
+        }
+        return null;
+    }
+
+    @JsonView({Part.ListView.class, EditView.class})
+    public Long getTeacherId(){
+        if(teacher!=null){
+            return teacher.getId();
+        }
+        return null;
+    }
+
+    @JsonView({ListView.class})
+    public String getTeacherName(){
+        if(teacher!=null){
+            return teacher.getName();
         }
         return null;
     }

@@ -21,7 +21,7 @@ import java.util.Map;
  * @version 1.0
  */
 @RestController("adminFtpStorageController")
-@RequestMapping("/admin/storage_plugin/ftp_storage")
+@RequestMapping("/api/storage_plugin/ftp_storage")
 public class FtpStorageController extends BaseController {
 
 	@Autowired
@@ -58,18 +58,16 @@ public class FtpStorageController extends BaseController {
 	/**
 	 * 设置
 	 */
-	@GetMapping("/setting")
-	public String setting(ModelMap model) {
-		PluginConfig pluginConfig = ftpStoragePlugin.getPluginConfig();
-		model.addAttribute("pluginConfig", pluginConfig);
-		return "/com/igomall/plugin/ftpStorage/setting";
+	@PostMapping("/setting")
+	public PluginConfig setting() {
+		return ftpStoragePlugin.getPluginConfig();
 	}
 
 	/**
 	 * 更新
 	 */
 	@PostMapping("/update")
-	public String update(String host, Integer port, String username, String password, String urlPrefix, @RequestParam(defaultValue = "false") Boolean isEnabled, Integer order, RedirectAttributes redirectAttributes) {
+	public Message update(String host, Integer port, String username, String password, String urlPrefix, @RequestParam(defaultValue = "false") Boolean isEnabled, Integer order) {
 		PluginConfig pluginConfig = ftpStoragePlugin.getPluginConfig();
 		Map<String, String> attributes = new HashMap<>();
 		attributes.put("host", host);
@@ -81,7 +79,7 @@ public class FtpStorageController extends BaseController {
 		pluginConfig.setIsEnabled(isEnabled);
 		pluginConfig.setOrder(order);
 		pluginConfigService.update(pluginConfig);
-		return "redirect:/admin/storage_plugin/list";
+		return Message.success("操作成功");
 	}
 
 }
