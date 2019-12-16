@@ -3,6 +3,8 @@ package com.igomall.entity.member;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.igomall.entity.*;
+import com.igomall.entity.course.Course;
+import com.igomall.entity.course.Lesson;
 import com.igomall.util.JsonUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -284,6 +286,16 @@ public class Member extends User {
 	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	private Set<PointLog> pointLogs = new HashSet<>();
 
+	/**
+	 * 收藏的课程
+	 */
+	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	private Set<Course> courseFavorites = new HashSet<>();
+	/**
+	 * 收藏的视频
+	 */
+	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	private Set<Lesson> lessonFavorites = new HashSet<>();
 	/**
 	 * 获取用户名
 	 * 
@@ -874,6 +886,22 @@ public class Member extends User {
 	 */
 	public void setPointLogs(Set<PointLog> pointLogs) {
 		this.pointLogs = pointLogs;
+	}
+
+	public Set<Course> getCourseFavorites() {
+		return courseFavorites;
+	}
+
+	public void setCourseFavorites(Set<Course> courseFavorites) {
+		this.courseFavorites = courseFavorites;
+	}
+
+	public Set<Lesson> getLessonFavorites() {
+		return lessonFavorites;
+	}
+
+	public void setLessonFavorites(Set<Lesson> lessonFavorites) {
+		this.lessonFavorites = lessonFavorites;
 	}
 
 	/**
