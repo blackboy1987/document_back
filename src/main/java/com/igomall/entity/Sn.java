@@ -25,22 +25,22 @@ public class Sn extends BaseEntity<Long> {
 		/**
 		 * 商品
 		 */
-		product,
+		course,
 
 		/**
 		 * 订单
 		 */
-		order,
+		part,
 
 		/**
 		 * 订单支付
 		 */
-		orderPayment,
+		chapter,
 
 		/**
 		 * 订单退款
 		 */
-		orderRefunds,
+		lesson,
 
 		/**
 		 * 订单发货

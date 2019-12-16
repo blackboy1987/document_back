@@ -4,11 +4,16 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.igomall.entity.OrderedEntity;
 import com.igomall.entity.course.Chapter;
 import com.igomall.entity.teacher.Teacher;
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Store;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 /**
  * 章节的视频
@@ -16,6 +21,13 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "edu_lesson")
 public class Lesson extends OrderedEntity<Long> {
+
+    @JsonView(BaseView.class)
+    @Field(store = Store.YES, index = Index.YES, analyze = Analyze.NO)
+    @Length(max = 100)
+    @Pattern(regexp = "^[0-9a-zA-Z_-]+$")
+    @Column(nullable = false, updatable = false, unique = true)
+    private String sn;
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(nullable = false,updatable = false)
@@ -42,6 +54,24 @@ public class Lesson extends OrderedEntity<Long> {
     @JoinColumn(nullable = false)
     private Teacher teacher;
 
+    /**
+     * 获取编号
+     *
+     * @return 编号
+     */
+    public String getSn() {
+        return sn;
+    }
+
+    /**
+     * 设置编号
+     *
+     * @param sn
+     *            编号
+     */
+    public void setSn(String sn) {
+        this.sn = sn;
+    }
 
     public Chapter getChapter() {
         return chapter;

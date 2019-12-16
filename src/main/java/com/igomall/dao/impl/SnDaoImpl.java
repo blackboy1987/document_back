@@ -22,28 +22,52 @@ import java.io.IOException;
  * @version 1.0
  */
 @Repository
-public class SnDaoImpl implements SnDao, InitializingBean {
+public class SnDaoImpl extends BaseDaoImpl<Sn,Long> implements SnDao, InitializingBean {
 
 	/**
 	 * 订单编号生成器
 	 */
-	private HiloOptimizer orderHiloOptimizer;
+	private HiloOptimizer courseHiloOptimizer;
+	private HiloOptimizer partHiloOptimizer;
+	private HiloOptimizer chapterHiloOptimizer;
+	private HiloOptimizer lessonHiloOptimizer;
 
 
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	@Value("${sn.order.prefix}")
-	private String orderPrefix;
-	@Value("${sn.order.maxLo}")
-	private int orderMaxLo;
+	@Value("${sn.course.prefix}")
+	private String coursePrefix;
+	@Value("${sn.course.maxLo}")
+	private int courseMaxLo;
+
+
+	@Value("${sn.part.prefix}")
+	private String partPrefix;
+	@Value("${sn.part.maxLo}")
+	private int partMaxLo;
+
+
+	@Value("${sn.chapter.prefix}")
+	private String chapterPrefix;
+	@Value("${sn.chapter.maxLo}")
+	private int chapterMaxLo;
+
+
+	@Value("${sn.lesson.prefix}")
+	private String lessonPrefix;
+	@Value("${sn.lesson.maxLo}")
+	private int lessonMaxLo;
 
 	/**
 	 * 初始化
 	 */
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		orderHiloOptimizer = new HiloOptimizer(Sn.Type.order, orderPrefix, orderMaxLo);
+		courseHiloOptimizer = new HiloOptimizer(Sn.Type.course, coursePrefix, courseMaxLo);
+		partHiloOptimizer = new HiloOptimizer(Sn.Type.part, partPrefix, partMaxLo);
+		chapterHiloOptimizer = new HiloOptimizer(Sn.Type.chapter, chapterPrefix, chapterMaxLo);
+		lessonHiloOptimizer = new HiloOptimizer(Sn.Type.lesson, lessonPrefix, lessonMaxLo);
 	}
 
 	/**
@@ -58,8 +82,14 @@ public class SnDaoImpl implements SnDao, InitializingBean {
 		Assert.notNull(type,"");
 
 		switch (type) {
-		case order:
-			return orderHiloOptimizer.generate();
+			case course:
+				return courseHiloOptimizer.generate();
+			case part:
+				return partHiloOptimizer.generate();
+			case chapter:
+				return chapterHiloOptimizer.generate();
+			case lesson:
+				return lessonHiloOptimizer.generate();
 			default:
 				return null;
 		}
@@ -74,10 +104,20 @@ public class SnDaoImpl implements SnDao, InitializingBean {
 	 */
 	private long getLastValue(Sn.Type type) {
 		String jpql = "select sn from Sn sn where sn.type = :type";
-		Sn sn = entityManager.createQuery(jpql, Sn.class).setLockMode(LockModeType.PESSIMISTIC_WRITE).setParameter("type", type).getSingleResult();
-		long lastValue = sn.getLastValue();
-		sn.setLastValue(lastValue + 1);
-		return lastValue;
+		long lastValue = 1;
+		try {
+			Sn sn = entityManager.createQuery(jpql, Sn.class).setLockMode(LockModeType.PESSIMISTIC_WRITE).setParameter("type", type).getSingleResult();
+			lastValue = sn.getLastValue();
+			sn.setLastValue(lastValue + 1);
+			return lastValue;
+		}catch (Exception e){
+			e.printStackTrace();
+			Sn sn = new Sn();
+			sn.setLastValue(lastValue+1);
+			sn.setType(type);
+			super.persist(sn);
+			return lastValue;
+		}
 	}
 
 	/**

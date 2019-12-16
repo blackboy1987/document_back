@@ -9,7 +9,7 @@ import com.igomall.entity.Sn;
  * @author blackboy
  * @version 1.0
  */
-public interface SnDao {
+public interface SnDao extends BaseDao<Sn,Long> {
 
 	/**
 	 * 生成序列号
