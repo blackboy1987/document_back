@@ -28,7 +28,7 @@ public class Course extends OrderedEntity<Long> {
     @NotEmpty
     @Length(max = 100)
     @Column(nullable = false,length = 100)
-    @JsonView({ListView.class,EditView.class,AllListView.class})
+    @JsonView({ListView.class,EditView.class,AllListView.class,InfoView.class})
     private String title;
 
 
@@ -36,7 +36,7 @@ public class Course extends OrderedEntity<Long> {
     private String memo;
 
     @Lob
-    @JsonView({EditView.class})
+    @JsonView({EditView.class,InfoView.class})
     private String description;
 
     @NotEmpty
@@ -63,6 +63,7 @@ public class Course extends OrderedEntity<Long> {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
+    @JsonView({InfoView.class})
     private Teacher teacher;
 
 
@@ -177,6 +178,7 @@ public class Course extends OrderedEntity<Long> {
 
     public interface ListView extends BaseView{}
     public interface EditView extends IdView{}
-
     public interface AllListView extends IdView{}
+
+    public interface InfoView extends IdView{}
 }
