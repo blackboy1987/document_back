@@ -7,6 +7,7 @@ import com.igomall.entity.course.Part;
 import com.igomall.service.BaseService;
 
 import java.util.List;
+import java.util.Map;
 
 public interface LessonService extends BaseService<Lesson,Long> {
     /**
@@ -28,4 +29,6 @@ public interface LessonService extends BaseService<Lesson,Long> {
     Lesson findBySn(String sn);
 
     List<Lesson> findList(Course course, Part part, Chapter chapter);
+
+    List<Map<String,Object>> findListByCourseSQL(Course course);
 }

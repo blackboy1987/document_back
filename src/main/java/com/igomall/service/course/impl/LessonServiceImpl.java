@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class LessonServiceImpl extends BaseServiceImpl<Lesson,Long> implements LessonService {
@@ -32,5 +33,10 @@ public class LessonServiceImpl extends BaseServiceImpl<Lesson,Long> implements L
     @Override
     public List<Lesson> findList(Course course, Part part, Chapter chapter) {
         return lessonDao.findList(course,part,chapter);
+    }
+
+    @Override
+    public List<Map<String,Object>> findListByCourseSQL(Course course){
+        return lessonDao.findListByCourseSQL(course);
     }
 }

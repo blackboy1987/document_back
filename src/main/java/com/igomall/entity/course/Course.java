@@ -3,17 +3,12 @@ package com.igomall.entity.course;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.igomall.entity.OrderedEntity;
 import com.igomall.entity.teacher.Teacher;
-import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Index;
-import org.hibernate.search.annotations.Store;
 import org.apache.commons.lang3.ArrayUtils;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,13 +19,6 @@ import java.util.Set;
 @Table(name = "edu_course")
 public class Course extends OrderedEntity<Long> {
 
-    @JsonView(BaseView.class)
-    @Field(store = Store.YES, index = Index.YES, analyze = Analyze.NO)
-    @Length(max = 100)
-    @Pattern(regexp = "^[0-9a-zA-Z_-]+$")
-    @Column(nullable = false, updatable = false, unique = true)
-    private String sn;
-
     @OneToMany(mappedBy = "course",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private Set<Part> parts = new HashSet<>();
 
@@ -40,7 +28,7 @@ public class Course extends OrderedEntity<Long> {
     @NotEmpty
     @Length(max = 100)
     @Column(nullable = false,length = 100)
-    @JsonView({ListView.class,EditView.class,AllListView.class,InfoView.class})
+    @JsonView({ListView.class,EditView.class,AllListView.class})
     private String title;
 
 
@@ -48,7 +36,7 @@ public class Course extends OrderedEntity<Long> {
     private String memo;
 
     @Lob
-    @JsonView({EditView.class,InfoView.class})
+    @JsonView({EditView.class})
     private String description;
 
     @NotEmpty
@@ -75,27 +63,8 @@ public class Course extends OrderedEntity<Long> {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
-    @JsonView({InfoView.class})
     private Teacher teacher;
 
-    /**
-     * 获取编号
-     *
-     * @return 编号
-     */
-    public String getSn() {
-        return sn;
-    }
-
-    /**
-     * 设置编号
-     *
-     * @param sn
-     *            编号
-     */
-    public void setSn(String sn) {
-        this.sn = sn;
-    }
 
     public Set<Part> getParts() {
         return parts;
@@ -209,6 +178,4 @@ public class Course extends OrderedEntity<Long> {
     public interface ListView extends BaseView{}
     public interface EditView extends IdView{}
     public interface AllListView extends IdView{}
-
-    public interface InfoView extends IdView{}
 }
