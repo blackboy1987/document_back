@@ -5,7 +5,9 @@ import com.igomall.common.Message;
 import com.igomall.common.Page;
 import com.igomall.common.Pageable;
 import com.igomall.controller.admin.BaseController;
+import com.igomall.entity.Sn;
 import com.igomall.entity.course.Chapter;
+import com.igomall.service.SnService;
 import com.igomall.service.course.ChapterService;
 import com.igomall.service.course.CourseService;
 import com.igomall.service.course.PartService;
@@ -29,6 +31,9 @@ public class ChapterController extends BaseController {
     @Autowired
     private CourseService courseService;
 
+    @Autowired
+    private SnService snService;
+
     @PostMapping("/save")
     public Message save(Chapter chapter,Long partId, Long courseId){
         chapter.setPart(partService.find(partId));
@@ -40,7 +45,7 @@ public class ChapterController extends BaseController {
         if(chapter.isNew()){
             chapterService.save(chapter);
         }else {
-            chapterService.update(chapter,"part","course");
+            chapterService.update(chapter,"part","course","sn");
         }
         return SUCCESS_MESSAGE;
     }
