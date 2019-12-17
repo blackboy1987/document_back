@@ -290,12 +290,12 @@ public class Member extends User {
 	 * 收藏的课程
 	 */
 	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-	private Set<Course> courseFavorites = new HashSet<>();
+	private Set<CourseFavorite> courseFavorites = new HashSet<>();
 	/**
 	 * 收藏的视频
 	 */
 	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-	private Set<Lesson> lessonFavorites = new HashSet<>();
+	private Set<LessonFavorite> lessonFavorites = new HashSet<>();
 	/**
 	 * 获取用户名
 	 * 
@@ -888,19 +888,19 @@ public class Member extends User {
 		this.pointLogs = pointLogs;
 	}
 
-	public Set<Course> getCourseFavorites() {
+	public Set<CourseFavorite> getCourseFavorites() {
 		return courseFavorites;
 	}
 
-	public void setCourseFavorites(Set<Course> courseFavorites) {
+	public void setCourseFavorites(Set<CourseFavorite> courseFavorites) {
 		this.courseFavorites = courseFavorites;
 	}
 
-	public Set<Lesson> getLessonFavorites() {
+	public Set<LessonFavorite> getLessonFavorites() {
 		return lessonFavorites;
 	}
 
-	public void setLessonFavorites(Set<Lesson> lessonFavorites) {
+	public void setLessonFavorites(Set<LessonFavorite> lessonFavorites) {
 		this.lessonFavorites = lessonFavorites;
 	}
 
