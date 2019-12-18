@@ -3,17 +3,12 @@ package com.igomall.entity.course;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.igomall.entity.OrderedEntity;
 import com.igomall.entity.teacher.Teacher;
-import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Index;
-import org.hibernate.search.annotations.Store;
 import org.apache.commons.lang3.ArrayUtils;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -218,6 +213,5 @@ public class Course extends OrderedEntity<Long> {
 
     public interface ListView extends BaseView{}
     public interface EditView extends IdView{}
-
     public interface AllListView extends IdView{}
 }
