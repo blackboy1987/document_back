@@ -37,6 +37,9 @@ public class Course extends OrderedEntity<Long> {
     @OneToMany(mappedBy = "course",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private Set<Chapter> chapters = new HashSet<>();
 
+    @OneToMany(mappedBy = "course",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    private Set<Lesson> lessons = new HashSet<>();
+
     @NotEmpty
     @Length(max = 100)
     @Column(nullable = false,length = 100)
@@ -76,6 +79,14 @@ public class Course extends OrderedEntity<Long> {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
     private Teacher teacher;
+
+    public Set<Lesson> getLessons() {
+        return lessons;
+    }
+
+    public void setLessons(Set<Lesson> lessons) {
+        this.lessons = lessons;
+    }
 
     /**
      * 获取编号

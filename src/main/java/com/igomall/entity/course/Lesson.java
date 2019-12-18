@@ -33,6 +33,11 @@ public class Lesson extends OrderedEntity<Long> {
     @JoinColumn(nullable = false,updatable = false)
     private Chapter chapter;
 
+
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(nullable = false,updatable = false)
+    private Course course;
+
     @NotEmpty
     @Length(max = 100)
     @Column(nullable = false,length = 100)
@@ -79,6 +84,14 @@ public class Lesson extends OrderedEntity<Long> {
 
     public void setChapter(Chapter chapter) {
         this.chapter = chapter;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     public String getTitle() {
