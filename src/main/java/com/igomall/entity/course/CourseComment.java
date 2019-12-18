@@ -214,7 +214,7 @@ public class CourseComment extends BaseEntity<Long> {
      * @param course
      *            商品
      */
-    public void setProduct(Course course) {
+    public void setCourse(Course course) {
         this.course = course;
     }
 

@@ -4,17 +4,15 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.igomall.entity.OrderedEntity;
 import com.igomall.entity.teacher.Teacher;
 import org.apache.commons.lang3.ArrayUtils;
-import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.*;
 import org.hibernate.search.annotations.Index;
-import org.hibernate.search.annotations.Store;
-import org.apache.commons.lang3.ArrayUtils;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -101,6 +99,103 @@ public class Course extends OrderedEntity<Long> {
     public void setLessons(Set<Lesson> lessons) {
         this.lessons = lessons;
     }
+
+    /**
+     * 搜索关键词
+     */
+    @Field(store = Store.YES, index = Index.YES, analyze = Analyze.YES)
+    @Boost(1.5F)
+    @Length(max = 200)
+    private String keyword;
+
+    /**
+     * 评分
+     */
+    @Field(store = Store.YES, index = Index.YES, analyze = Analyze.NO)
+    @NumericField
+    @Column(nullable = false, precision = 12, scale = 6)
+    private Float score;
+
+    /**
+     * 总评分
+     */
+    @Column(nullable = false)
+    private Long totalScore;
+
+    /**
+     * 评分数
+     */
+    @Field(store = Store.YES, index = Index.YES, analyze = Analyze.NO)
+    @NumericField
+    @Column(nullable = false)
+    private Long scoreCount;
+
+    /**
+     * 周点击数
+     */
+    @Column(nullable = false)
+    private Long weekHits;
+
+    /**
+     * 月点击数
+     */
+    @Column(nullable = false)
+    private Long monthHits;
+
+    /**
+     * 点击数
+     */
+    @Column(nullable = false)
+    private Long hits;
+
+    /**
+     * 周销量
+     */
+    @Field(store = Store.YES, index = Index.YES, analyze = Analyze.NO)
+    @NumericField
+    @Column(nullable = false)
+    private Long weekSales;
+
+    /**
+     * 月销量
+     */
+    @Field(store = Store.YES, index = Index.YES, analyze = Analyze.NO)
+    @NumericField
+    @Column(nullable = false)
+    private Long monthSales;
+
+    /**
+     * 销量
+     */
+    @Field(store = Store.YES, index = Index.YES, analyze = Analyze.NO)
+    @NumericField
+    @Column(nullable = false)
+    private Long sales;
+
+    /**
+     * 周点击数更新日期
+     */
+    @Column(nullable = false)
+    private Date weekHitsDate;
+
+    /**
+     * 月点击数更新日期
+     */
+    @Column(nullable = false)
+    private Date monthHitsDate;
+
+    /**
+     * 周销量更新日期
+     */
+    @Column(nullable = false)
+    private Date weekSalesDate;
+
+    /**
+     * 月销量更新日期
+     */
+    @Column(nullable = false)
+    private Date monthSalesDate;
+
 
     /**
      * 获取编号
@@ -208,6 +303,276 @@ public class Course extends OrderedEntity<Long> {
     public void setCourseConsultations(Set<CourseConsultation> courseConsultations) {
         this.courseConsultations = courseConsultations;
     }
+
+    /**
+     * * 获取搜索关键词
+	 *
+     * @return 搜索关键词
+	 */
+    public String getKeyword() {
+        return keyword;
+    }
+
+    /**
+     * 设置搜索关键词
+     *
+     * @param keyword
+     *            搜索关键词
+     */
+    public void setKeyword(String keyword) {
+        if (keyword != null) {
+            keyword = keyword.replaceAll("[,\\s]*,[,\\s]*", ",").replaceAll("^,|,$", "");
+        }
+        this.keyword = keyword;
+    }
+
+    /**
+     * 获取评分
+     *
+     * @return 评分
+     */
+    public Float getScore() {
+        return score;
+    }
+
+    /**
+     * 设置评分
+     *
+     * @param score
+     *            评分
+     */
+    public void setScore(Float score) {
+        this.score = score;
+    }
+
+    /**
+     * 获取总评分
+     *
+     * @return 总评分
+     */
+    public Long getTotalScore() {
+        return totalScore;
+    }
+
+    /**
+     * 设置总评分
+     *
+     * @param totalScore
+     *            总评分
+     */
+    public void setTotalScore(Long totalScore) {
+        this.totalScore = totalScore;
+    }
+
+    /**
+     * 获取评分数
+     *
+     * @return 评分数
+     */
+    public Long getScoreCount() {
+        return scoreCount;
+    }
+
+    /**
+     * 设置评分数
+     *
+     * @param scoreCount
+     *            评分数
+     */
+    public void setScoreCount(Long scoreCount) {
+        this.scoreCount = scoreCount;
+    }
+
+    /**
+     * 获取周点击数
+     *
+     * @return 周点击数
+     */
+    public Long getWeekHits() {
+        return weekHits;
+    }
+
+    /**
+     * 设置周点击数
+     *
+     * @param weekHits
+     *            周点击数
+     */
+    public void setWeekHits(Long weekHits) {
+        this.weekHits = weekHits;
+    }
+
+    /**
+     * 获取月点击数
+     *
+     * @return 月点击数
+     */
+    public Long getMonthHits() {
+        return monthHits;
+    }
+
+    /**
+     * 设置月点击数
+     *
+     * @param monthHits
+     *            月点击数
+     */
+    public void setMonthHits(Long monthHits) {
+        this.monthHits = monthHits;
+    }
+
+    /**
+     * 获取点击数
+     *
+     * @return 点击数
+     */
+    public Long getHits() {
+        return hits;
+    }
+
+    /**
+     * 设置点击数
+     *
+     * @param hits
+     *            点击数
+     */
+    public void setHits(Long hits) {
+        this.hits = hits;
+    }
+
+    /**
+     * 获取周销量
+     *
+     * @return 周销量
+     */
+    public Long getWeekSales() {
+        return weekSales;
+    }
+
+    /**
+     * 设置周销量
+     *
+     * @param weekSales
+     *            周销量
+     */
+    public void setWeekSales(Long weekSales) {
+        this.weekSales = weekSales;
+    }
+
+    /**
+     * 获取月销量
+     *
+     * @return 月销量
+     */
+    public Long getMonthSales() {
+        return monthSales;
+    }
+
+    /**
+     * 设置月销量
+     *
+     * @param monthSales
+     *            月销量
+     */
+    public void setMonthSales(Long monthSales) {
+        this.monthSales = monthSales;
+    }
+
+    /**
+     * 获取销量
+     *
+     * @return 销量
+     */
+    public Long getSales() {
+        return sales;
+    }
+
+    /**
+     * 设置销量
+     *
+     * @param sales
+     *            销量
+     */
+    public void setSales(Long sales) {
+        this.sales = sales;
+    }
+
+    /**
+     * 获取周点击数更新日期
+     *
+     * @return 周点击数更新日期
+     */
+    public Date getWeekHitsDate() {
+        return weekHitsDate;
+    }
+
+    /**
+     * 设置周点击数更新日期
+     *
+     * @param weekHitsDate
+     *            周点击数更新日期
+     */
+    public void setWeekHitsDate(Date weekHitsDate) {
+        this.weekHitsDate = weekHitsDate;
+    }
+
+    /**
+     * 获取月点击数更新日期
+     *
+     * @return 月点击数更新日期
+     */
+    public Date getMonthHitsDate() {
+        return monthHitsDate;
+    }
+
+    /**
+     * 设置月点击数更新日期
+     *
+     * @param monthHitsDate
+     *            月点击数更新日期
+     */
+    public void setMonthHitsDate(Date monthHitsDate) {
+        this.monthHitsDate = monthHitsDate;
+    }
+
+    /**
+     * 获取周销量更新日期
+     *
+     * @return 周销量更新日期
+     */
+    public Date getWeekSalesDate() {
+        return weekSalesDate;
+    }
+
+    /**
+     * 设置周销量更新日期
+     *
+     * @param weekSalesDate
+     *            周销量更新日期
+     */
+    public void setWeekSalesDate(Date weekSalesDate) {
+        this.weekSalesDate = weekSalesDate;
+    }
+
+    /**
+     * 获取月销量更新日期
+     *
+     * @return 月销量更新日期
+     */
+    public Date getMonthSalesDate() {
+        return monthSalesDate;
+    }
+
+    /**
+     * 设置月销量更新日期
+     *
+     * @param monthSalesDate
+     *            月销量更新日期
+     */
+    public void setMonthSalesDate(Date monthSalesDate) {
+        this.monthSalesDate = monthSalesDate;
+    }
+
 
     @Transient
     @JsonView({ListView.class})

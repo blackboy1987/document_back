@@ -21,12 +21,7 @@
 	<cache name="article" maxElementsInMemory="1000" timeToIdleSeconds="3600" timeToLiveSeconds="86400" eternal="false" overflowToDisk="true" />
 	<cache name="articleCategory" maxElementsInMemory="1000" timeToIdleSeconds="3600" timeToLiveSeconds="86400" eternal="false" overflowToDisk="true" />
 	<cache name="articleTag" maxElementsInMemory="1000" timeToIdleSeconds="3600" timeToLiveSeconds="86400" eternal="false" overflowToDisk="true" />
-	<cache name="course" maxElementsInMemory="1000" timeToIdleSeconds="3600" timeToLiveSeconds="86400" eternal="false" overflowToDisk="true" />
-	<cache name="courseCategory" maxElementsInMemory="1000" timeToIdleSeconds="3600" timeToLiveSeconds="86400" eternal="false" overflowToDisk="true" />
-	<cache name="courseTag" maxElementsInMemory="1000" timeToIdleSeconds="3600" timeToLiveSeconds="86400" eternal="false" overflowToDisk="true" />
-	<cache name="courseFavorite" maxElementsInMemory="1000" timeToIdleSeconds="3600" timeToLiveSeconds="86400" eternal="false" overflowToDisk="true" />
-	<cache name="review" maxElementsInMemory="1000" timeToIdleSeconds="3600" timeToLiveSeconds="86400" eternal="false" overflowToDisk="true" />
-	<cache name="consultation" maxElementsInMemory="1000" timeToIdleSeconds="3600" timeToLiveSeconds="86400" eternal="false" overflowToDisk="true" />
+
 	<cache name="promotion" maxElementsInMemory="1000" timeToIdleSeconds="3600" timeToLiveSeconds="86400" eternal="false" overflowToDisk="true" />
 	<cache name="sitemap" maxElementsInMemory="1000" timeToIdleSeconds="3600" timeToLiveSeconds="86400" eternal="false" overflowToDisk="true" />
 	<cache name="commonJs" maxElementsInMemory="1000" timeToIdleSeconds="3600" timeToLiveSeconds="86400" eternal="false" overflowToDisk="true" />
@@ -38,7 +33,12 @@
 	<cache name="authorization" maxElementsInMemory="1000000" timeToIdleSeconds="3600" timeToLiveSeconds="86400" eternal="false" overflowToDisk="true" />
 	<cache name="failedLoginAttempts" maxElementsInMemory="1000000" eternal="true" overflowToDisk="true" />
 
-
+	<cache name="courseComment" maxElementsInMemory="1000" timeToIdleSeconds="3600" timeToLiveSeconds="86400" eternal="false" overflowToDisk="true" />
+	<cache name="courseConsultation" maxElementsInMemory="1000" timeToIdleSeconds="3600" timeToLiveSeconds="86400" eternal="false" overflowToDisk="true" />
+	<cache name="course" maxElementsInMemory="1000" timeToIdleSeconds="3600" timeToLiveSeconds="86400" eternal="false" overflowToDisk="true" />
+	<cache name="courseCategory" maxElementsInMemory="1000" timeToIdleSeconds="3600" timeToLiveSeconds="86400" eternal="false" overflowToDisk="true" />
+	<cache name="courseTag" maxElementsInMemory="1000" timeToIdleSeconds="3600" timeToLiveSeconds="86400" eternal="false" overflowToDisk="true" />
+	<cache name="courseFavorite" maxElementsInMemory="1000" timeToIdleSeconds="3600" timeToLiveSeconds="86400" eternal="false" overflowToDisk="true" />
 	<cache name="permission" maxElementsInMemory="1000000" timeToIdleSeconds="3600" timeToLiveSeconds="86400" eternal="false" overflowToDisk="true" />
 	<cache name="department" maxElementsInMemory="1000" timeToIdleSeconds="3600" timeToLiveSeconds="86400" eternal="false" overflowToDisk="true" />
 	<cache name="role" maxElementsInMemory="1000" timeToIdleSeconds="3600" timeToLiveSeconds="86400" eternal="false" overflowToDisk="true" />
