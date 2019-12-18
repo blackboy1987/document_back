@@ -2,6 +2,7 @@
 package com.igomall.dao.course.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -14,6 +15,7 @@ import com.igomall.entity.course.Course;
 import com.igomall.entity.course.CourseComment;
 import com.igomall.entity.course.Lesson;
 import com.igomall.entity.member.Member;
+import com.igomall.entity.teacher.Teacher;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
@@ -160,4 +162,24 @@ public class CourseCommentDaoImpl extends BaseDaoImpl<CourseComment, Long> imple
 		return entityManager.createQuery(jpql, Long.class).setParameter("course", course).setParameter("isShow", true).getSingleResult();
 	}
 
+	@Override
+	public List<Map<String, Object>> findListBySQL(Course course) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(" select");
+		sb.append(" courseComment.id,");
+		sb.append(" courseComment.score,");
+		sb.append(" courseComment.created_date createdDate,");
+		sb.append(" courseComment.content,");
+		sb.append(" member.username,");
+		sb.append(" member.avatar");
+		sb.append(" from");
+		sb.append(" edu_course_comment as courseComment,");
+		sb.append(" edu_member as member");
+		sb.append(" where courseComment.is_show=true and courseComment.member_id=member.id");
+		if(course!=null){
+			sb.append(" and courseComment.course_id="+course.getId());
+		}
+		sb.append(" order by courseComment.created_date desc");
+		return jdbcTemplate.queryForList(sb.toString());
+	}
 }

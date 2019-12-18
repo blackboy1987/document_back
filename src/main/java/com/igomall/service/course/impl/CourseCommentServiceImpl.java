@@ -12,6 +12,7 @@ import com.igomall.entity.course.Course;
 import com.igomall.entity.course.CourseComment;
 import com.igomall.entity.course.Lesson;
 import com.igomall.entity.member.Member;
+import com.igomall.entity.teacher.Teacher;
 import com.igomall.service.course.CourseCommentService;
 import com.igomall.service.impl.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import org.springframework.util.Assert;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Service - 评论
@@ -175,4 +177,8 @@ public class CourseCommentServiceImpl extends BaseServiceImpl<CourseComment, Lon
 		courseCommentDao.persist(replyReview);
 	}
 
+    @Override
+    public List<Map<String, Object>> findListBySQL(Course course) {
+        return courseCommentDao.findListBySQL(course);
+    }
 }

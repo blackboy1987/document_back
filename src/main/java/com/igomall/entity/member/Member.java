@@ -265,6 +265,11 @@ public class Member extends User {
 	private MemberRank memberRank;
 
 	/**
+	 * 头像
+	 */
+	private String avatar;
+
+	/**
 	 * 会员预存款记录
 	 */
 	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
@@ -827,6 +832,14 @@ public class Member extends User {
 	 */
 	public void setMemberRank(MemberRank memberRank) {
 		this.memberRank = memberRank;
+	}
+
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 
 	/**

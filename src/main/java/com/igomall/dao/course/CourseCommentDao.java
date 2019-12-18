@@ -2,6 +2,7 @@
 package com.igomall.dao.course;
 
 import java.util.List;
+import java.util.Map;
 
 import com.igomall.common.Filter;
 import com.igomall.common.Order;
@@ -12,6 +13,7 @@ import com.igomall.entity.course.Course;
 import com.igomall.entity.course.CourseComment;
 import com.igomall.entity.course.Lesson;
 import com.igomall.entity.member.Member;
+import com.igomall.entity.teacher.Teacher;
 
 /**
  * Dao - 评论
@@ -94,4 +96,5 @@ public interface CourseCommentDao extends BaseDao<CourseComment, Long> {
 	 */
 	long calculateScoreCount(Course course);
 
+	List<Map<String,Object>> findListBySQL(Course course);
 }

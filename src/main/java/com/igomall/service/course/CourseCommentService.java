@@ -1,8 +1,6 @@
 
 package com.igomall.service.course;
 
-import java.util.List;
-
 import com.igomall.common.Filter;
 import com.igomall.common.Order;
 import com.igomall.common.Page;
@@ -12,6 +10,9 @@ import com.igomall.entity.course.CourseComment;
 import com.igomall.entity.course.Lesson;
 import com.igomall.entity.member.Member;
 import com.igomall.service.BaseService;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Service - 评论
@@ -119,4 +120,6 @@ public interface CourseCommentService extends BaseService<CourseComment, Long> {
 	 * @return 是否拥有评论权限
 	 */
 	boolean hasPermission(Member member, Course course);
+
+	List<Map<String,Object>> findListBySQL(Course course);
 }

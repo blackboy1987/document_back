@@ -1,13 +1,15 @@
 package com.igomall.job;
 
 import com.igomall.entity.Sn;
-import com.igomall.entity.course.Chapter;
-import com.igomall.entity.course.Course;
-import com.igomall.entity.course.CourseCategory;
-import com.igomall.entity.course.Lesson;
+import com.igomall.entity.course.*;
+import com.igomall.entity.member.Member;
 import com.igomall.service.SnService;
 import com.igomall.service.course.CourseCategoryService;
+import com.igomall.service.course.CourseCommentService;
 import com.igomall.service.course.CourseService;
+import com.igomall.service.course.LessonService;
+import com.igomall.service.member.MemberRankService;
+import com.igomall.service.member.MemberService;
 import com.igomall.service.teacher.TeacherService;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -18,14 +20,19 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.net.URL;
 import java.util.*;
 
-// @Component
-// @EnableScheduling
+@Component
+@EnableScheduling
 public class Demo {
 
     public static List<String> imageUrls = new ArrayList<>();
+    public static List<String> avatarUrls = new ArrayList<>();
+    public static List<String> comments = new ArrayList<>();
+    public static List<Member> members = new ArrayList<>();
+    public static List<Lesson> lessons = new ArrayList<>();
 
     @Autowired
     private CourseCategoryService courseCategoryService;
@@ -35,6 +42,14 @@ public class Demo {
     private CourseService courseService;
     @Autowired
     private SnService snService;
+    @Autowired
+    private LessonService lessonService;
+    @Autowired
+    private MemberService memberService;
+    @Autowired
+    private MemberRankService memberRankService;
+    @Autowired
+    private CourseCommentService courseCommentService;
 
     static {
         try {
@@ -42,7 +57,48 @@ public class Demo {
         }catch (Exception e){
             e.printStackTrace();
         }
+        avatarUrls.add("https://10.url.cn/eth/ajNVdqHZLLCp4ESLAqxJlLmybyjtIJMBKPjUwkibUfVLiaricZdkVsU8pGsTssK9szibgNVH1ibdpesc/130");
+        avatarUrls.add("https://thirdqq.qlogo.cn/g?b=sdk&k=FKgv21T76hxpRPkiaT4BibwA&s=140&t=1576496831");
+        avatarUrls.add("https://thirdqq.qlogo.cn/g?b=sdk&k=s4WGRFu9cO1bGooxYQW3YA&s=140&t=1576197898");
+        avatarUrls.add("https://thirdqq.qlogo.cn/g?b=sdk&k=NsVXONYnoQVWjkXO4vah1Q&s=140&t=1556989496");
+        avatarUrls.add("https://thirdqq.qlogo.cn/g?b=sdk&k=IpaZtaESJMC7qxeOZfsUDQ&s=140&t=1554262621");
+        avatarUrls.add("https://thirdqq.qlogo.cn/g?b=sdk&k=j7R7aicQxDVfH9BwibQQVHzQ&s=140&t=1576588999");
+        avatarUrls.add("https://thirdqq.qlogo.cn/g?b=sdk&k=fb38LlWBG6sFZSIYzO2zBA&s=140&t=1552981791");
+        avatarUrls.add("https://thirdqq.qlogo.cn/g?b=sdk&k=rPudiaUzvYnD6n9XvyYVqNg&s=140&t=1563884020");
+        avatarUrls.add("https://thirdqq.qlogo.cn/g?b=sdk&k=e2GKrtbMmyXVwwATmoMM2Q&s=140&t=1559116473");
+        avatarUrls.add("https://thirdqq.qlogo.cn/g?b=sdk&k=QlY8L3BeKwhCUySaXLcBjg&s=140&t=1559878870");
+        avatarUrls.add("https://thirdqq.qlogo.cn/g?b=sdk&k=yZS33OlxKNRIzMPpkoicibVQ&s=140&t=1557499476");
+        avatarUrls.add("https://thirdqq.qlogo.cn/g?b=sdk&k=QQaEqIYdUKNnWIibNLZHmOA&s=140&t=1559394052");
+        avatarUrls.add("https://thirdqq.qlogo.cn/g?b=sdk&k=LK5eNqibx3r6E0KrMic0AHcw&s=140&t=1559116973");
+        avatarUrls.add("https://thirdqq.qlogo.cn/g?b=sdk&k=qXbSLYVbMxJVCV1bcVomjQ&s=140&t=1556601812");
+        avatarUrls.add("https://wx.qlogo.cn/mmopen/vi_32/eICicwcoFyDoibicfibDvnKWKibU3RKRjtl7KaA36RavIT3yxVdKNPjox55wPD06wjzFnPJe9a4WTEpTs5AFib0zpItA/132");
+        avatarUrls.add("https://wx.qlogo.cn/mmopen/vi_32/R4DicBy8rqekVokfReoQjmfgZcxBxpmrx2NicHSWfREaI1bvOzsW5iarsK4XzWicvUIzOC4FME7ziaibVNbd5hn33jnw/132");
+        avatarUrls.add("https://thirdqq.qlogo.cn/g?b=sdk&k=0HLlDhp9dUX3IFrXW7mlBA&s=140&t=1556368889");
+        avatarUrls.add("https://thirdqq.qlogo.cn/g?b=sdk&k=6HongicMGXXUhOuu7ftQXibg&s=140&t=1556002201");
+        avatarUrls.add("https://thirdqq.qlogo.cn/g?b=sdk&k=3a9syZSRzhLSIMA7Po1NVg&s=100&t=570");
+        avatarUrls.add("http://thirdwx.qlogo.cn/mmopen/vi_32/W6y4vEtnIePMwb0U2IsPODJ2h9gOvRyDFq9UBsZ1DIY21ibaibMy48uTClCZhyXFLEicSGicBKicRUjW5lKTzT2KzKw/132");
+        avatarUrls.add("https://thirdqq.qlogo.cn/g?b=sdk&k=cuf1FnyicJ1gv3oF2jhlP1Q&s=140&t=1551586128");
+        avatarUrls.add("https://thirdqq.qlogo.cn/g?b=sdk&k=WkqtTmmN3xvEJcVOtSf6fQ&s=140&t=1557471912");
+        avatarUrls.add("https://thirdqq.qlogo.cn/g?b=sdk&k=ibqKh43KldmibAXzibvePYuaw&s=140&t=1574318170");
+        avatarUrls.add("http://thirdwx.qlogo.cn/mmopen/vi_32/PVicNqQMWvC6icb2dlhFzfGTSJ2NZuG5XwTtLiaWnEDT5surPTeJzm2wrJsvpe0FwNtA7n7J2XiaRIKsq0BhzWrn9w/132");
+        avatarUrls.add("https://thirdqq.qlogo.cn/g?b=sdk&k=oC4LIzwKFwbQGSJpFyCnDg&s=140&t=1574831832");
+        avatarUrls.add("https://thirdqq.qlogo.cn/g?b=sdk&k=ogyLKZKic38OSSae0IVjMNw&s=140&t=1555863084");
+
+        comments.add("就喜欢这种讲的很详细的课程.在课程中能学到非常多底层的东西,老师喜欢带着源码分析,非常棒.练习也不少,新来的小伙伴.看基础课程不要太快哦,稳一点,练习做完再点开下一集,收货满满滴.");
+        comments.add("对想进一步学习的人来说，有很好的吸引.了解的更多的是思想。后续课程应该还有很多。");
+        comments.add("老师讲得超级好，是我目前听过的所有网课中最好的");
+        comments.add("详尽,全面,准确,是相当不错的公开课");
+        comments.add("很庆幸自己选择的马士兵老师的课，老师们讲课很条理很清晰，重要的是能讲解学习的思路。自己的工作时间虽然不短了，但是还是欠缺了不少东西，最近找工作一直碰壁，很受打击，但是不管如何都要自己埋头苦学，加油！！！");
+        comments.add("我目前只学习了马老师讲的java基础知识，已经进行到了多线程，课程内容几乎都从程序的运行机制，以及底层的实现原理深入浅出的描述如何学习相应的知识点，真的受益匪浅，我会在这条路上坚定不移的走下去。但愿学有所成。");
+        comments.add("马老师讲的是真的好，职业规划讲的对我起了不小帮助");
+        comments.add("老师讲的非常细、容易明白，学到了一些自己平时没有注意到的地方，蟹蟹！");
+        comments.add("目前听到的最靠谱的公开课，知识点覆盖很全面，教学深入浅出，很容易理解，把复杂的问题抽丝剥茧，足见老师扎实的技术功底，感谢。");
+        comments.add("用尽一切时间打广告！这个培训班很有意思，绝对是吹牛出身的！！每天推送好几次，题目订的挺好的，结果打开永远都是广告！！！");
+        comments.add("老师讲的太棒了，声音洪亮，思路清晰，对待问题细心认真！");
+        comments.add("张老师的课很给力。都是实战经验传授。超五星");
     }
+
+
 
     /**
      * 每隔1钟创建一个视频
@@ -119,5 +175,62 @@ public class Demo {
                 imageUrls.add(elements1.attr("src"));
             }
         }
+    }
+
+    /**
+     * 创建评论
+     * @throws Exception
+     */
+   // @Scheduled(fixedRate =1)
+    public void task1(){
+        if(members.isEmpty()){
+            members = memberService.findAll();
+        }
+        if(lessons.isEmpty()){
+            lessons = lessonService.findAll();
+        }
+        Lesson lesson = lessons.get(new Random().nextInt(lessons.size()));
+        if(lesson!=null){
+            Member member = members.get(new Random().nextInt(comments.size()));
+            if(member==null){
+                return;
+            }
+
+            CourseComment courseComment = new CourseComment();
+            courseComment.setLesson(lesson);
+            courseComment.setCourse(lesson.getCourse());
+            courseComment.setForReview(null);
+            courseComment.setIsShow(true);
+            courseComment.setScore(new Random().nextInt(6));
+            if(courseComment.getScore()==0){
+                courseComment.setScore(1);
+            }
+            courseComment.setContent(comments.get(new Random().nextInt(comments.size())));
+            courseComment.setIp("127.0.0.1");
+            courseComment.setMember(member);
+            courseComment.setReplyReviews(new HashSet<>());
+            courseCommentService.save(courseComment);
+            System.out.println("ok");
+        }
+    }
+
+    /**
+     * 创建评论
+     * @throws Exception
+     */
+    // @Scheduled(fixedRate =100)
+    public void createMember(){
+        Member member = new Member();
+        member.setAmount(BigDecimal.ZERO);
+        member.setBalance(BigDecimal.ZERO);
+        member.setEmail("yunxiaocha_"+(System.currentTimeMillis()%999)+"@qq.com");
+        member.setPassword("123456");
+        member.setPoint(0L);
+        member.setUsername("yunxiaocha_"+(System.currentTimeMillis()%999));
+        member.setMemberRank(memberRankService.findDefault());
+        member.setAvatar(avatarUrls.get(new Random().nextInt(avatarUrls.size())));
+        member.setIsEnabled(true);
+        member.setIsLocked(false);
+        memberService.save(member);
     }
 }
