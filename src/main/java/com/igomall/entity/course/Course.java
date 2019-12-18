@@ -4,6 +4,11 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.igomall.entity.OrderedEntity;
 import com.igomall.entity.teacher.Teacher;
 import org.apache.commons.lang3.ArrayUtils;
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Store;
+import org.apache.commons.lang3.ArrayUtils;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -20,7 +25,7 @@ import java.util.Set;
 public class Course extends OrderedEntity<Long> {
 
     @JsonView(BaseView.class)
-    @Field(store = Store.YES, index = Index.YES, analyze = Analyze.NO)
+    @Field(store = Store.YES, index = Index.NO, analyze = Analyze.NO)
     @Length(max = 100)
     @Pattern(regexp = "^[0-9a-zA-Z_-]+$")
     @Column(nullable = false, updatable = false, unique = true)
