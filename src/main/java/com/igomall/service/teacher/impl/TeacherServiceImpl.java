@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Map;
 
 @Service
 public class TeacherServiceImpl extends BaseServiceImpl<Teacher,Long> implements TeacherService {
@@ -20,5 +21,10 @@ public class TeacherServiceImpl extends BaseServiceImpl<Teacher,Long> implements
     @Override
     public Page<Teacher> findPage(Pageable pageable, String name, Boolean isEnabled, Date beginDate, Date endDate) {
         return teacherDao.findPage(pageable,name,isEnabled,beginDate,endDate);
+    }
+
+    @Override
+    public Map<String, Object> findBySQL(Teacher teacher) {
+        return teacherDao.findBySQL(teacher);
     }
 }

@@ -4,6 +4,7 @@ import com.igomall.controller.admin.BaseController;
 import com.igomall.entity.course.Course;
 import com.igomall.service.course.CourseService;
 import com.igomall.service.course.LessonService;
+import com.igomall.service.teacher.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,8 @@ public class CourseController extends BaseController {
     private CourseService courseService;
     @Autowired
     private LessonService lessonService;
+    @Autowired
+    private TeacherService teacherService;
 
     @PostMapping("/info")
     public Map<String,Object> info(Long id){
@@ -30,6 +33,7 @@ public class CourseController extends BaseController {
         courseMap.put("description",course.getDescription());
         data.put("course",courseMap);
         data.put("lessons",lessonService.findListByCourseSQL(course));
+        data.put("teacher",teacherService.findBySQL(course.getTeacher()));
 
 
 

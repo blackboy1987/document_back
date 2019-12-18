@@ -14,6 +14,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 章节的视频
@@ -58,6 +60,19 @@ public class Lesson extends OrderedEntity<Long> {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
     private Teacher teacher;
+
+    /**
+     * 评论
+     */
+    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private Set<CourseComment> courseComments = new HashSet<>();
+
+    /**
+     * 咨询
+     */
+    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private Set<CourseConsultation> courseConsultations = new HashSet<>();
+
 
     /**
      * 获取编号
@@ -124,6 +139,22 @@ public class Lesson extends OrderedEntity<Long> {
 
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
+    }
+
+    public Set<CourseComment> getCourseComments() {
+        return courseComments;
+    }
+
+    public void setCourseComments(Set<CourseComment> courseComments) {
+        this.courseComments = courseComments;
+    }
+
+    public Set<CourseConsultation> getCourseConsultations() {
+        return courseConsultations;
+    }
+
+    public void setCourseConsultations(Set<CourseConsultation> courseConsultations) {
+        this.courseConsultations = courseConsultations;
     }
 
     @JsonView({ListView.class})

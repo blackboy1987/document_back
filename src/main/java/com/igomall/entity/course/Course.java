@@ -81,6 +81,19 @@ public class Course extends OrderedEntity<Long> {
     @JoinColumn(nullable = false)
     private Teacher teacher;
 
+    /**
+     * 评论
+     */
+    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private Set<CourseComment> courseComments = new HashSet<>();
+
+    /**
+     * 咨询
+     */
+    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private Set<CourseConsultation> courseConsultations = new HashSet<>();
+
+
     public Set<Lesson> getLessons() {
         return lessons;
     }
@@ -178,6 +191,22 @@ public class Course extends OrderedEntity<Long> {
 
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
+    }
+
+    public Set<CourseComment> getCourseComments() {
+        return courseComments;
+    }
+
+    public void setCourseComments(Set<CourseComment> courseComments) {
+        this.courseComments = courseComments;
+    }
+
+    public Set<CourseConsultation> getCourseConsultations() {
+        return courseConsultations;
+    }
+
+    public void setCourseConsultations(Set<CourseConsultation> courseConsultations) {
+        this.courseConsultations = courseConsultations;
     }
 
     @Transient

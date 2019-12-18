@@ -4,6 +4,8 @@ package com.igomall.entity.member;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.igomall.entity.*;
 import com.igomall.entity.course.Course;
+import com.igomall.entity.course.CourseComment;
+import com.igomall.entity.course.CourseConsultation;
 import com.igomall.entity.course.Lesson;
 import com.igomall.util.JsonUtils;
 import org.apache.commons.beanutils.PropertyUtils;
@@ -296,6 +298,21 @@ public class Member extends User {
 	 */
 	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	private Set<LessonFavorite> lessonFavorites = new HashSet<>();
+
+	/**
+	 * 评论
+	 */
+	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	@OrderBy("createdDate desc")
+	private Set<CourseComment> courseComments = new HashSet<>();
+
+	/**
+	 * 咨询
+	 */
+	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	@OrderBy("createdDate desc")
+	private Set<CourseConsultation> courseConsultations = new HashSet<>();
+
 	/**
 	 * 获取用户名
 	 * 
@@ -902,6 +919,22 @@ public class Member extends User {
 
 	public void setLessonFavorites(Set<LessonFavorite> lessonFavorites) {
 		this.lessonFavorites = lessonFavorites;
+	}
+
+	public Set<CourseComment> getCourseComments() {
+		return courseComments;
+	}
+
+	public void setCourseComments(Set<CourseComment> courseComments) {
+		this.courseComments = courseComments;
+	}
+
+	public Set<CourseConsultation> getCourseConsultations() {
+		return courseConsultations;
+	}
+
+	public void setCourseConsultations(Set<CourseConsultation> courseConsultations) {
+		this.courseConsultations = courseConsultations;
 	}
 
 	/**
