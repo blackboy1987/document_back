@@ -59,4 +59,9 @@ public class TeacherRankServiceImpl extends BaseServiceImpl<TeacherRank, Long> i
 	public Page<TeacherRank> findPage(Pageable pageable, String name, Boolean isEnabled, Date beginDate, Date endDate) {
 		return teacherRankDao.findPage(pageable,name,isEnabled,beginDate,endDate);
 	}
+
+	@Override
+	public TeacherRank findByName(String name) {
+		return teacherRankDao.findByName(name);
+	}
 }

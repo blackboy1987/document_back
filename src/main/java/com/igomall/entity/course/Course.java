@@ -1,6 +1,7 @@
 package com.igomall.entity.course;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.igomall.common.BigDecimalNumericFieldBridge;
 import com.igomall.entity.OrderedEntity;
 import com.igomall.entity.teacher.Teacher;
 import org.apache.commons.lang3.ArrayUtils;
@@ -12,6 +13,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -58,6 +60,15 @@ public class Course extends OrderedEntity<Long> {
     @Column(nullable = false,length = 400)
     @JsonView({ListView.class,EditView.class})
     private String image;
+
+    /**
+     * 销售价
+     */
+    @Field(store = Store.YES, index = Index.YES, analyze = Analyze.NO)
+    @NumericField
+    @FieldBridge(impl = BigDecimalNumericFieldBridge.class)
+    @Column(nullable = false, precision = 21, scale = 6)
+    private BigDecimal price;
 
     /**
      * 商品分类
@@ -195,7 +206,6 @@ public class Course extends OrderedEntity<Long> {
      */
     @Column(nullable = false)
     private Date monthSalesDate;
-
 
     /**
      * 获取编号

@@ -24,4 +24,6 @@ public interface TeacherRankService extends BaseService<TeacherRank, Long> {
 	TeacherRank findDefault();
 
 	Page<TeacherRank> findPage(Pageable pageable, String name, Boolean isEnabled, Date beginDate, Date endDate);
+
+	TeacherRank findByName(String name);
 }
