@@ -16,7 +16,7 @@ public class Message {
 	/**
 	 * 类型
 	 */
-	@JsonView({BaseEntity.BaseView.class})
+	@JsonView({BaseEntity.BaseView.class, BaseEntity.IdView.class})
 	public enum Type {
 
 		/**
@@ -43,10 +43,10 @@ public class Message {
 	/**
 	 * 内容
 	 */
-	@JsonView({BaseEntity.BaseView.class})
+	@JsonView({BaseEntity.BaseView.class, BaseEntity.IdView.class})
 	private String content;
 
-	@JsonView({BaseEntity.BaseView.class})
+	@JsonView({BaseEntity.BaseView.class, BaseEntity.IdView.class})
 	private Object data;
 
 	/**

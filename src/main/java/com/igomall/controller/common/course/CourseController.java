@@ -1,5 +1,8 @@
 package com.igomall.controller.common.course;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.igomall.common.Message;
+import com.igomall.common.Pageable;
 import com.igomall.controller.admin.BaseController;
 import com.igomall.entity.course.Course;
 import com.igomall.service.course.CourseCommentService;
@@ -42,8 +45,19 @@ public class CourseController extends BaseController {
         data.put("teacher",teacherService.findBySQL(course.getTeacher()));
         // 评论信息
         data.put("courseComments",courseCommentService.findListBySQL(course));
-
-
         return data;
+    }
+
+    /**
+     * 课程列表
+     * @param pageable
+     *      分页属性
+     * @return
+     *      课程列表
+     */
+    @PostMapping("/list")
+    @JsonView(Course.WebView.class)
+    public Message list(Pageable pageable){
+       return Message.success1("操作成功",courseService.findPage(pageable));
     }
 }

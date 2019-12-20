@@ -75,10 +75,7 @@ public class InitController {
             teacher.setName(name);
             teacher.setTeacherRank(createTeacherRank(teacherRankName));
             teacherService.save(teacher);
-
         }
-
-        System.out.println("====================================");
     }
 
     private TeacherRank createTeacherRank(String teacherRankName){
