@@ -33,6 +33,7 @@ public class Demo {
     public static List<String> comments = new ArrayList<>();
     public static List<Member> members = new ArrayList<>();
     public static List<Lesson> lessons = new ArrayList<>();
+    public static List<String> videoUrls = new ArrayList<>();
 
     @Autowired
     private CourseCategoryService courseCategoryService;
@@ -96,6 +97,25 @@ public class Demo {
         comments.add("用尽一切时间打广告！这个培训班很有意思，绝对是吹牛出身的！！每天推送好几次，题目订的挺好的，结果打开永远都是广告！！！");
         comments.add("老师讲的太棒了，声音洪亮，思路清晰，对待问题细心认真！");
         comments.add("张老师的课很给力。都是实战经验传授。超五星");
+
+        videoUrls.add("http://demo.musiceol.com/426-1/demo/426-1-57.mp4");
+        videoUrls.add("http://demo.musiceol.com/376-1/demo/376-1-2.mp4");
+        videoUrls.add("http://demo.musiceol.com/199-1/demo/199-1-1.mp4");
+        videoUrls.add("http://demo.musiceol.com/681-1/demo/681-1-1.mp4");
+        videoUrls.add("http://demo.musiceol.com/683-1/demo/683-1-1.mp4");
+        videoUrls.add("http://demo.musiceol.com/547-1/demo/547-1-30.mp4");
+        videoUrls.add("http://demo.musiceol.com/414-1/demo/414-1-1.mp4");
+        videoUrls.add("http://demo.musiceol.com/390-1/demo/390-1-25.mp4");
+        videoUrls.add("http://demo.musiceol.com/100-2/demo/100-2-2.mp4");
+        videoUrls.add("http://demo.musiceol.com/667-1/demo/667-1-1.mp4");
+        videoUrls.add("http://demo.musiceol.com/427-1/demo/427-1-3.mp4");
+        videoUrls.add("http://demo.musiceol.com/511-1/demo/511-1-13.mp4");
+        videoUrls.add("http://demo.musiceol.com/500-1/demo/500-1-1.mp4");
+        videoUrls.add("http://demo.musiceol.com/445-1/demo/445-1-29.mp4");
+        videoUrls.add("http://demo.musiceol.com/37-1/demo/37-1-2.mp4");
+        videoUrls.add("http://demo.musiceol.com/570-1/demo/570-1-1.mp4");
+        videoUrls.add("http://demo.musiceol.com/167-1/demo/167-1-1.mp4");
+        videoUrls.add("http://demo.musiceol.com/682-1/demo/682-1-3.mp4");
     }
 
 
@@ -162,7 +182,6 @@ public class Demo {
             }
         }
     }
-
 
     private static void getImageUrls() throws Exception{
         for (int i=1;i<=101;i++){
@@ -232,5 +251,20 @@ public class Demo {
         member.setIsEnabled(true);
         member.setIsLocked(false);
         memberService.save(member);
+    }
+
+
+
+    // @Scheduled(fixedRate =2000)
+    public void createLesson2(){
+        List<Lesson> lessons = lessonService.findAll();
+        Integer i = 0;
+        for (Lesson lesson:lessons) {
+            lesson.setVideoUrl(videoUrls.get((i++)%videoUrls.size()));
+            System.out.println(lesson.getId()+":"+lesson.getVideoUrl());
+            lessonService.update(lesson);
+        }
+
+        System.out.println("==============");
     }
 }
