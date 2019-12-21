@@ -70,4 +70,14 @@ public class TeacherRankDaoImpl extends BaseDaoImpl<TeacherRank, Long> implement
 		criteriaQuery.where(restrictions);
 		return super.findPage(criteriaQuery, pageable);
 	}
+
+	@Override
+	public TeacherRank findByName(String name) {
+		try {
+			String jpql = "select teacherRank from TeacherRank teacherRank where teacherRank.name = :name";
+			return entityManager.createQuery(jpql, TeacherRank.class).setParameter("name", name).getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
 }

@@ -37,4 +37,6 @@ public interface TeacherRankDao extends BaseDao<TeacherRank, Long> {
 	void clearDefault(TeacherRank exclude);
 
 	Page<TeacherRank> findPage(Pageable pageable, String name, Boolean isEnabled, Date beginDate, Date endDate);
+
+	TeacherRank findByName(String name);
 }

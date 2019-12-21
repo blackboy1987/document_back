@@ -1,6 +1,7 @@
 package com.igomall.entity.course;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.igomall.common.BigDecimalNumericFieldBridge;
 import com.igomall.entity.OrderedEntity;
 import com.igomall.entity.teacher.Teacher;
 import org.apache.commons.lang3.ArrayUtils;
@@ -12,6 +13,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -23,7 +25,7 @@ import java.util.Set;
 @Table(name = "edu_course")
 public class Course extends OrderedEntity<Long> {
 
-    @JsonView(BaseView.class)
+    @JsonView({BaseView.class,IdView.class})
     @Field(store = Store.YES, index = Index.NO, analyze = Analyze.NO)
     @Length(max = 100)
     @Pattern(regexp = "^[0-9a-zA-Z_-]+$")
@@ -42,7 +44,7 @@ public class Course extends OrderedEntity<Long> {
     @NotEmpty
     @Length(max = 100)
     @Column(nullable = false,length = 100)
-    @JsonView({ListView.class,EditView.class,AllListView.class})
+    @JsonView({ListView.class,EditView.class,AllListView.class,WebView.class})
     private String title;
 
 
@@ -56,8 +58,18 @@ public class Course extends OrderedEntity<Long> {
     @NotEmpty
     @Length(max = 400)
     @Column(nullable = false,length = 400)
-    @JsonView({ListView.class,EditView.class})
+    @JsonView({ListView.class,EditView.class,WebView.class})
     private String image;
+
+    /**
+     * 销售价
+     */
+    @Field(store = Store.YES, index = Index.YES, analyze = Analyze.NO)
+    @NumericField
+    @FieldBridge(impl = BigDecimalNumericFieldBridge.class)
+    @Column(nullable = false, precision = 21, scale = 6)
+    @JsonView({BaseView.class,WebView.class})
+    private BigDecimal price;
 
     /**
      * 商品分类
@@ -195,7 +207,6 @@ public class Course extends OrderedEntity<Long> {
      */
     @Column(nullable = false)
     private Date monthSalesDate;
-
 
     /**
      * 获取编号
@@ -614,4 +625,5 @@ public class Course extends OrderedEntity<Long> {
     public interface ListView extends BaseView{}
     public interface EditView extends IdView{}
     public interface AllListView extends IdView{}
+    public interface WebView extends IdView{}
 }

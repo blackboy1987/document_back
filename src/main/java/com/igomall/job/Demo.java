@@ -54,7 +54,7 @@ public class Demo {
 
     static {
         try {
-            getImageUrls();
+            // getImageUrls();
         }catch (Exception e){
             e.printStackTrace();
         }

@@ -2,7 +2,6 @@ package com.igomall.entity.course;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.igomall.entity.OrderedEntity;
-import com.igomall.entity.course.Chapter;
 import com.igomall.entity.teacher.Teacher;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
