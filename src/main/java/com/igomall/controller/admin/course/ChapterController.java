@@ -83,4 +83,15 @@ public class ChapterController extends BaseController {
     public List<Chapter> allList(Long courseId,Long partId){
         return chapterService.findList(courseService.find(courseId),partService.find(partId));
     }
+
+    /**
+     * 获取课程下面的chapter
+     * @param courseId
+     * @return
+     */
+    @PostMapping("/all")
+    @JsonView(Chapter.AllView.class)
+    public List<Chapter> all(Long courseId){
+        return chapterService.findList(courseService.find(courseId),null);
+    }
 }

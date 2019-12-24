@@ -621,6 +621,13 @@ public class Course extends OrderedEntity<Long> {
         return null;
     }
 
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
 
     public interface ListView extends BaseView{}
     public interface EditView extends IdView{}

@@ -18,18 +18,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.math.BigDecimal;
-import java.util.Date;
 
 /**
  * Controller - 会员注册
- * 
+ *
  * @author IGOMALL  Team
  * @version 1.0
  */
-@CrossOrigin
 @RestController("memberRegisterController")
-@RequestMapping("/api/member/register")
+@RequestMapping("/api/user/register")
 public class RegisterController extends BaseController {
 
 	@Autowired
@@ -68,24 +65,24 @@ public class RegisterController extends BaseController {
 	/**
 	 * 注册提交
 	 */
-	@PostMapping
-	public Message submit(String username, String password, String email, String mobile, HttpServletRequest request) {
+	@PostMapping("/submit")
+	public Message submit(String username, String password, String mobile, HttpServletRequest request) {
 		Setting setting = SystemUtils.getSetting();
+		String email = username+"@qq.com";
 		if (!ArrayUtils.contains(setting.getAllowedRegisterTypes(), Setting.RegisterType.member)) {
-			return Message.error("系统已关闭注册！");
+			return Message.error("禁止注册");
 		}
-		email = username + "@qq.com";
 		if (!isValid(Member.class, "username", username, BaseEntity.Save.class) || !isValid(Member.class, "password", password, BaseEntity.Save.class) || !isValid(Member.class, "email", email, BaseEntity.Save.class) || !isValid(Member.class, "mobile", mobile, BaseEntity.Save.class)) {
-			return Message.error("参数错误！");
+			return Message.error("参数错误");
 		}
 		if (memberService.usernameExists(username)) {
-			return Message.error("用户名已存在！");
+			return Message.error("用户名已存在");
 		}
 		if (memberService.emailExists(email)) {
-			return Message.error("邮箱已存在！");
+			return Message.error("邮箱已存在");
 		}
 		if (StringUtils.isNotEmpty(mobile) && memberService.mobileExists(mobile)) {
-			return Message.error("手机要已被占用！");
+			return Message.error("手机号已存在");
 		}
 
 		Member member = new Member();
@@ -93,33 +90,21 @@ public class RegisterController extends BaseController {
 		for (MemberAttribute memberAttribute : memberAttributeService.findList(true, true)) {
 			String[] values = request.getParameterValues("memberAttribute_" + memberAttribute.getId());
 			if (!memberAttributeService.isValid(memberAttribute, values)) {
-				return Message.error("参数错误！");
+				return Message.error("参数错误");
 			}
 			Object memberAttributeValue = memberAttributeService.toMemberAttributeValue(memberAttribute, values);
 			member.setAttributeValue(memberAttribute, memberAttributeValue);
 		}
-
+		member.init();
 		member.setUsername(username);
 		member.setPassword(password);
 		member.setEmail(email);
 		member.setMobile(mobile);
-		member.setPoint(0L);
-		member.setBalance(BigDecimal.ZERO);
-		member.setAmount(BigDecimal.ZERO);
-		member.setIsEnabled(true);
-		member.setIsLocked(false);
-		member.setLockDate(null);
 		member.setLastLoginIp(request.getRemoteAddr());
-		member.setLastLoginDate(new Date());
-		member.setSafeKey(null);
 		member.setMemberRank(memberRankService.findDefault());
-		member.setMemberDepositLogs(null);
-		member.setInMessages(null);
-		member.setOutMessages(null);
-		member.setPointLogs(null);
 		userService.register(member);
 		userService.login(new UserAuthenticationToken(Member.class, username, password, false, request.getRemoteAddr()));
-		return Message.success("注册成功！");
+		return Message.success("注册成功");
 	}
 
 }

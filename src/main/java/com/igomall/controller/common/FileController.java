@@ -7,10 +7,7 @@ import com.igomall.controller.admin.BaseController;
 import com.igomall.service.FileService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
@@ -24,10 +21,22 @@ import java.util.Map;
  */
 @RestController("commonFileController")
 @RequestMapping("/common/file")
+@CrossOrigin
 public class FileController extends BaseController {
 
 	@Autowired
 	private FileService fileService;
+
+	/**
+	 * 上传
+	 */
+	@GetMapping("/upload")
+	public @ResponseBody Map<String, Object> upload() {
+		Map<String, Object> data = new HashMap<>();
+		data.put("message", SUCCESS_MESSAGE);
+		data.put("state", "SUCCESS");
+		return data;
+	}
 
 	/**
 	 * 上传

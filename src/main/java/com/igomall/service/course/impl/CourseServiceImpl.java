@@ -4,6 +4,7 @@ import com.igomall.common.Page;
 import com.igomall.common.Pageable;
 import com.igomall.dao.course.CourseDao;
 import com.igomall.entity.course.Course;
+import com.igomall.entity.course.CourseCategory;
 import com.igomall.service.course.CourseService;
 import com.igomall.service.impl.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +31,8 @@ public class CourseServiceImpl extends BaseServiceImpl<Course,Long> implements C
 
     public Page<Course> findPage(Pageable pageable, String title, String description, Date beginDate, Date endDate){
         return courseDao.findPage(pageable,title,description,beginDate,endDate);
+    }
+    public Page<Course> findPage(CourseCategory courseCategory, Boolean isVip, Pageable pageable){
+        return courseDao.findPage(courseCategory, isVip, pageable);
     }
 }

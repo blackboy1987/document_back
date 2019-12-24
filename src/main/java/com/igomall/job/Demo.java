@@ -267,4 +267,25 @@ public class Demo {
 
         System.out.println("==============");
     }
+
+
+   // @Scheduled(fixedRate =1000)
+    public void pingjiaCourse(){
+        List<Course> courses = courseService.findAll();
+        for (Course course:courses) {
+            //course.setScore(new Random().nextFloat());
+           // course.setHits(new Random().nextLong());
+            if(course.getId()%9==0){
+                course.setPrice(new BigDecimal(new Random().nextFloat()*100));
+            }else{
+                course.setPrice(BigDecimal.ZERO);
+            }
+
+            courseService.update(course);
+        }
+
+        System.out.println("==============");
+    }
+
+
 }

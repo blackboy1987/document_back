@@ -5,6 +5,8 @@ import com.igomall.common.Message;
 import com.igomall.common.Pageable;
 import com.igomall.controller.admin.BaseController;
 import com.igomall.entity.course.Course;
+import com.igomall.entity.course.CourseCategory;
+import com.igomall.service.course.CourseCategoryService;
 import com.igomall.service.course.CourseCommentService;
 import com.igomall.service.course.CourseService;
 import com.igomall.service.course.LessonService;
@@ -29,6 +31,8 @@ public class CourseController extends BaseController {
     private TeacherService teacherService;
     @Autowired
     private CourseCommentService courseCommentService;
+    @Autowired
+    private CourseCategoryService courseCategoryService;
 
     @PostMapping("/info")
     public Map<String,Object> info(Long id){
@@ -57,7 +61,10 @@ public class CourseController extends BaseController {
      */
     @PostMapping("/list")
     @JsonView(Course.WebView.class)
-    public Message list(Pageable pageable){
-       return Message.success1("操作成功",courseService.findPage(pageable));
+    public Message list(Pageable pageable,Long courseCategoryId,Boolean isVip){
+        CourseCategory courseCategory = courseCategoryService.find(courseCategoryId);
+
+
+       return Message.success1("操作成功",courseService.findPage(courseCategory,isVip,pageable));
     }
 }

@@ -1163,4 +1163,23 @@ public class Member extends User {
 		setMobile(StringUtils.lowerCase(getMobile()));
 	}
 
+
+	public void init(){
+		setPoint(0L);
+		setBalance(BigDecimal.ZERO);
+		setAmount(BigDecimal.ZERO);
+		setIsEnabled(true);
+		setIsLocked(false);
+		setLockDate(null);
+		setLastLoginDate(new Date());
+		setSafeKey(null);
+		setMemberDepositLogs(null);
+		setCourseComments(null);
+		setCourseConsultations(null);
+		setCourseFavorites(null);
+		setLessonFavorites(null);
+		setInMessages(null);
+		setOutMessages(null);
+		setPointLogs(null);
+	}
 }

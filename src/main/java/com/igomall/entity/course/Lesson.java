@@ -42,18 +42,22 @@ public class Lesson extends OrderedEntity<Long> {
     @NotEmpty
     @Length(max = 100)
     @Column(nullable = false,length = 100)
-    @JsonView({ListView.class,EditView.class})
+    @JsonView({ListView.class,EditView.class, Chapter.AllView.class})
     private String title;
 
     @NotEmpty
     @Column(nullable = false,length = 500)
-    @JsonView({ListView.class,EditView.class})
+    @JsonView({ListView.class,EditView.class, Chapter.AllView.class})
     private String videoUrl;
 
     @NotEmpty
     @Column(nullable = false,length = 500)
-    @JsonView({ListView.class,EditView.class})
+    @JsonView({ListView.class,EditView.class, Chapter.AllView.class})
     private String videoImage;
+
+    @Column(length = 500)
+    @JsonView({ListView.class,EditView.class, Chapter.AllView.class})
+    private String description;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
@@ -72,6 +76,13 @@ public class Lesson extends OrderedEntity<Long> {
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private Set<CourseConsultation> courseConsultations = new HashSet<>();
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     /**
      * 获取编号

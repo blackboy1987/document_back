@@ -41,13 +41,26 @@ public class Chapter extends OrderedEntity<Long> {
 
     @NotEmpty
     @Length(max = 255)
-    @Column(length = 255,nullable = false)
-    @JsonView({ListView.class,EditView.class,AllList.class})
+    @Column(nullable = false)
+    @JsonView({ListView.class,EditView.class,AllList.class,AllView.class})
     private String title;
 
+    @Length(max = 1000)
+    @Column(length = 1000)
+    @JsonView({ListView.class,EditView.class,AllList.class,AllView.class})
+    private String description;
+
     @OneToMany(mappedBy = "chapter",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JsonView({AllView.class})
     private Set<Lesson> lessons = new HashSet<>();
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     /**
      * 获取编号
@@ -164,4 +177,5 @@ public class Chapter extends OrderedEntity<Long> {
     public interface ListView extends BaseView{}
     public interface EditView extends IdView{}
     public interface AllList extends IdView{}
+    public interface AllView extends IdView{}
 }

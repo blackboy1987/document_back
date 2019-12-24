@@ -3,6 +3,7 @@ package com.igomall.service.course;
 import com.igomall.common.Page;
 import com.igomall.common.Pageable;
 import com.igomall.entity.course.Course;
+import com.igomall.entity.course.CourseCategory;
 import com.igomall.service.BaseService;
 
 import java.util.Date;
@@ -28,4 +29,6 @@ public interface CourseService extends BaseService<Course,Long> {
     Course findBySn(String sn);
 
     Page<Course> findPage(Pageable pageable, String title, String description, Date beginDate, Date endDate);
+
+    Page<Course> findPage(CourseCategory courseCategory, Boolean isVip,Pageable pageable);
 }
