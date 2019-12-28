@@ -139,10 +139,46 @@ public class Member extends User {
 	private Long point;
 
 	/**
+	 * 积分
+	 */
+	@Column(nullable = false)
+	private Long point1;
+
+	/**
+	 * 积分
+	 */
+	@Column(nullable = false)
+	private Long point2;
+
+	/**
+	 * 积分
+	 */
+	@Column(nullable = false)
+	private Long point3;
+
+	/**
 	 * 余额
 	 */
 	@Column(nullable = false, precision = 27, scale = 12)
 	private BigDecimal balance;
+
+	/**
+	 * 余额1
+	 */
+	@Column(nullable = false, precision = 27, scale = 12)
+	private BigDecimal balance1;
+
+	/**
+	 * 余额2
+	 */
+	@Column(nullable = false, precision = 27, scale = 12)
+	private BigDecimal balance2;
+
+	/**
+	 * 余额3
+	 */
+	@Column(nullable = false, precision = 27, scale = 12)
+	private BigDecimal balance3;
 
 	/**
 	 * 消费金额
@@ -435,6 +471,30 @@ public class Member extends User {
 		this.point = point;
 	}
 
+	public Long getPoint1() {
+		return point1;
+	}
+
+	public void setPoint1(Long point1) {
+		this.point1 = point1;
+	}
+
+	public Long getPoint2() {
+		return point2;
+	}
+
+	public void setPoint2(Long point2) {
+		this.point2 = point2;
+	}
+
+	public Long getPoint3() {
+		return point3;
+	}
+
+	public void setPoint3(Long point3) {
+		this.point3 = point3;
+	}
+
 	/**
 	 * 获取余额
 	 * 
@@ -452,6 +512,31 @@ public class Member extends User {
 	 */
 	public void setBalance(BigDecimal balance) {
 		this.balance = balance;
+	}
+
+
+	public BigDecimal getBalance1() {
+		return balance1;
+	}
+
+	public void setBalance1(BigDecimal balance1) {
+		this.balance1 = balance1;
+	}
+
+	public BigDecimal getBalance2() {
+		return balance2;
+	}
+
+	public void setBalance2(BigDecimal balance2) {
+		this.balance2 = balance2;
+	}
+
+	public BigDecimal getBalance3() {
+		return balance3;
+	}
+
+	public void setBalance3(BigDecimal balance3) {
+		this.balance3 = balance3;
 	}
 
 	/**
@@ -1166,7 +1251,13 @@ public class Member extends User {
 
 	public void init(){
 		setPoint(0L);
+		setPoint1(0L);
+		setPoint2(0L);
+		setPoint3(0L);
 		setBalance(BigDecimal.ZERO);
+		setBalance1(BigDecimal.ZERO);
+		setBalance2(BigDecimal.ZERO);
+		setBalance3(BigDecimal.ZERO);
 		setAmount(BigDecimal.ZERO);
 		setIsEnabled(true);
 		setIsLocked(false);
