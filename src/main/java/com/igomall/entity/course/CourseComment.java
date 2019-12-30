@@ -44,6 +44,7 @@ public class CourseComment extends BaseEntity<Long> {
     @Min(1)
     @Max(5)
     @Column(nullable = false, updatable = false)
+    @JsonView({ListView.class})
     private Integer score;
 
     /**
@@ -52,6 +53,7 @@ public class CourseComment extends BaseEntity<Long> {
     @NotEmpty
     @Length(max = 200)
     @Column(nullable = false, updatable = false)
+    @JsonView({ListView.class})
     private String content;
 
     /**
@@ -92,7 +94,7 @@ public class CourseComment extends BaseEntity<Long> {
     /**
      * 回复
      */
-    @JsonView(BaseView.class)
+    @JsonView(ListView.class)
     @OneToMany(mappedBy = "forReview", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @OrderBy("createdDate asc")
     private Set<CourseComment> replyReviews = new HashSet<>();
@@ -274,4 +276,25 @@ public class CourseComment extends BaseEntity<Long> {
     public void setForReview(CourseComment forReview) {
         this.forReview = forReview;
     }
+
+    @Transient
+    @JsonView({ListView.class})
+    public String getUsername(){
+        if(member!=null){
+            return member.getUsername();
+        }
+        return null;
+    }
+
+    @Transient
+    @JsonView({ListView.class})
+    public String getAvatar(){
+        if(member!=null){
+            return member.getAvatar();
+        }
+        return null;
+    }
+
+
+    public interface ListView extends IdView{}
 }

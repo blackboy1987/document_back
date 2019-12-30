@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.File;
 import java.util.*;
 
 @RestController("apiCourseController")
@@ -75,5 +76,20 @@ public class CourseController extends BaseController {
 
 
        return Message.success1("操作成功",courseService.findPage(courseCategory,isVip,pageable));
+    }
+
+    @PostMapping("/create")
+    public Message create(){
+        String courseTitle = "JQuery基础教程";
+        String path = "/Volumes/blackboy/百度云/传智播客全套/01.最新整理49期JAVA基础加就业班全套视频主要看/05.JQuery(共18集)/视频";
+        File parent = new File(path);
+        File[] files = parent.listFiles();
+        System.out.println(files.length);
+
+        return Message.success("aa");
+    }
+
+    public static void main(String[] args) {
+        new CourseController().create();
     }
 }

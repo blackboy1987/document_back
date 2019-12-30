@@ -30,8 +30,10 @@ public class IndexController extends BaseController {
 	@PostMapping("/currentUser")
 	public Map<String,Object> currentUser(@CurrentUser Member member){
 		Map<String,Object> data = new HashMap<>();
-
-		System.out.println(member);
+		data.put("username",member.getUsername());
+		data.put("avatar",member.getAvatar());
+		data.put("name",member.getName());
+		data.put("id",member.getId());
 		return data;
 	}
 
