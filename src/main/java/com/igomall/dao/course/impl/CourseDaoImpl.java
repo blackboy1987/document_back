@@ -1,5 +1,7 @@
 package com.igomall.dao.course.impl;
 
+import com.igomall.common.Filter;
+import com.igomall.common.Order;
 import com.igomall.common.Page;
 import com.igomall.common.Pageable;
 import com.igomall.dao.course.CourseDao;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.criteria.*;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Repository
 public class CourseDaoImpl extends BaseDaoImpl<Course,Long> implements CourseDao {
@@ -62,5 +65,23 @@ public class CourseDaoImpl extends BaseDaoImpl<Course,Long> implements CourseDao
         }
         criteriaQuery.where(restrictions);
         return super.findPage(criteriaQuery, pageable);
+    }
+
+    @Override
+    public List<Course> findList(CourseCategory courseCategory, Integer first, Integer count, List<Filter> filters, List<Order> orders) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Course> criteriaQuery = criteriaBuilder.createQuery(Course.class);
+        Root<Course> root = criteriaQuery.from(Course.class);
+        criteriaQuery.select(root);
+        Predicate restrictions = criteriaBuilder.conjunction();
+        if (courseCategory != null) {
+            Subquery<CourseCategory> subquery = criteriaQuery.subquery(CourseCategory.class);
+            Root<CourseCategory> subqueryRoot = subquery.from(CourseCategory.class);
+            subquery.select(subqueryRoot);
+            subquery.where(criteriaBuilder.or(criteriaBuilder.equal(subqueryRoot, courseCategory), criteriaBuilder.like(subqueryRoot.get("treePath"), "%" + CourseCategory.TREE_PATH_SEPARATOR + courseCategory.getId() + CourseCategory.TREE_PATH_SEPARATOR + "%")));
+            restrictions = criteriaBuilder.and(restrictions, criteriaBuilder.in(root.get("courseCategory")).value(subquery));
+        }
+        criteriaQuery.where(restrictions);
+        return super.findList(criteriaQuery,first,count,filters,orders);
     }
 }

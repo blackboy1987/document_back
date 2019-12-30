@@ -1,5 +1,7 @@
 package com.igomall.service.course.impl;
 
+import com.igomall.common.Filter;
+import com.igomall.common.Order;
 import com.igomall.common.Page;
 import com.igomall.common.Pageable;
 import com.igomall.dao.course.CourseDao;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class CourseServiceImpl extends BaseServiceImpl<Course,Long> implements CourseService {
@@ -34,5 +37,10 @@ public class CourseServiceImpl extends BaseServiceImpl<Course,Long> implements C
     }
     public Page<Course> findPage(CourseCategory courseCategory, Boolean isVip, Pageable pageable){
         return courseDao.findPage(courseCategory, isVip, pageable);
+    }
+
+    @Override
+    public List<Course> findList(CourseCategory courseCategory, Integer first, Integer count, List<Filter> filters, List<Order> orders) {
+        return courseDao.findList(courseCategory,first,count,filters,orders);
     }
 }
