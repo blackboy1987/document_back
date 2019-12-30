@@ -2,6 +2,7 @@ package com.igomall.config;
 
 import com.igomall.entity.Admin;
 import com.igomall.entity.Permission;
+import com.igomall.entity.member.Member;
 import com.igomall.security.AuthenticationFilter;
 import com.igomall.security.AuthorizingRealm;
 import com.igomall.security.LogoutFilter;
@@ -42,6 +43,8 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/admin/currentUser","anon");
         filterChainDefinitionMap.put("/admin/login","adminAuthc");
         filterChainDefinitionMap.put("/admin/logout","logout");
+
+
         List<Permission> permissions = permissionService.findAll();
         for (Permission permission:permissions) {
             Map<String,String> permissions1 = permission.getPermissions();
@@ -54,6 +57,7 @@ public class ShiroConfig {
         Map<String, Filter > filters = new HashMap<>();
 
         filters.put("adminAuthc",adminAuthc());
+
         filters.put("logout",new LogoutFilter());
         shiroFilterFactoryBean.setFilters(filters);
 
@@ -90,6 +94,16 @@ public class ShiroConfig {
         authenticationFilter.setSuccessUrl("/admin/index");
         return authenticationFilter;
     }
+
+    @Bean
+    public AuthenticationFilter memberAuthc(){
+        AuthenticationFilter authenticationFilter = new AuthenticationFilter();
+        authenticationFilter.setUserClass(Member.class);
+        authenticationFilter.setLoginUrl("/member/login");
+        authenticationFilter.setSuccessUrl("/member/index");
+        return authenticationFilter;
+    }
+
 
 
     @Bean

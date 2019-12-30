@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/teacher_rank")
+@RequestMapping("/admin/api/teacher_rank")
 public class TeacherRankController extends BaseController {
 
     @Autowired

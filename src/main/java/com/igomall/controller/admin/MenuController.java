@@ -24,7 +24,7 @@ import java.util.List;
  * @version 1.0
  */
 @RestController("adminMenuController")
-@RequestMapping("/admin/menu")
+@RequestMapping("/admin/api/menu")
 public class MenuController extends BaseController {
 
 	@Autowired

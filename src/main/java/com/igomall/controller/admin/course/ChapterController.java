@@ -18,8 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/chapter")
+@RestController("/admin/api/chapter")
 public class ChapterController extends BaseController {
 
     @Autowired

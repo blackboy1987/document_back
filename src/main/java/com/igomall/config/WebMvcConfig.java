@@ -2,6 +2,7 @@ package com.igomall.config;
 
 import com.igomall.audit.AuditLogMethodArgumentResolver;
 import com.igomall.entity.Admin;
+import com.igomall.interceptor.AdminLoginInterceptor;
 import com.igomall.interceptor.CorsInterceptor;
 import com.igomall.interceptor.LoginInterceptor;
 import com.igomall.interceptor.ValidateLoginInterceptor;
@@ -33,17 +34,28 @@ public class WebMvcConfig implements WebMvcConfigurer {
         return loginInterceptor;
     }
 
+    @Bean
+    public AdminLoginInterceptor adminLoginInterceptor() {
+        AdminLoginInterceptor adminLoginInterceptor = new AdminLoginInterceptor();
+        return adminLoginInterceptor;
+    }
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(corsInterceptor())
                 .addPathPatterns("/**");
-        /*registry.addInterceptor(loginInterceptor())
-                .addPathPatterns("/api/**","/admin/**")
-                .excludePathPatterns("/api/login","/api/logout","/admin/login","/common/**");*/
+
+        registry.addInterceptor(loginInterceptor())
+                .addPathPatterns("/member/api/**")
+                .excludePathPatterns("/member/api/login","/member/api/logout","/common/**");
+
+        registry.addInterceptor(adminLoginInterceptor())
+                .addPathPatterns("/admin/api/**")
+                .excludePathPatterns("/admin/api/login","/admin/api/logout","/common/**");
 
 
-        /*registry.addInterceptor(currentUserHandlerInterceptor())
-                .addPathPatterns("/admin/**");*/
+        registry.addInterceptor(currentUserHandlerInterceptor())
+                .addPathPatterns("/admin/**");
 
     }
 

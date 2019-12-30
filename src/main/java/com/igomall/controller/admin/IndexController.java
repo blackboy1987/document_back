@@ -20,7 +20,7 @@ import java.util.Map;
  * @version 1.0
  */
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("//admin/api")
 public class IndexController {
 
 	/**

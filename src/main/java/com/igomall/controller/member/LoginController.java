@@ -23,7 +23,7 @@ import java.util.Map;
  * @version 1.0
  */
 @RestController("memberLoginController")
-@RequestMapping("/api/member/login")
+@RequestMapping("/member/api/login")
 public class LoginController extends BaseController {
 
 	@Autowired

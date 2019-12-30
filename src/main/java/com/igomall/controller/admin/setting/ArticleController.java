@@ -25,7 +25,7 @@ import java.util.HashSet;
  * @version 1.0
  */
 @RestController("adminArticleController")
-@RequestMapping("/article")
+@RequestMapping("/admin/api/article")
 public class ArticleController extends BaseController {
 
 	@Autowired

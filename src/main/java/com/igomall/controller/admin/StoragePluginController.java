@@ -17,7 +17,7 @@ import java.util.List;
  * @version 1.0
  */
 @RestController("adminStoragePluginController")
-@RequestMapping("/api/storage_plugin")
+@RequestMapping("/admin/api/storage_plugin")
 public class StoragePluginController extends BaseController {
 
 	@Autowired

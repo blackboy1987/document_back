@@ -19,7 +19,7 @@ import java.util.HashSet;
 import java.util.List;
 
 @RestController
-@RequestMapping("/teacher")
+@RequestMapping("/admin/api/teacher")
 public class TeacherController extends BaseController {
 
     @Autowired

@@ -28,7 +28,7 @@ import java.util.*;
  * @version 1.0
  */
 @RestController("adminPermissionController")
-@RequestMapping("/admin/permission")
+@RequestMapping("/admin/api/permission")
 public class PermissionController extends BaseController {
 
 	@Autowired

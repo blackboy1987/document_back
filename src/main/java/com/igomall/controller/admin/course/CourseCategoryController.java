@@ -21,7 +21,7 @@ import java.util.Set;
  * @version 1.0
  */
 @RestController("adminCourseCategoryController")
-@RequestMapping("/course_category")
+@RequestMapping("/admin/api/course_category")
 public class CourseCategoryController extends BaseController {
 
 	@Autowired

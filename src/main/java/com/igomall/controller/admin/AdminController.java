@@ -30,7 +30,7 @@ import java.util.Map;
  * @version 1.0
  */
 @RestController
-@RequestMapping("/admin/admin")
+@RequestMapping("/admin/api/admin")
 public class AdminController extends BaseController {
 
 	@Autowired

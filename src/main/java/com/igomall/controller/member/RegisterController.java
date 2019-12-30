@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
  * @version 1.0
  */
 @RestController("memberRegisterController")
-@RequestMapping("/api/user/register")
+@RequestMapping("/member/api/register")
 public class RegisterController extends BaseController {
 
 	@Autowired

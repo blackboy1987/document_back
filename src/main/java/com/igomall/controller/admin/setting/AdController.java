@@ -5,10 +5,7 @@ import com.igomall.controller.admin.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.igomall.common.Message;
@@ -23,8 +20,8 @@ import com.igomall.service.setting.AdService;
  * @author IGOMALL  Team
  * @version 1.0
  */
-@Controller("adminAdController")
-@RequestMapping("/admin/ad")
+@RestController("adminAdController")
+@RequestMapping("/admin/api/ad")
 public class AdController extends BaseController {
 
 	@Autowired

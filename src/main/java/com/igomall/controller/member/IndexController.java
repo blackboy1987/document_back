@@ -24,7 +24,7 @@ import java.util.Map;
  * @version 1.0
  */
 @RestController("memberIndexController")
-@RequestMapping("/api")
+@RequestMapping("/member/api")
 public class IndexController extends BaseController {
 
 	@PostMapping("/currentUser")
