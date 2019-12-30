@@ -1,20 +1,16 @@
 
 package com.igomall.controller.admin.setting;
 
-import com.igomall.controller.admin.BaseController;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.igomall.common.Message;
+import com.igomall.common.Page;
 import com.igomall.common.Pageable;
+import com.igomall.controller.admin.BaseController;
 import com.igomall.entity.setting.AdPosition;
 import com.igomall.service.setting.AdPositionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * Controller - 广告位
@@ -23,68 +19,58 @@ import com.igomall.service.setting.AdPositionService;
  * @version 1.0
  */
 @Controller("adminAdPositionController")
-@RequestMapping("/admin/ad_position")
+@RequestMapping("/admin/api/ad_position")
 public class AdPositionController extends BaseController {
 
 	@Autowired
 	private AdPositionService adPositionService;
 
 	/**
-	 * 添加
-	 */
-	@GetMapping("/add")
-	public String add(ModelMap model) {
-		return "admin/ad_position/add";
-	}
-
-	/**
 	 * 保存
 	 */
 	@PostMapping("/save")
-	public String save(AdPosition adPosition, RedirectAttributes redirectAttributes) {
+	public Message save(AdPosition adPosition) {
 		if (!isValid(adPosition)) {
-			return ERROR_VIEW;
+			return Message.success("参数错误");
 		}
 		adPosition.setAds(null);
 		adPositionService.save(adPosition);
-		return "redirect:list";
+		return Message.success("操作成功");
 	}
 
 	/**
 	 * 编辑
 	 */
-	@GetMapping("/edit")
-	public String edit(Long id, ModelMap model) {
-		model.addAttribute("adPosition", adPositionService.find(id));
-		return "admin/ad_position/edit";
+	@PostMapping("/edit")
+	public AdPosition edit(Long id) {
+		return adPositionService.find(id);
 	}
 
 	/**
 	 * 更新
 	 */
 	@PostMapping("/update")
-	public String update(AdPosition adPosition, RedirectAttributes redirectAttributes) {
+	public Message update(AdPosition adPosition) {
 		if (!isValid(adPosition)) {
-			return ERROR_VIEW;
+			return Message.success("参数错误");
 		}
 		adPositionService.update(adPosition, "ads");
-		return "redirect:list";
+		return Message.success("操作成功");
 	}
 
 	/**
 	 * 列表
 	 */
-	@GetMapping("/list")
-	public String list(Pageable pageable, ModelMap model) {
-		model.addAttribute("page", adPositionService.findPage(pageable));
-		return "admin/ad_position/list";
+	@PostMapping("/list")
+	public Page <AdPosition> list(Pageable pageable) {
+		return adPositionService.findPage(pageable);
 	}
 
 	/**
 	 * 删除
 	 */
 	@PostMapping("/delete")
-	public @ResponseBody Message delete(Long[] ids) {
+	public Message delete(Long[] ids) {
 		adPositionService.delete(ids);
 		return SUCCESS_MESSAGE;
 	}

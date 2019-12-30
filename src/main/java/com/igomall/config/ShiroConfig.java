@@ -49,7 +49,7 @@ public class ShiroConfig {
                 filterChainDefinitionMap.put(key,"adminAuthc,perms["+permissions1.get(key)+"]");
             }
         }
-        filterChainDefinitionMap.put("/admin/**","adminAuthc");
+       // filterChainDefinitionMap.put("/admin/**","adminAuthc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         Map<String, Filter > filters = new HashMap<>();
 
