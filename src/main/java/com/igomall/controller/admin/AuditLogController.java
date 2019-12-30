@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
  * @version 1.0
  */
 @RestController("adminAuditLogController")
-@RequestMapping("/audit_log")
+@RequestMapping("/admin/api/audit_log")
 public class AuditLogController extends BaseController {
 
 	@Autowired

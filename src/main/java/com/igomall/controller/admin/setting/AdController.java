@@ -9,9 +9,9 @@ import com.igomall.entity.setting.Ad;
 import com.igomall.service.setting.AdPositionService;
 import com.igomall.service.setting.AdService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Controller - 广告
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author IGOMALL  Team
  * @version 1.0
  */
-@Controller("adminAdController")
+@RestController("adminAdController")
 @RequestMapping("/admin/api/ad")
 public class AdController extends BaseController {
 

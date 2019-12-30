@@ -24,7 +24,7 @@ import java.util.List;
  * @version 1.0
  */
 @RestController("adminRoleController")
-@RequestMapping("/admin/role")
+@RequestMapping("/admin/api/role")
 public class RoleController extends BaseController {
 
 	@Autowired

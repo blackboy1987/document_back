@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/part")
+@RequestMapping("/admin/api/part")
 public class PartController extends BaseController {
 
     @Autowired

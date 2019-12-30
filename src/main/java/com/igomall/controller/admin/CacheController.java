@@ -17,7 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  * @version 1.0
  */
 @RestController("adminCacheController")
-@RequestMapping("/cache")
+@RequestMapping("/admin/api/cache")
 public class CacheController extends BaseController {
 
 	@Autowired

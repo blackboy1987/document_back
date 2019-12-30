@@ -22,7 +22,7 @@ import java.util.Map;
  * @version 1.0
  */
 @RestController("adminFileController")
-@RequestMapping("/file")
+@RequestMapping("/admin/api/file")
 public class FileController extends BaseController {
 
 	@Autowired

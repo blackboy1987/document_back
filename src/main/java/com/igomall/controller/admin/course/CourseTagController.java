@@ -20,7 +20,7 @@ import java.util.HashSet;
  * @version 1.0
  */
 @RestController("adminCourseTagController")
-@RequestMapping("/course_tag")
+@RequestMapping("/admin/api/course_tag")
 public class CourseTagController extends BaseController {
 
 	@Autowired

@@ -21,7 +21,7 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
  * @version 1.0
  */
 @RestController("adminTemplateController")
-@RequestMapping("/template")
+@RequestMapping("/admin/api/template")
 public class TemplateController extends BaseController {
 
 	@Autowired

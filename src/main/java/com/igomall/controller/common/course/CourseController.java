@@ -6,6 +6,7 @@ import com.igomall.common.Pageable;
 import com.igomall.controller.admin.BaseController;
 import com.igomall.entity.course.Course;
 import com.igomall.entity.course.CourseCategory;
+import com.igomall.entity.course.CourseTag;
 import com.igomall.service.course.CourseCategoryService;
 import com.igomall.service.course.CourseCommentService;
 import com.igomall.service.course.CourseService;
@@ -16,8 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @RestController("apiCourseController")
 @RequestMapping("/api/course")
@@ -35,12 +35,21 @@ public class CourseController extends BaseController {
     private CourseCategoryService courseCategoryService;
 
     @PostMapping("/info")
-    public Map<String,Object> info(Long id){
+    public Map<String,Object> info(String sn){
         Map<String,Object> data = new HashMap<>();
-        Course course = courseService.find(id);
+        Course course = courseService.findBySn(sn);
         Map<String,Object> courseMap = new HashMap<>();
         courseMap.put("title",course.getTitle());
         courseMap.put("description",course.getDescription());
+        courseMap.put("price",course.getPrice());
+        courseMap.put("teacher",course.getTeacher().getName());
+        Set<CourseTag> courseTags = course.getCourseTags();
+        List<String> tags = new ArrayList<>();
+        for (CourseTag courseTag:courseTags) {
+            tags.add(courseTag.getName());
+        }
+        courseMap.put("tags",tags);
+        courseMap.put("image",course.getImage());
         // 课程信息
         data.put("course",courseMap);
         // 视频列表

@@ -23,7 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  * @version 1.0
  */
 @RestController("adminstingController")
-@RequestMapping("/setting")
+@RequestMapping("/admin/api/setting")
 public class SettingController extends BaseController {
 
 	@Autowired

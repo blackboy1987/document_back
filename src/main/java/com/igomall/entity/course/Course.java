@@ -25,7 +25,7 @@ import java.util.Set;
 @Table(name = "edu_course")
 public class Course extends OrderedEntity<Long> {
 
-    @JsonView({BaseView.class,IdView.class})
+    @JsonView({BaseView.class,IdView.class,CommonView.class})
     @Field(store = Store.YES, index = Index.NO, analyze = Analyze.NO)
     @Length(max = 100)
     @Pattern(regexp = "^[0-9a-zA-Z_-]+$")
@@ -44,7 +44,7 @@ public class Course extends OrderedEntity<Long> {
     @NotEmpty
     @Length(max = 100)
     @Column(nullable = false,length = 100)
-    @JsonView({ListView.class,EditView.class,AllListView.class,WebView.class})
+    @JsonView({ListView.class,EditView.class,AllListView.class,WebView.class,CommonView.class})
     private String title;
 
 
@@ -58,7 +58,7 @@ public class Course extends OrderedEntity<Long> {
     @NotEmpty
     @Length(max = 400)
     @Column(nullable = false,length = 400)
-    @JsonView({ListView.class,EditView.class,WebView.class})
+    @JsonView({ListView.class,EditView.class,WebView.class,CommonView.class})
     private String image;
 
     /**
@@ -68,7 +68,7 @@ public class Course extends OrderedEntity<Long> {
     @NumericField
     @FieldBridge(impl = BigDecimalNumericFieldBridge.class)
     @Column(nullable = false, precision = 21, scale = 6)
-    @JsonView({BaseView.class,WebView.class})
+    @JsonView({BaseView.class,WebView.class,CommonView.class})
     private BigDecimal price;
 
     /**

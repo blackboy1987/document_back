@@ -19,7 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/course")
+@RequestMapping("/admin/api/course")
 public class CourseController extends BaseController {
 
     @Autowired

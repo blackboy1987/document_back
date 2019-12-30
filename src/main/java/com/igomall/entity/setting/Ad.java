@@ -8,6 +8,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.igomall.entity.BaseEntity;
 import com.igomall.entity.OrderedEntity;
 import org.hibernate.validator.constraints.Length;
 
@@ -65,6 +67,7 @@ public class Ad extends OrderedEntity<Long> {
 	 */
 	@Length(max = 200)
 	@Pattern(regexp = "^(?i)(http:\\/\\/|https:\\/\\/|\\/).*$")
+	@JsonView({BaseEntity.CommonView.class})
 	private String path;
 
 	/**
