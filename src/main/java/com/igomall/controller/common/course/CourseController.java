@@ -41,6 +41,7 @@ public class CourseController extends BaseController {
         Course course = courseService.findBySn(sn);
         Map<String,Object> courseMap = new HashMap<>();
         courseMap.put("title",course.getTitle());
+        courseMap.put("sn",course.getSn());
         courseMap.put("description",course.getDescription());
         courseMap.put("price",course.getPrice());
         courseMap.put("teacher",course.getTeacher().getName());

@@ -39,7 +39,7 @@ public class LoginController extends BaseController {
 	@PostMapping
 	public ResponseEntity<?> index(HttpServletRequest request, String username, String password, String type) {
 		Map<String,Object> data = new HashMap<>();
-		data.put("code",299);
+		data.put("code",999);
 		return ResponseEntity.ok(data);
 	}
 }

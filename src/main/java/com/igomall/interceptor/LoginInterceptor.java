@@ -24,7 +24,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			response.setContentType("application/json");
 			Map<String, Object> data = new HashMap<>();
 			data.put("message", Message.error("请先登录"));
-			response.setStatus(299);
+			response.setStatus(999);
 			return false;
 		}
 		return true;

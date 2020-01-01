@@ -16,6 +16,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+
 @RestController("memberAnswerController")
 @RequestMapping("/member/api/answer")
 public class AnswerController extends BaseController {
@@ -27,12 +31,17 @@ public class AnswerController extends BaseController {
     @Autowired
     private LessonService lessonService;
 
-    public Message save(Answer answer, @CurrentUser Member member,Long courseId,Long lessonId){
+    @PostMapping("/save")
+    public Message save(Answer answer, @CurrentUser Member member,String courseSn,Long lessonId){
         answer.setMember(member);
-        answer.setCourse(courseService.find(courseId));
+        answer.setCourse(courseService.findBySn(courseSn));
         answer.setLesson(lessonService.find(lessonId));
-        if(isValid(answer)){
+        if(!isValid(answer)){
             return Message.error("参数错误");
+        }
+        // 检测当前账号的爱豆余额够不够。如果不够，提示余额不足。
+        if(member.getPoint().compareTo(10L)<0){
+            return Message.error("爱豆余额不足");
         }
         answerService.save(answer);
         return SUCCESS_MESSAGE;

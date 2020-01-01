@@ -30,7 +30,7 @@ public class IndexController {
 	public Map<String,Object> currentUser(@CurrentUser Admin admin) {
 		Map<String,Object> data = new HashMap<>();
 		if(admin==null){
-			data.put("code",299);
+			data.put("code",999);
 		}else{
 			data.put("id",admin.getId());
 			data.put("name",admin.getName());
