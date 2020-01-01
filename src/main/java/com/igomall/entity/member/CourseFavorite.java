@@ -25,6 +25,11 @@ public class CourseFavorite extends BaseEntity<Long> {
 	private static final long serialVersionUID = 2540556338075542780L;
 
 	/**
+	 * 最大商品收藏数量
+	 */
+	public static final Integer MAX_COURSE_FAVORITE_SIZE = 999;
+
+	/**
 	 * 会员
 	 */
 	@JsonView(BaseView.class)

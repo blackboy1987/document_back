@@ -1,12 +1,12 @@
 
-package com.igomall.entity;
+package com.igomall.entity.member;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.*;
 
-import com.igomall.entity.member.Member;
+import com.igomall.entity.BaseEntity;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 

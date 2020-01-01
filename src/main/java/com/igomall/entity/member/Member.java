@@ -3,10 +3,8 @@ package com.igomall.entity.member;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.igomall.entity.*;
-import com.igomall.entity.course.Course;
 import com.igomall.entity.course.CourseComment;
 import com.igomall.entity.course.CourseConsultation;
-import com.igomall.entity.course.Lesson;
 import com.igomall.util.JsonUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.codec.digest.DigestUtils;

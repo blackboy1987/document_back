@@ -103,6 +103,20 @@ public class Course extends OrderedEntity<Long> {
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private Set<CourseConsultation> courseConsultations = new HashSet<>();
 
+    /**
+     * 点击数缓存名称
+     */
+    public static final String HITS_CACHE_NAME = "coursetHits";
+
+    /**
+     * 属性值属性个数
+     */
+    public static final int ATTRIBUTE_VALUE_PROPERTY_COUNT = 20;
+
+    /**
+     * 属性值属性名称前缀
+     */
+    public static final String ATTRIBUTE_VALUE_PROPERTY_NAME_PREFIX = "attributeValue";
 
     public Set<Lesson> getLessons() {
         return lessons;
@@ -584,6 +598,68 @@ public class Course extends OrderedEntity<Long> {
         this.monthSalesDate = monthSalesDate;
     }
 
+    /**
+     * 是否上架
+     */
+    @Field(store = Store.YES, index = Index.YES, analyze = Analyze.NO)
+    @NotNull
+    @Column(nullable = false)
+    private Boolean isMarketable;
+
+    /**
+     * 是否列出
+     */
+    @Field(store = Store.YES, index = Index.YES, analyze = Analyze.NO)
+    @NotNull
+    @Column(nullable = false)
+    private Boolean isList;
+
+    /**
+     * 是否置顶
+     */
+    @Field(store = Store.YES, index = Index.YES, analyze = Analyze.NO)
+    @NotNull
+    @Column(nullable = false)
+    private Boolean isTop;
+
+    public Boolean getIsMarketable() {
+        return isMarketable;
+    }
+
+    public void setIsMarketable(Boolean isMarketable) {
+        this.isMarketable = isMarketable;
+    }
+
+    public Boolean getIsList() {
+        return isList;
+    }
+
+    public void setIsList(Boolean isList) {
+        this.isList = isList;
+    }
+
+    public Boolean getIsTop() {
+        return isTop;
+    }
+
+    public void setIsTop(Boolean isTop) {
+        this.isTop = isTop;
+    }
+
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
+    }
+
+    /**
+     * 是否有效
+     */
+    @Field(store = Store.YES, index = Index.YES, analyze = Analyze.NO)
+    @Column(nullable = false)
+    private Boolean isActive;
 
     @Transient
     @JsonView({ListView.class})
