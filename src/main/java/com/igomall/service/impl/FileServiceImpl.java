@@ -185,7 +185,12 @@ public class FileServiceImpl implements FileService {
 				File tempFile = new File(FileUtils.getTempDirectory(), UUID.randomUUID() + ".tmp");
 				multipartFile.transferTo(tempFile);
 				File largeTempFile = new File(FileUtils.getTempDirectory(), UUID.randomUUID() + "." + FilenameUtils.getExtension(multipartFile.getOriginalFilename()));
-				ImageUtils.zoom(tempFile, largeTempFile, setting.getLargeProductImageWidth(), setting.getLargeProductImageHeight());
+
+				if(StringUtils.equalsIgnoreCase("avatar",type)){
+					ImageUtils.zoom(tempFile, largeTempFile, 100, 100);
+				}
+
+
 				FileUtils.deleteQuietly(tempFile);
 				String contentType = multipartFile.getContentType();
 				if (async) {
