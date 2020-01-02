@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import com.igomall.util.ImageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.ServletContext;
 
@@ -156,6 +157,51 @@ public class FileServiceImpl implements FileService {
 		return null;
 	}
 
+
+	@Override
+	public String upload(FileType fileType, MultipartFile multipartFile, boolean async,String type) {
+		Assert.notNull(fileType,"");
+		Assert.notNull(multipartFile,"");
+		Assert.state(!multipartFile.isEmpty(),"");
+
+		Setting setting = SystemUtils.getSetting();
+		String uploadPath;
+		Map<String, Object> model = new HashMap<>();
+		model.put("uuid", UUID.randomUUID().toString());
+		switch (fileType) {
+			case media:
+				uploadPath = setting.resolveMediaUploadPath(model);
+				break;
+			case file:
+				uploadPath = setting.resolveFileUploadPath(model);
+				break;
+			default:
+				uploadPath = setting.resolveImageUploadPath(model);
+				break;
+		}
+		try {
+			String destPath = uploadPath + UUID.randomUUID() + "." + FilenameUtils.getExtension(multipartFile.getOriginalFilename());
+			for (StoragePlugin storagePlugin : pluginService.getStoragePlugins(true)) {
+				File tempFile = new File(FileUtils.getTempDirectory(), UUID.randomUUID() + ".tmp");
+				multipartFile.transferTo(tempFile);
+				File largeTempFile = new File(FileUtils.getTempDirectory(), UUID.randomUUID() + "." + FilenameUtils.getExtension(multipartFile.getOriginalFilename()));
+				ImageUtils.zoom(tempFile, largeTempFile, setting.getLargeProductImageWidth(), setting.getLargeProductImageHeight());
+				FileUtils.deleteQuietly(tempFile);
+				String contentType = multipartFile.getContentType();
+				if (async) {
+					addUploadTask(storagePlugin, destPath, largeTempFile, contentType);
+				} else {
+					upload(storagePlugin, destPath, largeTempFile, contentType);
+				}
+				return storagePlugin.getUrl(destPath);
+			}
+		} catch (IOException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
+		return null;
+	}
+
+
 	@Override
 	public String upload(FileType fileType, MultipartFile multipartFile) {
 		Assert.notNull(fileType,"");
@@ -200,4 +246,36 @@ public class FileServiceImpl implements FileService {
 		}
 	}
 
+	@Override
+	public String upload(FileType fileType, File file,Integer index) {
+		Assert.notNull(fileType,"");
+
+		Setting setting = SystemUtils.getSetting();
+		String uploadPath;
+		Map<String, Object> model = new HashMap<>();
+		model.put("uuid", UUID.randomUUID().toString());
+		switch (fileType) {
+			case media:
+				uploadPath = setting.resolveMediaUploadPath(model);
+				break;
+			case file:
+				uploadPath = setting.resolveFileUploadPath(model);
+				break;
+			default:
+				uploadPath = setting.resolveImageUploadPath(model);
+				break;
+		}
+		try{
+			String destPath = uploadPath +(index<10?("00"+index):index<100?("0"+index):index)+"_"+UUID.randomUUID() + "." + FilenameUtils.getExtension(file.getName());
+			for (StoragePlugin storagePlugin : pluginService.getStoragePlugins(true)) {
+				File tempFile = new File(FileUtils.getTempDirectory(), UUID.randomUUID() + ".tmp");
+				FileUtils.copyFile(file,tempFile);
+				upload(storagePlugin, destPath, tempFile, "video/mp4");
+				return storagePlugin.getUrl(destPath);
+			}
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

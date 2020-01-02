@@ -42,7 +42,7 @@ public class FileController extends BaseController {
 	 * 上传
 	 */
 	@PostMapping("/upload")
-	public @ResponseBody Map<String, Object> upload(FileType fileType, MultipartFile file) {
+	public @ResponseBody Map<String, Object> upload(FileType fileType, MultipartFile file,String type) {
 		Map<String, Object> data = new HashMap<>();
 		if (fileType == null || file == null || file.isEmpty()) {
 			data.put("message", ERROR_MESSAGE);
@@ -54,7 +54,7 @@ public class FileController extends BaseController {
 			data.put("state", message("admin.upload.invalid"));
 			return data;
 		}
-		String url = fileService.upload(fileType, file, false);
+		String url = fileService.upload(fileType, file, false,type);
 		if (StringUtils.isEmpty(url)) {
 			data.put("message", Message.warn("admin.upload.error"));
 			data.put("state", message("admin.upload.error"));

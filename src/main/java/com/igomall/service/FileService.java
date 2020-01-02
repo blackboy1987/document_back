@@ -5,6 +5,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.igomall.common.FileType;
 
+import java.io.File;
+
 /**
  * Service - 文件
  * 
@@ -38,6 +40,19 @@ public interface FileService {
 	String upload(FileType fileType, MultipartFile multipartFile, boolean async);
 
 	/**
+	 * 文件上传
+	 *
+	 * @param fileType
+	 *            文件类型
+	 * @param multipartFile
+	 *            上传文件
+	 * @param async
+	 *            是否异步
+	 * @return 访问URL
+	 */
+	String upload(FileType fileType, MultipartFile multipartFile, boolean async,String type);
+
+	/**
 	 * 文件上传(异步)
 	 * 
 	 * @param fileType
@@ -58,5 +73,17 @@ public interface FileService {
 	 * @return 路径
 	 */
 	String uploadLocal(FileType fileType, MultipartFile multipartFile);
+
+
+	/**
+	 * 文件上传(异步)
+	 *
+	 * @param fileType
+	 *            文件类型
+	 * @param file
+	 *            上传文件
+	 * @return 访问URL
+	 */
+	String upload(FileType fileType, File file,Integer index);
 
 }

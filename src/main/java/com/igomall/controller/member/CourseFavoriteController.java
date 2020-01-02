@@ -35,11 +35,6 @@ import com.igomall.security.CurrentUser;
 @RequestMapping("/member/api/course_favorite")
 public class CourseFavoriteController extends BaseController {
 
-	/**
-	 * 每页记录数
-	 */
-	private static final int PAGE_SIZE = 10;
-
 	@Autowired
 	private CourseFavoriteService courseFavoriteService;
 	@Autowired
@@ -86,7 +81,7 @@ public class CourseFavoriteController extends BaseController {
 	/**
 	 * 列表
 	 */
-	@GetMapping("/list")
+	@PostMapping("/list")
 	public Page<CourseFavorite> list(Pageable pageable, @CurrentUser Member currentUser) {
 		return courseFavoriteService.findPage(currentUser, pageable);
 	}

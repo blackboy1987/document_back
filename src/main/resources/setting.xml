@@ -37,9 +37,9 @@
 	<settingConfig name="uploadImageExtension" value="jpg,jpeg,bmp,gif,png"/>  
 	<settingConfig name="uploadMediaExtension" value="swf,flv,mp3,wav,avi,rm,rmvb,mp4"/>
 	<settingConfig name="uploadFileExtension" value="zip,rar,7z,doc,docx,xls,xlsx,ppt,pptx"/>  
-	<settingConfig name="imageUploadPath" value="/upload/image/${.now?string('yyyyMM')}/"/>  
-	<settingConfig name="mediaUploadPath" value="/upload/media/${.now?string('yyyyMM')}/"/>  
-	<settingConfig name="fileUploadPath" value="/upload/file/${.now?string('yyyyMM')}/"/>  
+	<settingConfig name="imageUploadPath" value="/upload/image/${.now?string('yyyy/MM/dd')}/"/>
+	<settingConfig name="mediaUploadPath" value="/upload/media/${.now?string('yyyy/MM/dd')}/"/>
+	<settingConfig name="fileUploadPath" value="/upload/file/${.now?string('yyyy/MM/dd')}/"/>
 	<settingConfig name="smtpHost" value="smtp.shopxx.net"/>  
 	<settingConfig name="smtpPort" value="25"/>  
 	<settingConfig name="smtpUsername" value="test"/>  
