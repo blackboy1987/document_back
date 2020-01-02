@@ -1,5 +1,5 @@
 
-package com.igomall.entity;
+package com.igomall.entity.setting;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -8,6 +8,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.igomall.entity.OrderedEntity;
 import com.igomall.entity.member.Member;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.Length;
@@ -36,6 +38,7 @@ public class Area extends OrderedEntity<Long> {
 	@NotEmpty
 	@Length(max = 200)
 	@Column(nullable = false)
+	@JsonView({TreeView.class})
 	private String name;
 
 	/**
@@ -67,6 +70,7 @@ public class Area extends OrderedEntity<Long> {
 	 */
 	@OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	@OrderBy("order asc")
+	@JsonView({TreeView.class})
 	private Set<Area> children = new HashSet<>();
 
 	/**
@@ -267,4 +271,5 @@ public class Area extends OrderedEntity<Long> {
 		}
 	}
 
+	public interface TreeView extends IdView{}
 }

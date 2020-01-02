@@ -65,7 +65,7 @@ public final class ImageUtils {
 	/**
 	 * 方式
 	 */
-	private static Method method = Method.auto;
+	private static Method method = Method.imageMagick;
 
 	/**
 	 * GraphicsMagick程序路径

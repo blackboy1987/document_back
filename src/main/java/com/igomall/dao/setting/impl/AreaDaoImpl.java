@@ -1,5 +1,5 @@
 
-package com.igomall.dao.impl;
+package com.igomall.dao.setting.impl;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -11,13 +11,14 @@ import java.util.Map;
 
 import javax.persistence.TypedQuery;
 
+import com.igomall.dao.impl.BaseDaoImpl;
+import com.igomall.dao.setting.AreaDao;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.springframework.stereotype.Repository;
 
-import com.igomall.dao.AreaDao;
-import com.igomall.entity.Area;
+import com.igomall.entity.setting.Area;
 
 /**
  * Dao - 地区

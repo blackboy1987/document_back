@@ -1,24 +1,22 @@
 
 package com.igomall.controller.member;
 
-import javax.servlet.http.HttpServletRequest;
-
 import com.igomall.common.Message;
 import com.igomall.entity.member.Member;
 import com.igomall.entity.member.MemberAttribute;
+import com.igomall.security.CurrentUser;
 import com.igomall.service.member.MemberAttributeService;
 import com.igomall.service.member.MemberService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.igomall.security.CurrentUser;
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Controller - 个人资料
@@ -26,8 +24,8 @@ import com.igomall.security.CurrentUser;
  * @author blackboy
  * @version 1.0
  */
-@Controller("memberProfileController")
-@RequestMapping("/member/profile")
+@RestController("memberProfileController")
+@RequestMapping("/member/api/profile")
 public class ProfileController extends BaseController {
 
 	@Autowired
@@ -97,5 +95,22 @@ public class ProfileController extends BaseController {
 		currentUser.setAvatar(avatar);
 		memberService.update(currentUser);
 		return Message.success("头像修改成功");
+	}
+
+	@PostMapping("/info")
+	public Map<String,Object> info(@CurrentUser Member member){
+		Map<String,Object> data = new HashMap<>();
+		data.put("username",member.getUsername());
+		data.put("avatar",member.getAvatar());
+		data.put("name",member.getName());
+		data.put("address",member.getAddress());
+		data.put("areaIds",member.getArea()==null?new ArrayList<Long>():member.getArea().getParentIds());
+		data.put("birth",member.getBirth());
+		data.put("email",member.getEmail());
+		data.put("gender",member.getGender());
+		data.put("mobile",member.getMobile());
+		data.put("memberRankName",member.getMemberRank().getName());
+		data.put("phone",member.getPhone());
+		return data;
 	}
 }

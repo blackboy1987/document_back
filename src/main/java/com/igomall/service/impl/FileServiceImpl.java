@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import com.igomall.util.Image1Utils;
 import com.igomall.util.ImageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.ServletContext;
@@ -187,9 +188,8 @@ public class FileServiceImpl implements FileService {
 				File largeTempFile = new File(FileUtils.getTempDirectory(), UUID.randomUUID() + "." + FilenameUtils.getExtension(multipartFile.getOriginalFilename()));
 
 				if(StringUtils.equalsIgnoreCase("avatar",type)){
-					ImageUtils.zoom(tempFile, largeTempFile, 100, 100);
+					Image1Utils.zoom(tempFile,largeTempFile,100,100);
 				}
-
 
 				FileUtils.deleteQuietly(tempFile);
 				String contentType = multipartFile.getContentType();

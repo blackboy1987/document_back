@@ -1,24 +1,18 @@
 
-package com.igomall.service;
+package com.igomall.dao.setting;
 
 import java.util.List;
 
-import com.igomall.entity.Area;
+import com.igomall.dao.BaseDao;
+import com.igomall.entity.setting.Area;
 
 /**
- * Service - 地区
+ * Dao - 地区
  * 
  * @author IGOMALL  Team
  * @version 1.0
  */
-public interface AreaService extends BaseService<Area, Long> {
-
-	/**
-	 * 查找顶级地区
-	 * 
-	 * @return 顶级地区
-	 */
-	List<Area> findRoots();
+public interface AreaDao extends BaseDao<Area, Long> {
 
 	/**
 	 * 查找顶级地区

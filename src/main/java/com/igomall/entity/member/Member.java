@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.igomall.entity.*;
 import com.igomall.entity.course.CourseComment;
 import com.igomall.entity.course.CourseConsultation;
+import com.igomall.entity.setting.Area;
 import com.igomall.util.JsonUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -41,6 +42,11 @@ public class Member extends User {
 	 * 性别
 	 */
 	public enum Gender {
+
+		/**
+		 * 未知
+		 */
+		unknown,
 
 		/**
 		 * 男
