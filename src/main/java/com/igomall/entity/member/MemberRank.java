@@ -3,7 +3,7 @@ package com.igomall.entity.member;
 
 import com.igomall.entity.BaseEntity;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
+import javax.validation.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;

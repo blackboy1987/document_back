@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 
 import com.igomall.entity.OrderedEntity;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
+import javax.validation.constraints.NotEmpty;
 
 import com.igomall.common.BaseAttributeConverter;
 

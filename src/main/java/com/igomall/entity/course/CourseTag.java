@@ -3,9 +3,9 @@ package com.igomall.entity.course;
 
 import com.igomall.entity.OrderedEntity;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import java.util.HashSet;
 import java.util.Set;

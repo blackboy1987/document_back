@@ -13,7 +13,7 @@ import com.igomall.entity.OrderedEntity;
 import com.igomall.entity.member.Member;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
+import javax.validation.constraints.NotEmpty;
 
 /**
  * Entity - 地区

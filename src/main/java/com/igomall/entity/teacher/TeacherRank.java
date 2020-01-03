@@ -4,9 +4,9 @@ package com.igomall.entity.teacher;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.igomall.entity.BaseEntity;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;

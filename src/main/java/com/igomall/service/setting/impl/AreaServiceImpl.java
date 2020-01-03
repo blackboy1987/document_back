@@ -28,11 +28,13 @@ public class AreaServiceImpl extends BaseServiceImpl<Area, Long> implements Area
 	private AreaDao areaDao;
 
 	@Transactional(readOnly = true)
+	@Cacheable(value = "area")
 	public List<Area> findRoots() {
 		return areaDao.findRoots(null);
 	}
 
 	@Transactional(readOnly = true)
+	@Cacheable(value = "area")
 	public List<Area> findRoots(Integer count) {
 		return areaDao.findRoots(count);
 	}

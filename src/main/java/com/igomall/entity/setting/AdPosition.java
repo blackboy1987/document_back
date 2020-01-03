@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 
 import com.igomall.entity.BaseEntity;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
+import javax.validation.constraints.NotEmpty;
 
 import com.igomall.util.FreeMarkerUtils;
 
