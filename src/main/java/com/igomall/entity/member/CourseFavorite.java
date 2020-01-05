@@ -38,7 +38,7 @@ public class CourseFavorite extends BaseEntity<Long> {
 	private Member member;
 
 	/**
-	 * 商品
+	 * 课程
 	 */
 	@JsonView(BaseView.class)
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -71,4 +71,30 @@ public class CourseFavorite extends BaseEntity<Long> {
 	public void setCourse(Course course) {
 		this.course = course;
 	}
+
+	@JsonView({ListView.class})
+	public String getCourseSn(){
+		if(course!=null){
+			course.getSn();
+		}
+		return null;
+	}
+
+	@JsonView({ListView.class})
+	public String getCourseTitle(){
+		if(course!=null){
+			course.getTitle();
+		}
+		return null;
+	}
+
+	@JsonView({ListView.class})
+	public String getCourseImage(){
+		if(course!=null){
+			course.getImage();
+		}
+		return null;
+	}
+
+	public interface ListView {}
 }

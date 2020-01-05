@@ -1,6 +1,7 @@
 
 package com.igomall.controller.member;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.igomall.common.Message;
 import com.igomall.common.Page;
 import com.igomall.common.Pageable;
@@ -63,6 +64,7 @@ public class CourseFavoriteController extends BaseController {
 	 * 列表
 	 */
 	@PostMapping("/list")
+	@JsonView(CourseFavorite.ListView.class)
 	public Page<CourseFavorite> list(Pageable pageable, @CurrentUser Member currentUser) {
 		return courseFavoriteService.findPage(currentUser, pageable);
 	}
