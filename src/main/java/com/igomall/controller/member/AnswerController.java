@@ -5,9 +5,11 @@ import com.igomall.common.Message;
 import com.igomall.common.Page;
 import com.igomall.common.Pageable;
 import com.igomall.controller.admin.BaseController;
+import com.igomall.entity.Sn;
 import com.igomall.entity.course.Answer;
 import com.igomall.entity.member.Member;
 import com.igomall.security.CurrentUser;
+import com.igomall.service.SnService;
 import com.igomall.service.course.AnswerService;
 import com.igomall.service.course.CourseService;
 import com.igomall.service.course.LessonService;
@@ -30,12 +32,19 @@ public class AnswerController extends BaseController {
     private CourseService courseService;
     @Autowired
     private LessonService lessonService;
+    @Autowired
+    private SnService snService;
 
     @PostMapping("/save")
     public Message save(Answer answer, @CurrentUser Member member,String courseSn,Long lessonId){
         answer.setMember(member);
         answer.setCourse(courseService.findBySn(courseSn));
         answer.setLesson(lessonService.find(lessonId));
+        answer.setSn(snService.generate(Sn.Type.answer));
+        answer.setPoint(10L);
+        answer.setStatus(0);
+        answer.setForAnswer(null);
+        answer.setReplyAnswers(null);
         if(!isValid(answer)){
             return Message.error("参数错误");
         }
@@ -44,7 +53,7 @@ public class AnswerController extends BaseController {
             return Message.error("爱豆余额不足");
         }
         answerService.save(answer);
-        return SUCCESS_MESSAGE;
+        return Message.success("操作成功");
     }
 
     @PostMapping("/list")

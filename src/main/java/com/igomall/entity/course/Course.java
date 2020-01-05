@@ -705,6 +705,42 @@ public class Course extends OrderedEntity<Long> {
         this.price = price;
     }
 
+    public void init(){
+        setChapters(new HashSet<>());
+        setCourseCategory(null);
+        setCourseComments(new HashSet<>());
+        setCourseConsultations(new HashSet<>());
+        setCourseTags(new HashSet<>());
+        setDescription(null);
+        setHits(0L);
+        setImage(null);
+        setIsActive(true);
+        setIsList(true);
+        setIsMarketable(true);
+        setIsTop(true);
+        setKeyword(null);
+        setMemo(null);
+        setMonthHits(0L);
+        setMonthHitsDate(new Date());
+        setMonthSales(0L);
+        setMonthSalesDate(new Date());
+        setOrder(0);
+        setParts(new HashSet<>());
+        setPrice(BigDecimal.ZERO);
+        setSales(0L);
+        setScore(5f);
+        setScoreCount(0L);
+        setSn(null);
+        setTeacher(null);
+        setTitle(null);
+        setTotalScore(0L);
+        setWeekHits(0L);
+        setWeekHitsDate(new Date());
+        setWeekSales(0L);
+        setWeekSalesDate(new Date());
+    }
+
+
     public interface ListView extends BaseView{}
     public interface EditView extends IdView{}
     public interface AllListView extends IdView{}

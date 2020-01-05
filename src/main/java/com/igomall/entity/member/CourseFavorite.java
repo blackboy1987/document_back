@@ -27,7 +27,7 @@ public class CourseFavorite extends BaseEntity<Long> {
 	/**
 	 * 最大商品收藏数量
 	 */
-	public static final Integer MAX_COURSE_FAVORITE_SIZE = 999;
+	public static final Integer MAX_COURSE_FAVORITE_SIZE = 999999999;
 
 	/**
 	 * 会员

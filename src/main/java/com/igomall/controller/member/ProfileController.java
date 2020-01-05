@@ -19,10 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Controller - 个人资料
@@ -131,15 +128,17 @@ public class ProfileController extends BaseController {
 	 * 更新
 	 */
 	@PostMapping("/update")
-	public Message update(List<String> tags, String name, Member.Gender gender, String email, Long areaId, String signature, String job, String school, String major, @CurrentUser Member currentUser) {
-
-		CollectionUtils.filter(tags, new AndPredicate(new UniquePredicate(), new Predicate() {
-			public boolean evaluate(Object object) {
-				String option = (String) object;
-				return StringUtils.isNotEmpty(option);
-			}
-		}));
-		currentUser.setTags(tags);
+	public Message update(String tags, String name, Member.Gender gender, String email, Long areaId, String signature, String job, String school, String major, @CurrentUser Member currentUser) {
+		if(StringUtils.isNotEmpty(tags)){
+			List<String> tags1 = Arrays.asList(tags.split(","));
+			CollectionUtils.filter(tags1, new AndPredicate(new UniquePredicate(), new Predicate() {
+				public boolean evaluate(Object object) {
+					String option = (String) object;
+					return StringUtils.isNotEmpty(option);
+				}
+			}));
+			currentUser.setTags(tags1);
+		}
 		if(StringUtils.isNotEmpty(name)){
 			currentUser.setName(name);;
 		}
