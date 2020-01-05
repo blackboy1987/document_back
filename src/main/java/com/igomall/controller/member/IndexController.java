@@ -33,6 +33,22 @@ public class IndexController extends BaseController {
 		data.put("username",member.getUsername());
 		data.put("avatar",member.getAvatar());
 		data.put("name",member.getName());
+		data.put("address",member.getAddress());
+		data.put("areaIds",member.getAreaIds());
+		data.put("birth",member.getBirth());
+		data.put("email",member.getEmail());
+		data.put("gender",member.getGender());
+		data.put("mobile",member.getMobile());
+		data.put("phone",member.getPhone());
+		data.put("signature",member.getSignature());
+		data.put("job",member.getJob());
+		data.put("school",member.getSchool());
+		data.put("major",member.getMajor());
+		data.put("tags",member.getTags());
+		data.put("memberRankName",member.getMemberRank().getName());
+		if(member.getArea()!=null){
+			data.put("area",member.getArea().getFullName());
+		}
 		data.put("id",member.getId());
 		return data;
 	}

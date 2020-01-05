@@ -2,6 +2,7 @@
 package com.igomall.entity.member;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.igomall.common.BaseAttributeConverter;
 import com.igomall.entity.*;
 import com.igomall.entity.course.CourseComment;
 import com.igomall.entity.course.CourseConsultation;
@@ -9,6 +10,8 @@ import com.igomall.entity.setting.Area;
 import com.igomall.util.JsonUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
@@ -308,6 +311,20 @@ public class Member extends User {
 	 * 头像
 	 */
 	private String avatar;
+
+
+	private String signature;
+
+	private String job;
+
+	private String school;
+
+	private String major;
+
+
+	@Column(nullable = false, length = 4000)
+	@Convert(converter = TagConverter.class)
+	private List<String> tags = new ArrayList<>();
 
 	/**
 	 * 会员预存款记录
@@ -1039,6 +1056,46 @@ public class Member extends User {
 		this.courseConsultations = courseConsultations;
 	}
 
+	public String getSignature() {
+		return signature;
+	}
+
+	public void setSignature(String signature) {
+		this.signature = signature;
+	}
+
+	public String getJob() {
+		return job;
+	}
+
+	public void setJob(String job) {
+		this.job = job;
+	}
+
+	public String getSchool() {
+		return school;
+	}
+
+	public void setSchool(String school) {
+		this.school = school;
+	}
+
+	public String getMajor() {
+		return major;
+	}
+
+	public void setMajor(String major) {
+		this.major = major;
+	}
+
+	public List<String> getTags() {
+		return tags;
+	}
+
+	public void setTags(List<String> tags) {
+		this.tags = tags;
+	}
+
 	/**
 	 * 获取会员注册项值
 	 * 
@@ -1233,6 +1290,17 @@ public class Member extends User {
 		return credentials != null && DigestUtils.md5Hex(credentials instanceof char[] ? new String((char[]) credentials) : credentials.toString()).equals(getEncodedPassword());
 	}
 
+	@Transient
+	public List<Long> getAreaIds(){
+		List<Long> areaIds = new ArrayList<>();
+		if(area!=null){
+			areaIds.addAll(Arrays.asList(area.getParentIds()));
+			areaIds.add(area.getId());
+		}
+		return areaIds;
+	}
+
+
 	/**
 	 * 持久化前处理
 	 */
@@ -1252,6 +1320,15 @@ public class Member extends User {
 		setMobile(StringUtils.lowerCase(getMobile()));
 	}
 
+	/**
+	 * 类型转换 - 可选项
+	 *
+	 * @author IGOMALL  Team
+	 * @version 1.0
+	 */
+	@Converter
+	public static class TagConverter extends BaseAttributeConverter<List<String>> {
+	}
 
 	public void init(){
 		setPoint(0L);

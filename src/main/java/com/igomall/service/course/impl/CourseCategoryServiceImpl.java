@@ -30,17 +30,18 @@ public class CourseCategoryServiceImpl extends BaseServiceImpl<CourseCategory, L
 	private CourseCategoryDao courseCategoryDao;
 
 	@Transactional(readOnly = true)
-	@Cacheable(value = "courseCategory")
 	public List<CourseCategory> findList(Integer count, List<Filter> filters, List<Order> orders) {
 		return courseCategoryDao.findList(count, filters, orders);
 	}
 
 	@Transactional(readOnly = true)
+	@Cacheable(value = "courseCategory")
 	public List<CourseCategory> findRoots() {
 		return courseCategoryDao.findRoots(null);
 	}
 
 	@Transactional(readOnly = true)
+	@Cacheable(value = "courseCategory")
 	public List<CourseCategory> findRoots(Integer count) {
 		return courseCategoryDao.findRoots(count);
 	}
