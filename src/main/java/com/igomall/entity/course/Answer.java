@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.igomall.entity.BaseEntity;
 import com.igomall.entity.OrderedEntity;
 import com.igomall.entity.member.Member;
+import com.igomall.entity.member.Message;
 import com.igomall.entity.teacher.Teacher;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
@@ -25,8 +26,6 @@ import java.util.Set;
 @Table(name = "edu_answer")
 public class Answer extends BaseEntity<Long> {
 
-
-    @JsonView({ListView.class})
     @Field(store = Store.YES, index = Index.YES, analyze = Analyze.NO)
     @Length(max = 100)
     @Pattern(regexp = "^[0-9a-zA-Z_-]+$")
@@ -38,8 +37,8 @@ public class Answer extends BaseEntity<Long> {
     private Course course;
 
     @NotEmpty
-    @Length(max = 255)
-    @Column(nullable = false)
+    @Length(max = 4000)
+    @Column(nullable = false, updatable = false, length = 4000)
     @JsonView({ListView.class})
     private String content;
 
@@ -49,6 +48,28 @@ public class Answer extends BaseEntity<Long> {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false,updatable = false)
     private Member member;
+
+    @NotNull
+    @Column(nullable = false)
+    private Long point;
+    @NotNull
+    @Column(nullable = false)
+    @JsonView({ListView.class})
+    private Integer status;
+
+    /**
+     * 原消息
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(updatable = false)
+    private Answer forAnswer;
+
+    /**
+     * 回复消息
+     */
+    @OneToMany(mappedBy = "forAnswer", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OrderBy(value = "createdDate asc")
+    private Set<Answer> replyAnswers = new HashSet<>();
 
     /**
      * 获取编号
@@ -101,6 +122,38 @@ public class Answer extends BaseEntity<Long> {
         this.member = member;
     }
 
+    public Long getPoint() {
+        return point;
+    }
+
+    public void setPoint(Long point) {
+        this.point = point;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Answer getForAnswer() {
+        return forAnswer;
+    }
+
+    public void setForAnswer(Answer forAnswer) {
+        this.forAnswer = forAnswer;
+    }
+
+    public Set<Answer> getReplyAnswers() {
+        return replyAnswers;
+    }
+
+    public void setReplyAnswers(Set<Answer> replyAnswers) {
+        this.replyAnswers = replyAnswers;
+    }
+
     @Transient
     public String getUsername(){
         if(member!=null){
@@ -120,7 +173,7 @@ public class Answer extends BaseEntity<Long> {
 
     @Transient
     @JsonView({ListView.class})
-    public String getLessontitle(){
+    public String getLessonTitle(){
         if(lesson!=null){
             return lesson.getTitle();
         }

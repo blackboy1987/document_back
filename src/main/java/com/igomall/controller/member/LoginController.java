@@ -36,8 +36,9 @@ public class LoginController extends BaseController {
 	 * 登录页面
 	 */
 	@PostMapping
-	public Map<String,Object> index(String username, String password, HttpServletRequest request, HttpServletResponse response) {
+	public Map<String,Object> index(String type,String username, String password, HttpServletRequest request, HttpServletResponse response) {
 		Map<String,Object> data = new HashMap<>();
+		data.put("type",type);
 		if(StringUtils.isEmpty(username) || StringUtils.isEmpty(password)){
 			data.put("type","error");
 			data.put("content","请输入用户名或密码");
@@ -46,15 +47,18 @@ public class LoginController extends BaseController {
 		Member member = memberService.findByUsername(username);
 		if(member==null){
 			data.put("type","error");
+			data.put("status","error");
 			data.put("content","用户名或密码输入错误");
 			return data;
 		}
 		if(!member.isValidCredentials(password)){
 			data.put("type","error");
+			data.put("status","error");
 			data.put("content","用户名或密码输入错误");
 			return data;
 		}
 		data.put("type","success");
+		data.put("status","ok");
 		data.put("content","登陆成功");
 		Map<String,Object> user = new HashMap<>();
 		user.put("id",member.getId());

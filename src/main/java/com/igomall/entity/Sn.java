@@ -45,7 +45,7 @@ public class Sn extends BaseEntity<Long> {
 		/**
 		 * 订单发货
 		 */
-		orderShipping,
+		answer,
 
 		/**
 		 * 订单退货

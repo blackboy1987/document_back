@@ -31,6 +31,7 @@ public class SnDaoImpl extends BaseDaoImpl<Sn,Long> implements SnDao, Initializi
 	private HiloOptimizer partHiloOptimizer;
 	private HiloOptimizer chapterHiloOptimizer;
 	private HiloOptimizer lessonHiloOptimizer;
+	private HiloOptimizer answerHiloOptimizer;
 
 
 	@PersistenceContext
@@ -59,6 +60,11 @@ public class SnDaoImpl extends BaseDaoImpl<Sn,Long> implements SnDao, Initializi
 	@Value("${sn.lesson.maxLo}")
 	private int lessonMaxLo;
 
+	@Value("${sn.answer.prefix}")
+	private String answerPrefix;
+	@Value("${sn.answer.maxLo}")
+	private int answerMaxLo;
+
 	/**
 	 * 初始化
 	 */
@@ -67,7 +73,8 @@ public class SnDaoImpl extends BaseDaoImpl<Sn,Long> implements SnDao, Initializi
 		courseHiloOptimizer = new HiloOptimizer(Sn.Type.course, coursePrefix, courseMaxLo);
 		partHiloOptimizer = new HiloOptimizer(Sn.Type.part, partPrefix, partMaxLo);
 		chapterHiloOptimizer = new HiloOptimizer(Sn.Type.chapter, chapterPrefix, chapterMaxLo);
-		lessonHiloOptimizer = new HiloOptimizer(Sn.Type.lesson, lessonPrefix, lessonMaxLo);
+		lessonHiloOptimizer = new HiloOptimizer(Sn.Type.lesson, lessonPrefix, lessonMaxLo);;
+		answerHiloOptimizer = new HiloOptimizer(Sn.Type.answer, answerPrefix, answerMaxLo);
 	}
 
 	/**
@@ -90,6 +97,8 @@ public class SnDaoImpl extends BaseDaoImpl<Sn,Long> implements SnDao, Initializi
 				return chapterHiloOptimizer.generate();
 			case lesson:
 				return lessonHiloOptimizer.generate();
+			case answer:
+				return answerHiloOptimizer.generate();
 			default:
 				return null;
 		}

@@ -7,9 +7,12 @@ import com.igomall.common.Pageable;
 import com.igomall.controller.admin.BaseController;
 import com.igomall.entity.Sn;
 import com.igomall.entity.course.*;
+import com.igomall.entity.member.Member;
+import com.igomall.security.CurrentUser;
 import com.igomall.service.FileService;
 import com.igomall.service.SnService;
 import com.igomall.service.course.*;
+import com.igomall.service.member.CourseFavoriteService;
 import com.igomall.service.teacher.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,13 +44,20 @@ public class CourseController extends BaseController {
     private FileService fileService;
 
     @Autowired
+    private CourseFavoriteService courseFavoriteService;
+    @Autowired
     private ChapterService chapterService;
 
     @PostMapping("/info")
-    public Map<String,Object> info(String sn){
+    public Map<String,Object> info(String sn, @CurrentUser Member member){
         Map<String,Object> data = new HashMap<>();
         Course course = courseService.findBySn(sn);
         Map<String,Object> courseMap = new HashMap<>();
+        if(courseFavoriteService.exists(member, course)){
+            courseMap.put("collection",true);
+        }else {
+            courseMap.put("collection",false);
+        }
         courseMap.put("title",course.getTitle());
         courseMap.put("sn",course.getSn());
         courseMap.put("description",course.getDescription());
