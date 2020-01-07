@@ -185,20 +185,26 @@ public class FileServiceImpl implements FileService {
 			for (StoragePlugin storagePlugin : pluginService.getStoragePlugins(true)) {
 				File tempFile = new File(FileUtils.getTempDirectory(), UUID.randomUUID() + ".tmp");
 				multipartFile.transferTo(tempFile);
-				File largeTempFile = new File(FileUtils.getTempDirectory(), UUID.randomUUID() + "." + FilenameUtils.getExtension(multipartFile.getOriginalFilename()));
-
 				if(StringUtils.equalsIgnoreCase("avatar",type)){
+					File largeTempFile = new File(FileUtils.getTempDirectory(), UUID.randomUUID() + "." + FilenameUtils.getExtension(multipartFile.getOriginalFilename()));
 					Image1Utils.zoom(tempFile,largeTempFile,100,100);
+					FileUtils.deleteQuietly(tempFile);
+					String contentType = multipartFile.getContentType();
+					if (async) {
+						addUploadTask(storagePlugin, destPath, largeTempFile, contentType);
+					} else {
+						upload(storagePlugin, destPath, largeTempFile, contentType);
+					}
+					return storagePlugin.getUrl(destPath);
+				}else {
+					String contentType = multipartFile.getContentType();
+					if (async) {
+						addUploadTask(storagePlugin, destPath, tempFile, contentType);
+					} else {
+						upload(storagePlugin, destPath, tempFile, contentType);
+					}
+					return storagePlugin.getUrl(destPath);
 				}
-
-				FileUtils.deleteQuietly(tempFile);
-				String contentType = multipartFile.getContentType();
-				if (async) {
-					addUploadTask(storagePlugin, destPath, largeTempFile, contentType);
-				} else {
-					upload(storagePlugin, destPath, largeTempFile, contentType);
-				}
-				return storagePlugin.getUrl(destPath);
 			}
 		} catch (IOException e) {
 			throw new RuntimeException(e.getMessage(), e);

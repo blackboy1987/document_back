@@ -25,6 +25,21 @@ import java.util.Set;
 @Table(name = "edu_course")
 public class Course extends OrderedEntity<Long> {
 
+    /**
+     * 点击数缓存名称
+     */
+    public static final String HITS_CACHE_NAME = "coursetHits";
+
+    /**
+     * 属性值属性个数
+     */
+    public static final int ATTRIBUTE_VALUE_PROPERTY_COUNT = 20;
+
+    /**
+     * 属性值属性名称前缀
+     */
+    public static final String ATTRIBUTE_VALUE_PROPERTY_NAME_PREFIX = "attributeValue";
+
     @JsonView({BaseView.class,IdView.class,CommonView.class})
     @Field(store = Store.YES, index = Index.NO, analyze = Analyze.NO)
     @Length(max = 100)
@@ -102,21 +117,6 @@ public class Course extends OrderedEntity<Long> {
      */
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private Set<CourseConsultation> courseConsultations = new HashSet<>();
-
-    /**
-     * 点击数缓存名称
-     */
-    public static final String HITS_CACHE_NAME = "coursetHits";
-
-    /**
-     * 属性值属性个数
-     */
-    public static final int ATTRIBUTE_VALUE_PROPERTY_COUNT = 20;
-
-    /**
-     * 属性值属性名称前缀
-     */
-    public static final String ATTRIBUTE_VALUE_PROPERTY_NAME_PREFIX = "attributeValue";
 
     public Set<Lesson> getLessons() {
         return lessons;

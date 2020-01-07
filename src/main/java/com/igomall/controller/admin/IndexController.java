@@ -3,9 +3,6 @@ package com.igomall.controller.admin;
 
 import com.igomall.entity.Admin;
 import com.igomall.security.CurrentUser;
-import com.igomall.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +17,7 @@ import java.util.Map;
  * @version 1.0
  */
 @RestController
-@RequestMapping("//admin/api")
+@RequestMapping("/admin/api")
 public class IndexController {
 
 	/**
@@ -29,17 +26,9 @@ public class IndexController {
 	@GetMapping("/currentUser")
 	public Map<String,Object> currentUser(@CurrentUser Admin admin) {
 		Map<String,Object> data = new HashMap<>();
-		if(admin==null){
-			data.put("code",999);
-		}else{
-			data.put("id",admin.getId());
-			data.put("name",admin.getName());
-			data.put("email",admin.getEmail());
-			data.put("username",admin.getUsername());
-			data.put("department",admin.getDepartmentName());
-			data.put("displayName",admin.getDisplayName());
-		}
-
+		data.put("username",admin.getUsername());
+		data.put("name",admin.getName());
+		data.put("email",admin.getEmail());
 		return data;
 	}
 

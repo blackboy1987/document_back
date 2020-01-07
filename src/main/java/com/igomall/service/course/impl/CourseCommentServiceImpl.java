@@ -78,8 +78,8 @@ public class CourseCommentServiceImpl extends BaseServiceImpl<CourseComment, Lon
 	@Override
 	@Transactional(readOnly = true)
 	public boolean hasPermission(Member member, Course course) {
-		Assert.notNull(member);
-		Assert.notNull(course);
+		Assert.notNull(member,"");
+		Assert.notNull(course,"");
 
 		long reviewCount = courseCommentDao.count(member, course, null, null);
 		//long orderCount = orderDao.count(null, com.igomall.entity.Order.Status.completed, null, member, course, null, null, null, null, null, null);
@@ -91,7 +91,7 @@ public class CourseCommentServiceImpl extends BaseServiceImpl<CourseComment, Lon
 	@Transactional
 	@CacheEvict(value = "courseComment", allEntries = true)
 	public CourseComment save(CourseComment courseComment) {
-		Assert.notNull(courseComment);
+		Assert.notNull(courseComment,"");
 
 		CourseComment pReview = super.save(courseComment);
 		Course course = pReview.getCourse();
@@ -109,7 +109,7 @@ public class CourseCommentServiceImpl extends BaseServiceImpl<CourseComment, Lon
 	@Transactional
 	@CacheEvict(value = "courseComment", allEntries = true)
 	public CourseComment update(CourseComment courseComment) {
-		Assert.notNull(courseComment);
+		Assert.notNull(courseComment,"");
 
 		CourseComment pReview = super.update(courseComment);
 		Course course = pReview.getCourse();

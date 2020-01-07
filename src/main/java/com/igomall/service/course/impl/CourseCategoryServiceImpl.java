@@ -35,19 +35,19 @@ public class CourseCategoryServiceImpl extends BaseServiceImpl<CourseCategory, L
 	}
 
 	@Transactional(readOnly = true)
-	@Cacheable(value = "courseCategory")
+	@Cacheable(value = "courseCategoryRoot")
 	public List<CourseCategory> findRoots() {
 		return courseCategoryDao.findRoots(null);
 	}
 
 	@Transactional(readOnly = true)
-	@Cacheable(value = "courseCategory")
+	@Cacheable(value = "courseCategoryRoot")
 	public List<CourseCategory> findRoots(Integer count) {
 		return courseCategoryDao.findRoots(count);
 	}
 
 	@Transactional(readOnly = true)
-	@Cacheable(value = "courseCategory", condition = "#useCache")
+	@Cacheable(value = "courseCategoryRoot", condition = "#useCache")
 	public List<CourseCategory> findRoots(Integer count, boolean useCache) {
 		return courseCategoryDao.findRoots(count);
 	}
@@ -68,7 +68,7 @@ public class CourseCategoryServiceImpl extends BaseServiceImpl<CourseCategory, L
 	}
 
 	@Transactional(readOnly = true)
-	@Cacheable(value = "courseCategory")
+	@Cacheable(value = "courseCategoryTree")
 	public List<CourseCategory> findTree() {
 		return courseCategoryDao.findChildren(null, true, null);
 	}
@@ -93,7 +93,7 @@ public class CourseCategoryServiceImpl extends BaseServiceImpl<CourseCategory, L
 	@Transactional
 	@CacheEvict(value = { "course", "courseCategory" }, allEntries = true)
 	public CourseCategory save(CourseCategory courseCategory) {
-		Assert.notNull(courseCategory);
+		Assert.notNull(courseCategory,"");
 
 		setValue(courseCategory);
 		return super.save(courseCategory);
@@ -103,7 +103,7 @@ public class CourseCategoryServiceImpl extends BaseServiceImpl<CourseCategory, L
 	@Transactional
 	@CacheEvict(value = { "course", "courseCategory" }, allEntries = true)
 	public CourseCategory update(CourseCategory courseCategory) {
-		Assert.notNull(courseCategory);
+		Assert.notNull(courseCategory,"");
 
 		setValue(courseCategory);
 		for (CourseCategory children : courseCategoryDao.findChildren(courseCategory, true, null)) {
