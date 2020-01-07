@@ -96,5 +96,5 @@ public class CourseFavorite extends BaseEntity<Long> {
 		return null;
 	}
 
-	public interface ListView {}
+	public interface ListView extends IdView {}
 }
