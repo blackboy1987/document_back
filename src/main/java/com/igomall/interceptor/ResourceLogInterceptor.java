@@ -10,6 +10,7 @@ import com.igomall.entity.document.ResourceLog;
 import com.igomall.entity.member.Member;
 import com.igomall.service.UserService;
 import com.igomall.service.document.ResourceLogService;
+import com.igomall.util.IpUtil;
 import com.igomall.util.JsonUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,8 @@ public class ResourceLogInterceptor extends HandlerInterceptorAdapter {
     User user = userService.getCurrent();
     ResourceLog resourceLog = new ResourceLog();
     String ip = request.getRemoteAddr();
+    ip = IpUtil.getIpAddr(request);
+    System.out.println(ip);
     if (user instanceof Member) {
       Member member = (Member) user;
       resourceLog.setUsername(member.getUsername());
