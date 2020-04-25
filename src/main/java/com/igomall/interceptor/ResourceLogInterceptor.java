@@ -39,8 +39,7 @@ public class ResourceLogInterceptor extends HandlerInterceptorAdapter {
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
     User user = userService.getCurrent();
     ResourceLog resourceLog = new ResourceLog();
-    String ip = request.getRemoteAddr();
-    ip = IpUtil.getIpAddr(request);
+    String ip = IpUtil.getIpAddr(request);
     System.out.println(ip);
     if (user instanceof Member) {
       Member member = (Member) user;
