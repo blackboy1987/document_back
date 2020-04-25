@@ -4,7 +4,6 @@ package com.igomall.entity.member;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.igomall.common.BaseAttributeConverter;
 import com.igomall.entity.*;
-import com.igomall.entity.setting.Area;
 import com.igomall.util.JsonUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -289,12 +288,6 @@ public class Member extends User {
 	 */
 	@Embedded
 	private SafeKey safeKey;
-
-	/**
-	 * 地区
-	 */
-	@ManyToOne(fetch = FetchType.LAZY)
-	private Area area;
 
 	/**
 	 * 会员等级
@@ -875,25 +868,6 @@ public class Member extends User {
 	}
 
 	/**
-	 * 获取地区
-	 *
-	 * @return 地区
-	 */
-	public Area getArea() {
-		return area;
-	}
-
-	/**
-	 * 设置地区
-	 *
-	 * @param area
-	 *            地区
-	 */
-	public void setArea(Area area) {
-		this.area = area;
-	}
-
-	/**
 	 * 获取会员等级
 	 *
 	 * @return 会员等级
@@ -1055,8 +1029,6 @@ public class Member extends User {
 			return getGender();
 		case birth:
 			return getBirth();
-		case area:
-			return getArea();
 		case address:
 			return getAddress();
 		case zipCode:
@@ -1129,9 +1101,6 @@ public class Member extends User {
 			}
 			break;
 		case area:
-			if (memberAttributeValue instanceof Area || memberAttributeValue == null) {
-				setArea((Area) memberAttributeValue);
-			}
 			break;
 		case address:
 			if (memberAttributeValue instanceof String || memberAttributeValue == null) {
@@ -1188,7 +1157,6 @@ public class Member extends User {
 		setName(null);
 		setGender(null);
 		setBirth(null);
-		setArea(null);
 		setAddress(null);
 		setZipCode(null);
 		setPhone(null);
@@ -1228,16 +1196,6 @@ public class Member extends User {
 	@Transient
 	public boolean isValidCredentials(Object credentials) {
 		return credentials != null && DigestUtils.md5Hex(credentials instanceof char[] ? new String((char[]) credentials) : credentials.toString()).equals(getEncodedPassword());
-	}
-
-	@Transient
-	public List<Long> getAreaIds(){
-		List<Long> areaIds = new ArrayList<>();
-		if(area!=null){
-			areaIds.addAll(Arrays.asList(area.getParentIds()));
-			areaIds.add(area.getId());
-		}
-		return areaIds;
 	}
 
 

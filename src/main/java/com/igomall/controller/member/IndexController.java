@@ -19,7 +19,7 @@ import java.util.Map;
 
 /**
  * Controller - 会员登录
- * 
+ *
  * @author IGOMALL  Team
  * @version 1.0
  */
@@ -34,7 +34,6 @@ public class IndexController extends BaseController {
 		data.put("avatar",member.getAvatar());
 		data.put("name",member.getName());
 		data.put("address",member.getAddress());
-		data.put("areaIds",member.getAreaIds());
 		data.put("birth",member.getBirth());
 		data.put("email",member.getEmail());
 		data.put("gender",member.getGender());
@@ -46,9 +45,6 @@ public class IndexController extends BaseController {
 		data.put("major",member.getMajor());
 		data.put("tags",member.getTags());
 		data.put("memberRankName",member.getMemberRank().getName());
-		if(member.getArea()!=null){
-			data.put("area",member.getArea().getFullName());
-		}
 		data.put("id",member.getId());
 		return data;
 	}

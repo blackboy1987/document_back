@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import com.igomall.dao.setting.AreaDao;
 import com.igomall.service.impl.BaseServiceImpl;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
@@ -25,14 +24,13 @@ import com.igomall.common.Filter;
 import com.igomall.common.Order;
 import com.igomall.dao.member.MemberAttributeDao;
 import com.igomall.dao.member.MemberDao;
-import com.igomall.entity.setting.Area;
 import com.igomall.entity.member.Member;
 import com.igomall.entity.member.MemberAttribute;
 import com.igomall.service.member.MemberAttributeService;
 
 /**
  * Service - 会员注册项
- * 
+ *
  * @author IGOMALL  Team
  * @version 1.0
  */
@@ -43,8 +41,6 @@ public class MemberAttributeServiceImpl extends BaseServiceImpl<MemberAttribute,
 	private MemberAttributeDao memberAttributeDao;
 	@Autowired
 	private MemberDao memberDao;
-	@Autowired
-	private AreaDao areaDao;
 
 	@Transactional(readOnly = true)
 	public Integer findUnusedPropertyIndex() {
@@ -111,13 +107,6 @@ public class MemberAttributeServiceImpl extends BaseServiceImpl<MemberAttribute,
 				}
 			}
 			break;
-		case area:
-			Long id = NumberUtils.toLong(value, -1L);
-			Area area = areaDao.find(id);
-			if (memberAttribute.getIsRequired() && area == null) {
-				return false;
-			}
-			break;
 		case select:
 			if (memberAttribute.getIsRequired() && StringUtils.isEmpty(value)) {
 				return false;
@@ -179,9 +168,6 @@ public class MemberAttributeServiceImpl extends BaseServiceImpl<MemberAttribute,
 			} catch (ParseException e) {
 				return null;
 			}
-		case area:
-			Long id = NumberUtils.toLong(value, -1L);
-			return areaDao.find(id);
 		case select:
 			if (CollectionUtils.isNotEmpty(memberAttribute.getOptions()) && memberAttribute.getOptions().contains(value)) {
 				return value;

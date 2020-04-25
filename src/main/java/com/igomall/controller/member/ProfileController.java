@@ -7,7 +7,6 @@ import com.igomall.entity.member.MemberAttribute;
 import com.igomall.security.CurrentUser;
 import com.igomall.service.member.MemberAttributeService;
 import com.igomall.service.member.MemberService;
-import com.igomall.service.setting.AreaService;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.functors.AndPredicate;
@@ -23,7 +22,7 @@ import java.util.*;
 
 /**
  * Controller - 个人资料
- * 
+ *
  * @author blackboy
  * @version 1.0
  */
@@ -35,8 +34,6 @@ public class ProfileController extends BaseController {
 	private MemberService memberService;
 	@Autowired
 	private MemberAttributeService memberAttributeService;
-	@Autowired
-	private AreaService areaService;
 
 	/**
 	 * 检查E-mail是否唯一
@@ -109,7 +106,6 @@ public class ProfileController extends BaseController {
 		data.put("avatar",member.getAvatar());
 		data.put("name",member.getName());
 		data.put("address",member.getAddress());
-		data.put("areaIds",member.getAreaIds());
 		data.put("birth",member.getBirth());
 		data.put("email",member.getEmail());
 		data.put("gender",member.getGender());
@@ -151,7 +147,6 @@ public class ProfileController extends BaseController {
 		currentUser.setJob(job);
 		currentUser.setSchool(school);
 		currentUser.setMajor(major);
-		currentUser.setArea(areaService.find(areaId));
 		memberService.update(currentUser);
 		return Message.success("资料更新成功");
 	}

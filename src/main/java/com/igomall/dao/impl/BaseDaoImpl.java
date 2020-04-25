@@ -40,7 +40,7 @@ import com.igomall.entity.OrderedEntity;
 
 /**
  * Dao - 基类
- * 
+ *
  * @author blackboy
  * @version 1.0
  */
@@ -352,7 +352,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 
 	/**
 	 * 查找实体对象集合
-	 * 
+	 *
 	 * @param criteriaQuery
 	 *            查询条件
 	 * @param first
@@ -386,7 +386,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 			if (OrderedEntity.class.isAssignableFrom(entityClass)) {
 				orderList.add(criteriaBuilder.asc(getPath(root, OrderedEntity.ORDER_PROPERTY_NAME)));
 			} else {
-				orderList.add(criteriaBuilder.desc(getPath(root, OrderedEntity.CREATED_DATE_PROPERTY_NAME)));
+				orderList.add(criteriaBuilder.desc(getPath(root, OrderedEntity.CREATE_DATE_PROPERTY_NAME)));
 			}
 		}
 		criteriaQuery.orderBy(orderList);
@@ -406,7 +406,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 
 	/**
 	 * 查找实体对象集合
-	 * 
+	 *
 	 * @param criteriaQuery
 	 *            查询条件
 	 * @param first
@@ -425,7 +425,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 
 	/**
 	 * 查找实体对象集合
-	 * 
+	 *
 	 * @param criteriaQuery
 	 *            查询条件
 	 * @param first
@@ -440,7 +440,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 
 	/**
 	 * 查找实体对象集合
-	 * 
+	 *
 	 * @param criteriaQuery
 	 *            查询条件
 	 * @return 实体对象集合
@@ -451,7 +451,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 
 	/**
 	 * 查找实体对象分页
-	 * 
+	 *
 	 * @param criteriaQuery
 	 *            查询条件
 	 * @param pageable
@@ -508,9 +508,8 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 			if (OrderedEntity.class.isAssignableFrom(entityClass)) {
 				orderList.add(criteriaBuilder.asc(getPath(root, OrderedEntity.ORDER_PROPERTY_NAME)));
 			} else {
-				//orderList.add(criteriaBuilder.desc(getPath(root, OrderedEntity.CREATED_DATE_PROPERTY_NAME)));
+				orderList.add(criteriaBuilder.desc(getPath(root, OrderedEntity.CREATE_DATE_PROPERTY_NAME)));
 			}
-			orderList.add(criteriaBuilder.desc(getPath(root, OrderedEntity.CREATED_DATE_PROPERTY_NAME)));
 		}
 		criteriaQuery.orderBy(orderList);
 
@@ -526,7 +525,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 
 	/**
 	 * 查找实体对象分页
-	 * 
+	 *
 	 * @param criteriaQuery
 	 *            查询条件
 	 * @param pageable
@@ -539,7 +538,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 
 	/**
 	 * 查询实体对象数量
-	 * 
+	 *
 	 * @param criteriaQuery
 	 *            查询条件
 	 * @param filters
@@ -572,7 +571,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 
 	/**
 	 * 查询实体对象数量
-	 * 
+	 *
 	 * @param criteriaQuery
 	 *            查询条件
 	 * @return 实体对象数量
@@ -583,7 +582,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 
 	/**
 	 * 查找Root
-	 * 
+	 *
 	 * @param criteriaQuery
 	 *            查询条件
 	 * @param clazz
@@ -605,7 +604,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 
 	/**
 	 * 获取Path
-	 * 
+	 *
 	 * @param path
 	 *            Path
 	 * @param attributeName
@@ -622,7 +621,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 
 	/**
 	 * 获取或创建别名
-	 * 
+	 *
 	 * @param selection
 	 *            Selection
 	 * @return 别名
@@ -644,7 +643,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 
 	/**
 	 * 拷贝Join
-	 * 
+	 *
 	 * @param from
 	 *            源
 	 * @param to
@@ -663,7 +662,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 
 	/**
 	 * 拷贝Fetch
-	 * 
+	 *
 	 * @param from
 	 *            源
 	 * @param to
@@ -681,7 +680,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 
 	/**
 	 * 拷贝Fetch
-	 * 
+	 *
 	 * @param from
 	 *            源
 	 * @param to
@@ -699,7 +698,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 
 	/**
 	 * 拷贝查询条件(不包含Selection、Order)
-	 * 
+	 *
 	 * @param from
 	 *            源
 	 * @param to
@@ -730,7 +729,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 
 	/**
 	 * 转换为Predicate
-	 * 
+	 *
 	 * @param root
 	 *            Root
 	 * @param filters
@@ -826,7 +825,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 
 	/**
 	 * 转换为Order
-	 * 
+	 *
 	 * @param root
 	 *            Root
 	 * @param orders

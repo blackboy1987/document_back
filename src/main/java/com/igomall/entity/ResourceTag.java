@@ -1,34 +1,34 @@
 
-package com.igomall.entity.setting;
+package com.igomall.entity;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import org.hibernate.validator.constraints.Length;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.*;
-import javax.validation.constraints.Pattern;
-
-import com.igomall.entity.OrderedEntity;
-import org.hibernate.validator.constraints.Length;
-import javax.validation.constraints.NotEmpty;
-
 /**
- * Entity - 文章标签
- * 
- * @author IGOMALL  Team
+ * Entity - 商品标签
+ *
+ * @author blackboy
  * @version 1.0
  */
 @Entity
-@Table(name = "edu_article_tag")
-public class ArticleTag extends OrderedEntity<Long> {
+@Table(name = "document_resource_tag")
+public class ResourceTag extends OrderedEntity<Long> {
 
-	private static final long serialVersionUID = -2735037966597250149L;
+	private static final long serialVersionUID = 4136507336496569742L;
 
 	/**
 	 * 名称
 	 */
 	@NotEmpty
 	@Length(max = 200)
-	@Column(nullable = false)
+	@Column(nullable = false,unique = true)
+	@JsonView({ApiListView.class})
 	private String name;
 
 	/**
@@ -45,14 +45,15 @@ public class ArticleTag extends OrderedEntity<Long> {
 	private String memo;
 
 	/**
-	 * 文章
+	 * 商品
 	 */
-	@ManyToMany(mappedBy = "articleTags", fetch = FetchType.LAZY)
-	private Set<Article> articles = new HashSet<>();
+	@ManyToMany(mappedBy = "resourceTags", fetch = FetchType.LAZY)
+	@JsonView({ApiListView.class})
+	private Set<Resource> resources = new HashSet<>();
 
 	/**
 	 * 获取名称
-	 * 
+	 *
 	 * @return 名称
 	 */
 	public String getName() {
@@ -61,7 +62,7 @@ public class ArticleTag extends OrderedEntity<Long> {
 
 	/**
 	 * 设置名称
-	 * 
+	 *
 	 * @param name
 	 *            名称
 	 */
@@ -71,7 +72,7 @@ public class ArticleTag extends OrderedEntity<Long> {
 
 	/**
 	 * 获取图标
-	 * 
+	 *
 	 * @return 图标
 	 */
 	public String getIcon() {
@@ -80,7 +81,7 @@ public class ArticleTag extends OrderedEntity<Long> {
 
 	/**
 	 * 设置图标
-	 * 
+	 *
 	 * @param icon
 	 *            图标
 	 */
@@ -90,7 +91,7 @@ public class ArticleTag extends OrderedEntity<Long> {
 
 	/**
 	 * 获取备注
-	 * 
+	 *
 	 * @return 备注
 	 */
 	public String getMemo() {
@@ -99,7 +100,7 @@ public class ArticleTag extends OrderedEntity<Long> {
 
 	/**
 	 * 设置备注
-	 * 
+	 *
 	 * @param memo
 	 *            备注
 	 */
@@ -108,22 +109,22 @@ public class ArticleTag extends OrderedEntity<Long> {
 	}
 
 	/**
-	 * 获取文章
-	 * 
-	 * @return 文章
+	 * 获取商品
+	 *
+	 * @return 商品
 	 */
-	public Set<Article> getArticles() {
-		return articles;
+	public Set<Resource> getResources() {
+		return resources;
 	}
 
 	/**
-	 * 设置文章
-	 * 
-	 * @param articles
-	 *            文章
+	 * 设置商品
+	 *
+	 * @param resources
+	 *            商品
 	 */
-	public void setArticles(Set<Article> articles) {
-		this.articles = articles;
+	public void setResources(Set<Resource> resources) {
+		this.resources = resources;
 	}
 
 	/**
@@ -131,10 +132,10 @@ public class ArticleTag extends OrderedEntity<Long> {
 	 */
 	@PreRemove
 	public void preRemove() {
-		Set<Article> articles = getArticles();
-		if (articles != null) {
-			for (Article article : articles) {
-				article.getArticleTags().remove(this);
+		Set<Resource> resources = getResources();
+		if (resources != null) {
+			for (Resource resource : resources) {
+				resource.getResourceTags().remove(this);
 			}
 		}
 	}

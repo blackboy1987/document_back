@@ -1,20 +1,6 @@
 
 package com.igomall.service.impl;
 
-import java.beans.PropertyDescriptor;
-import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.lang3.ArrayUtils;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
-
 import com.igomall.common.Filter;
 import com.igomall.common.Order;
 import com.igomall.common.Page;
@@ -22,6 +8,18 @@ import com.igomall.common.Pageable;
 import com.igomall.dao.BaseDao;
 import com.igomall.entity.BaseEntity;
 import com.igomall.service.BaseService;
+import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.lang3.ArrayUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
+
+import java.beans.PropertyDescriptor;
+import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Service - 基类
@@ -35,7 +33,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity<ID>, ID extends Seria
 	/**
 	 * 更新忽略属性
 	 */
-	private static final String[] UPDATE_IGNORE_PROPERTIES = new String[] { BaseEntity.CREATED_DATE_PROPERTY_NAME, BaseEntity.LAST_MODIFIED_DATE_PROPERTY_NAME, BaseEntity.VERSION_PROPERTY_NAME };
+	private static final String[] UPDATE_IGNORE_PROPERTIES = new String[] { BaseEntity.CREATE_DATE_PROPERTY_NAME, BaseEntity.MODIFY_DATE_PROPERTY_NAME };
 
 	/**
 	 * BaseDao
@@ -47,14 +45,14 @@ public abstract class BaseServiceImpl<T extends BaseEntity<ID>, ID extends Seria
 		this.baseDao = baseDao;
 	}
 
-	@Override
 	@Transactional(readOnly = true)
+	@Override
 	public T find(ID id) {
 		return baseDao.find(id);
 	}
 
-	@Override
 	@Transactional(readOnly = true)
+	@Override
 	public List<T> findAll() {
 		return findList(null, null, null, null);
 	}
@@ -74,50 +72,50 @@ public abstract class BaseServiceImpl<T extends BaseEntity<ID>, ID extends Seria
 		return result;
 	}
 
-	@Override
 	@Transactional(readOnly = true)
+	@Override
 	public List<T> findList(Integer count, List<Filter> filters, List<Order> orders) {
 		return findList(null, count, filters, orders);
 	}
 
-	@Override
 	@Transactional(readOnly = true)
+	@Override
 	public List<T> findList(Integer first, Integer count, List<Filter> filters, List<Order> orders) {
 		return baseDao.findList(first, count, filters, orders);
 	}
 
-	@Override
 	@Transactional(readOnly = true)
+	@Override
 	public Page<T> findPage(Pageable pageable) {
 		return baseDao.findPage(pageable);
 	}
 
-	@Override
 	@Transactional(readOnly = true)
+	@Override
 	public long count() {
 		return count(new Filter[] {});
 	}
 
-	@Override
 	@Transactional(readOnly = true)
+	@Override
 	public long count(Filter... filters) {
 		return baseDao.count(filters);
 	}
 
-	@Override
 	@Transactional(readOnly = true)
+	@Override
 	public boolean exists(ID id) {
 		return baseDao.find(id) != null;
 	}
 
-	@Override
 	@Transactional(readOnly = true)
+	@Override
 	public boolean exists(Filter... filters) {
 		return baseDao.count(filters) > 0;
 	}
 
-	@Override
 	@Transactional
+	@Override
 	public T save(T entity) {
 		Assert.notNull(entity,"");
 		Assert.isTrue(entity.isNew(),"");
@@ -126,8 +124,8 @@ public abstract class BaseServiceImpl<T extends BaseEntity<ID>, ID extends Seria
 		return entity;
 	}
 
-	@Override
 	@Transactional
+	@Override
 	public T update(T entity) {
 		Assert.notNull(entity,"");
 		Assert.isTrue(!entity.isNew(),"");
@@ -142,8 +140,8 @@ public abstract class BaseServiceImpl<T extends BaseEntity<ID>, ID extends Seria
 		return entity;
 	}
 
-	@Override
 	@Transactional
+	@Override
 	public T update(T entity, String... ignoreProperties) {
 		Assert.notNull(entity,"");
 		Assert.isTrue(!entity.isNew(),"");
@@ -156,15 +154,14 @@ public abstract class BaseServiceImpl<T extends BaseEntity<ID>, ID extends Seria
 		return update(persistant);
 	}
 
-	@Override
 	@Transactional
+	@Override
 	public void delete(ID id) {
 		delete(baseDao.find(id));
 	}
 
-
-	@Override
 	@Transactional
+	@Override
 	public void delete(ID... ids) {
 		if (ids != null) {
 			for (ID id : ids) {
@@ -173,8 +170,8 @@ public abstract class BaseServiceImpl<T extends BaseEntity<ID>, ID extends Seria
 		}
 	}
 
-	@Override
 	@Transactional
+	@Override
 	public void delete(T entity) {
 		if (entity != null) {
 			baseDao.remove(baseDao.isManaged(entity) ? entity : baseDao.merge(entity));
