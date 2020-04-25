@@ -61,6 +61,7 @@ public class ResourceLogInterceptor extends HandlerInterceptorAdapter {
         }
       }
     }
+    resourceLog.setAction(request.getRequestURL().toString());
     resourceLog.setUser(user);
     resourceLog.setIp(ip);
     resourceLog.setParameter(JsonUtils.toJson(parameterMap));
