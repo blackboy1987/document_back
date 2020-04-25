@@ -38,32 +38,31 @@ public class ResourceLogInterceptor extends HandlerInterceptorAdapter {
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
     User user = userService.getCurrent();
     ResourceLog resourceLog = new ResourceLog();
+    String ip = request.getRemoteAddr();
     if (user instanceof Member) {
       Member member = (Member) user;
-      String ip = request.getRemoteAddr();
-      StringBuffer parameter = new StringBuffer();
-      Map<String, String[]> parameterMap = request.getParameterMap();
-      if (parameterMap != null) {
-        for (Entry<String, String[]> entry : parameterMap.entrySet()) {
-          String parameterName = entry.getKey();
-          if (!ArrayUtils.contains(ignoreParameters, parameterName)) {
-            String[] parameterValues = entry.getValue();
-            if (parameterValues != null) {
-              for (String parameterValue : parameterValues) {
-                parameter.append(parameterName + " = " + parameterValue + "\n");
-              }
+      resourceLog.setUsername(member.getUsername());
+
+    }
+    StringBuffer parameter = new StringBuffer();
+    Map<String, String[]> parameterMap = request.getParameterMap();
+    if (parameterMap != null) {
+      for (Entry<String, String[]> entry : parameterMap.entrySet()) {
+        String parameterName = entry.getKey();
+        if (!ArrayUtils.contains(ignoreParameters, parameterName)) {
+          String[] parameterValues = entry.getValue();
+          if (parameterValues != null) {
+            for (String parameterValue : parameterValues) {
+              parameter.append(parameterName + " = " + parameterValue + "\n");
             }
           }
         }
       }
-      resourceLog.setUser(user);
-      resourceLog.setUsername(member.getUsername());
-      resourceLog.setIp(ip);
-      resourceLog.setParameter(JsonUtils.toJson(parameterMap));
-      resourceLogService.create(resourceLog);
     }
-
-
+    resourceLog.setUser(user);
+    resourceLog.setIp(ip);
+    resourceLog.setParameter(JsonUtils.toJson(parameterMap));
+    resourceLogService.create(resourceLog);
 
 	}
 
