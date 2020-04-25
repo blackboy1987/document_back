@@ -10,10 +10,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableCaching
 @EnableAsync
 @EnableScheduling
-public class JscEduApplication {
+public class IgomallDemoApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(JscEduApplication.class, args);
+        SpringApplication.run(IgomallDemoApplication.class, args);
     }
 
 }

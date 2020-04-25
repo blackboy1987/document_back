@@ -4,14 +4,10 @@ package com.igomall.entity.member;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.igomall.common.BaseAttributeConverter;
 import com.igomall.entity.*;
-import com.igomall.entity.course.CourseComment;
-import com.igomall.entity.course.CourseConsultation;
 import com.igomall.entity.setting.Area;
 import com.igomall.util.JsonUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.Length;
 
@@ -27,7 +23,7 @@ import java.util.*;
 
 /**
  * Entity - 会员
- * 
+ *
  * @author IGOMALL  Team
  * @version 1.0
  */
@@ -352,33 +348,8 @@ public class Member extends User {
 	private Set<PointLog> pointLogs = new HashSet<>();
 
 	/**
-	 * 收藏的课程
-	 */
-	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-	private Set<CourseFavorite> courseFavorites = new HashSet<>();
-	/**
-	 * 收藏的视频
-	 */
-	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-	private Set<LessonFavorite> lessonFavorites = new HashSet<>();
-
-	/**
-	 * 评论
-	 */
-	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-	@OrderBy("createdDate desc")
-	private Set<CourseComment> courseComments = new HashSet<>();
-
-	/**
-	 * 咨询
-	 */
-	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-	@OrderBy("createdDate desc")
-	private Set<CourseConsultation> courseConsultations = new HashSet<>();
-
-	/**
 	 * 获取用户名
-	 * 
+	 *
 	 * @return 用户名
 	 */
 	public String getUsername() {
@@ -387,7 +358,7 @@ public class Member extends User {
 
 	/**
 	 * 设置用户名
-	 * 
+	 *
 	 * @param username
 	 *            用户名
 	 */
@@ -397,7 +368,7 @@ public class Member extends User {
 
 	/**
 	 * 获取密码
-	 * 
+	 *
 	 * @return 密码
 	 */
 	public String getPassword() {
@@ -406,7 +377,7 @@ public class Member extends User {
 
 	/**
 	 * 设置密码
-	 * 
+	 *
 	 * @param password
 	 *            密码
 	 */
@@ -419,7 +390,7 @@ public class Member extends User {
 
 	/**
 	 * 获取加密密码
-	 * 
+	 *
 	 * @return 加密密码
 	 */
 	public String getEncodedPassword() {
@@ -428,7 +399,7 @@ public class Member extends User {
 
 	/**
 	 * 设置加密密码
-	 * 
+	 *
 	 * @param encodedPassword
 	 *            加密密码
 	 */
@@ -438,7 +409,7 @@ public class Member extends User {
 
 	/**
 	 * 获取E-mail
-	 * 
+	 *
 	 * @return E-mail
 	 */
 	public String getEmail() {
@@ -447,7 +418,7 @@ public class Member extends User {
 
 	/**
 	 * 设置E-mail
-	 * 
+	 *
 	 * @param email
 	 *            E-mail
 	 */
@@ -457,7 +428,7 @@ public class Member extends User {
 
 	/**
 	 * 获取手机
-	 * 
+	 *
 	 * @return 手机
 	 */
 	public String getMobile() {
@@ -466,7 +437,7 @@ public class Member extends User {
 
 	/**
 	 * 设置手机
-	 * 
+	 *
 	 * @param mobile
 	 *            手机
 	 */
@@ -476,7 +447,7 @@ public class Member extends User {
 
 	/**
 	 * 获取积分
-	 * 
+	 *
 	 * @return 积分
 	 */
 	public Long getPoint() {
@@ -485,7 +456,7 @@ public class Member extends User {
 
 	/**
 	 * 设置积分
-	 * 
+	 *
 	 * @param point
 	 *            积分
 	 */
@@ -519,7 +490,7 @@ public class Member extends User {
 
 	/**
 	 * 获取余额
-	 * 
+	 *
 	 * @return 余额
 	 */
 	public BigDecimal getBalance() {
@@ -528,7 +499,7 @@ public class Member extends User {
 
 	/**
 	 * 设置余额
-	 * 
+	 *
 	 * @param balance
 	 *            余额
 	 */
@@ -563,7 +534,7 @@ public class Member extends User {
 
 	/**
 	 * 获取消费金额
-	 * 
+	 *
 	 * @return 消费金额
 	 */
 	public BigDecimal getAmount() {
@@ -572,7 +543,7 @@ public class Member extends User {
 
 	/**
 	 * 设置消费金额
-	 * 
+	 *
 	 * @param amount
 	 *            消费金额
 	 */
@@ -582,7 +553,7 @@ public class Member extends User {
 
 	/**
 	 * 获取姓名
-	 * 
+	 *
 	 * @return 姓名
 	 */
 	public String getName() {
@@ -591,7 +562,7 @@ public class Member extends User {
 
 	/**
 	 * 设置姓名
-	 * 
+	 *
 	 * @param name
 	 *            姓名
 	 */
@@ -601,7 +572,7 @@ public class Member extends User {
 
 	/**
 	 * 获取性别
-	 * 
+	 *
 	 * @return 性别
 	 */
 	public Gender getGender() {
@@ -610,7 +581,7 @@ public class Member extends User {
 
 	/**
 	 * 设置性别
-	 * 
+	 *
 	 * @param gender
 	 *            性别
 	 */
@@ -620,7 +591,7 @@ public class Member extends User {
 
 	/**
 	 * 获取出生日期
-	 * 
+	 *
 	 * @return 出生日期
 	 */
 	public Date getBirth() {
@@ -629,7 +600,7 @@ public class Member extends User {
 
 	/**
 	 * 设置出生日期
-	 * 
+	 *
 	 * @param birth
 	 *            出生日期
 	 */
@@ -639,7 +610,7 @@ public class Member extends User {
 
 	/**
 	 * 获取地址
-	 * 
+	 *
 	 * @return 地址
 	 */
 	public String getAddress() {
@@ -648,7 +619,7 @@ public class Member extends User {
 
 	/**
 	 * 设置地址
-	 * 
+	 *
 	 * @param address
 	 *            地址
 	 */
@@ -658,7 +629,7 @@ public class Member extends User {
 
 	/**
 	 * 获取邮编
-	 * 
+	 *
 	 * @return 邮编
 	 */
 	public String getZipCode() {
@@ -667,7 +638,7 @@ public class Member extends User {
 
 	/**
 	 * 设置邮编
-	 * 
+	 *
 	 * @param zipCode
 	 *            邮编
 	 */
@@ -677,7 +648,7 @@ public class Member extends User {
 
 	/**
 	 * 获取电话
-	 * 
+	 *
 	 * @return 电话
 	 */
 	public String getPhone() {
@@ -686,7 +657,7 @@ public class Member extends User {
 
 	/**
 	 * 设置电话
-	 * 
+	 *
 	 * @param phone
 	 *            电话
 	 */
@@ -696,7 +667,7 @@ public class Member extends User {
 
 	/**
 	 * 获取会员注册项值0
-	 * 
+	 *
 	 * @return 会员注册项值0
 	 */
 	public String getAttributeValue0() {
@@ -705,7 +676,7 @@ public class Member extends User {
 
 	/**
 	 * 设置会员注册项值0
-	 * 
+	 *
 	 * @param attributeValue0
 	 *            会员注册项值0
 	 */
@@ -715,7 +686,7 @@ public class Member extends User {
 
 	/**
 	 * 获取会员注册项值1
-	 * 
+	 *
 	 * @return 会员注册项值1
 	 */
 	public String getAttributeValue1() {
@@ -724,7 +695,7 @@ public class Member extends User {
 
 	/**
 	 * 设置会员注册项值1
-	 * 
+	 *
 	 * @param attributeValue1
 	 *            会员注册项值1
 	 */
@@ -734,7 +705,7 @@ public class Member extends User {
 
 	/**
 	 * 获取会员注册项值2
-	 * 
+	 *
 	 * @return 会员注册项值2
 	 */
 	public String getAttributeValue2() {
@@ -743,7 +714,7 @@ public class Member extends User {
 
 	/**
 	 * 设置会员注册项值2
-	 * 
+	 *
 	 * @param attributeValue2
 	 *            会员注册项值2
 	 */
@@ -753,7 +724,7 @@ public class Member extends User {
 
 	/**
 	 * 获取会员注册项值3
-	 * 
+	 *
 	 * @return 会员注册项值3
 	 */
 	public String getAttributeValue3() {
@@ -762,7 +733,7 @@ public class Member extends User {
 
 	/**
 	 * 设置会员注册项值3
-	 * 
+	 *
 	 * @param attributeValue3
 	 *            会员注册项值3
 	 */
@@ -772,7 +743,7 @@ public class Member extends User {
 
 	/**
 	 * 获取会员注册项值4
-	 * 
+	 *
 	 * @return 会员注册项值4
 	 */
 	public String getAttributeValue4() {
@@ -781,7 +752,7 @@ public class Member extends User {
 
 	/**
 	 * 设置会员注册项值4
-	 * 
+	 *
 	 * @param attributeValue4
 	 *            会员注册项值4
 	 */
@@ -791,7 +762,7 @@ public class Member extends User {
 
 	/**
 	 * 获取会员注册项值5
-	 * 
+	 *
 	 * @return 会员注册项值5
 	 */
 	public String getAttributeValue5() {
@@ -800,7 +771,7 @@ public class Member extends User {
 
 	/**
 	 * 设置会员注册项值5
-	 * 
+	 *
 	 * @param attributeValue5
 	 *            会员注册项值5
 	 */
@@ -810,7 +781,7 @@ public class Member extends User {
 
 	/**
 	 * 获取会员注册项值6
-	 * 
+	 *
 	 * @return 会员注册项值6
 	 */
 	public String getAttributeValue6() {
@@ -819,7 +790,7 @@ public class Member extends User {
 
 	/**
 	 * 设置会员注册项值6
-	 * 
+	 *
 	 * @param attributeValue6
 	 *            会员注册项值6
 	 */
@@ -829,7 +800,7 @@ public class Member extends User {
 
 	/**
 	 * 获取会员注册项值7
-	 * 
+	 *
 	 * @return 会员注册项值7
 	 */
 	public String getAttributeValue7() {
@@ -838,7 +809,7 @@ public class Member extends User {
 
 	/**
 	 * 设置会员注册项值7
-	 * 
+	 *
 	 * @param attributeValue7
 	 *            会员注册项值7
 	 */
@@ -848,7 +819,7 @@ public class Member extends User {
 
 	/**
 	 * 获取会员注册项值8
-	 * 
+	 *
 	 * @return 会员注册项值8
 	 */
 	public String getAttributeValue8() {
@@ -857,7 +828,7 @@ public class Member extends User {
 
 	/**
 	 * 设置会员注册项值8
-	 * 
+	 *
 	 * @param attributeValue8
 	 *            会员注册项值8
 	 */
@@ -867,7 +838,7 @@ public class Member extends User {
 
 	/**
 	 * 获取会员注册项值9
-	 * 
+	 *
 	 * @return 会员注册项值9
 	 */
 	public String getAttributeValue9() {
@@ -876,7 +847,7 @@ public class Member extends User {
 
 	/**
 	 * 设置会员注册项值9
-	 * 
+	 *
 	 * @param attributeValue9
 	 *            会员注册项值9
 	 */
@@ -886,7 +857,7 @@ public class Member extends User {
 
 	/**
 	 * 获取安全密匙
-	 * 
+	 *
 	 * @return 安全密匙
 	 */
 	public SafeKey getSafeKey() {
@@ -895,7 +866,7 @@ public class Member extends User {
 
 	/**
 	 * 设置安全密匙
-	 * 
+	 *
 	 * @param safeKey
 	 *            安全密匙
 	 */
@@ -905,7 +876,7 @@ public class Member extends User {
 
 	/**
 	 * 获取地区
-	 * 
+	 *
 	 * @return 地区
 	 */
 	public Area getArea() {
@@ -914,7 +885,7 @@ public class Member extends User {
 
 	/**
 	 * 设置地区
-	 * 
+	 *
 	 * @param area
 	 *            地区
 	 */
@@ -924,7 +895,7 @@ public class Member extends User {
 
 	/**
 	 * 获取会员等级
-	 * 
+	 *
 	 * @return 会员等级
 	 */
 	public MemberRank getMemberRank() {
@@ -933,7 +904,7 @@ public class Member extends User {
 
 	/**
 	 * 设置会员等级
-	 * 
+	 *
 	 * @param memberRank
 	 *            会员等级
 	 */
@@ -951,7 +922,7 @@ public class Member extends User {
 
 	/**
 	 * 获取会员预存款记录
-	 * 
+	 *
 	 * @return 会员预存款记录
 	 */
 	public Set<MemberDepositLog> getMemberDepositLogs() {
@@ -960,7 +931,7 @@ public class Member extends User {
 
 	/**
 	 * 设置会员预存款记录
-	 * 
+	 *
 	 * @param memberDepositLogs
 	 *            会员预存款记录
 	 */
@@ -970,7 +941,7 @@ public class Member extends User {
 
 	/**
 	 * 获取接收的消息
-	 * 
+	 *
 	 * @return 接收的消息
 	 */
 	public Set<Message> getInMessages() {
@@ -979,7 +950,7 @@ public class Member extends User {
 
 	/**
 	 * 设置接收的消息
-	 * 
+	 *
 	 * @param inMessages
 	 *            接收的消息
 	 */
@@ -989,7 +960,7 @@ public class Member extends User {
 
 	/**
 	 * 获取发送的消息
-	 * 
+	 *
 	 * @return 发送的消息
 	 */
 	public Set<Message> getOutMessages() {
@@ -998,7 +969,7 @@ public class Member extends User {
 
 	/**
 	 * 设置发送的消息
-	 * 
+	 *
 	 * @param outMessages
 	 *            发送的消息
 	 */
@@ -1008,7 +979,7 @@ public class Member extends User {
 
 	/**
 	 * 获取积分记录
-	 * 
+	 *
 	 * @return 积分记录
 	 */
 	public Set<PointLog> getPointLogs() {
@@ -1017,44 +988,12 @@ public class Member extends User {
 
 	/**
 	 * 设置积分记录
-	 * 
+	 *
 	 * @param pointLogs
 	 *            积分记录
 	 */
 	public void setPointLogs(Set<PointLog> pointLogs) {
 		this.pointLogs = pointLogs;
-	}
-
-	public Set<CourseFavorite> getCourseFavorites() {
-		return courseFavorites;
-	}
-
-	public void setCourseFavorites(Set<CourseFavorite> courseFavorites) {
-		this.courseFavorites = courseFavorites;
-	}
-
-	public Set<LessonFavorite> getLessonFavorites() {
-		return lessonFavorites;
-	}
-
-	public void setLessonFavorites(Set<LessonFavorite> lessonFavorites) {
-		this.lessonFavorites = lessonFavorites;
-	}
-
-	public Set<CourseComment> getCourseComments() {
-		return courseComments;
-	}
-
-	public void setCourseComments(Set<CourseComment> courseComments) {
-		this.courseComments = courseComments;
-	}
-
-	public Set<CourseConsultation> getCourseConsultations() {
-		return courseConsultations;
-	}
-
-	public void setCourseConsultations(Set<CourseConsultation> courseConsultations) {
-		this.courseConsultations = courseConsultations;
 	}
 
 	public String getSignature() {
@@ -1099,7 +1038,7 @@ public class Member extends User {
 
 	/**
 	 * 获取会员注册项值
-	 * 
+	 *
 	 * @param memberAttribute
 	 *            会员注册项
 	 * @return 会员注册项值
@@ -1162,7 +1101,7 @@ public class Member extends User {
 
 	/**
 	 * 设置会员注册项值
-	 * 
+	 *
 	 * @param memberAttribute
 	 *            会员注册项
 	 * @param memberAttributeValue
@@ -1347,10 +1286,6 @@ public class Member extends User {
 		setLastLoginDate(new Date());
 		setSafeKey(null);
 		setMemberDepositLogs(null);
-		setCourseComments(null);
-		setCourseConsultations(null);
-		setCourseFavorites(null);
-		setLessonFavorites(null);
 		setInMessages(null);
 		setOutMessages(null);
 		setPointLogs(null);
