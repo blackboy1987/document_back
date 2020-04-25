@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <setting> 
-	<settingConfig name="siteName" value="SHOP++商城"/>  
+	<settingConfig name="siteName" value="SHOP++商城"/>
+	<settingConfig name="siteDescription" value="我是网站描述" />
 	<settingConfig name="siteUrl" value="http://localhost:8880/mall"/>  
 	<settingConfig name="logo" value="/mall/upload/image/logo.png"/>  
 	<settingConfig name="hotSearch" value="苹果,三星,索尼,华为,魅族,佳能,华硕,美的,格力"/>  

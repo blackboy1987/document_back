@@ -1,22 +1,20 @@
 
 package com.igomall.util;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
+import com.igomall.common.CommonAttributes;
+import com.igomall.common.EnumConverter;
+import com.igomall.common.Setting;
+import com.igomall.common.TemplateConfig;
+import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Ehcache;
+import net.sf.ehcache.Element;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.beanutils.ConvertUtilsBean;
 import org.apache.commons.beanutils.ConvertUtilsBean2;
 import org.apache.commons.beanutils.Converter;
 import org.apache.commons.beanutils.converters.ArrayConverter;
 import org.apache.commons.beanutils.converters.DateConverter;
+import org.apache.commons.io.FileUtils;
 import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -26,18 +24,16 @@ import org.dom4j.io.XMLWriter;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.Assert;
 
-import com.igomall.common.CommonAttributes;
-import com.igomall.common.EnumConverter;
-import com.igomall.common.Setting;
-import com.igomall.common.TemplateConfig;
-
-import net.sf.ehcache.CacheManager;
-import net.sf.ehcache.Ehcache;
-import net.sf.ehcache.Element;
+import java.io.*;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * Utils - 系统
- * 
+ *
  * @author blackboy
  * @version 1.0
  */
@@ -97,7 +93,7 @@ public final class SystemUtils {
 
 	/**
 	 * 获取系统设置
-	 * 
+	 *
 	 * @return 系统设置
 	 */
 	@SuppressWarnings("unchecked")
@@ -108,7 +104,7 @@ public final class SystemUtils {
 		if (cacheElement == null) {
 			Setting setting = new Setting();
 			try {
-				File settingXmlFile = new ClassPathResource(CommonAttributes.SETTING_XML_PATH).getFile();
+				InputStream settingXmlFile = new ClassPathResource(CommonAttributes.SETTING_XML_PATH).getInputStream();
 				Document document = new SAXReader().read(settingXmlFile);
 				List<org.dom4j.Node> nodes = document.selectNodes("/setting/settingConfig");
 				for (org.dom4j.Node node: nodes) {
@@ -136,7 +132,7 @@ public final class SystemUtils {
 
 	/**
 	 * 设置系统设置
-	 * 
+	 *
 	 * @param setting
 	 *            系统设置
 	 */
@@ -145,7 +141,7 @@ public final class SystemUtils {
 		Assert.notNull(setting,"");
 
 		try {
-			File settingXmlFile = new ClassPathResource(CommonAttributes.SETTING_XML_PATH).getFile();
+			InputStream settingXmlFile = new ClassPathResource(CommonAttributes.SETTING_XML_PATH).getInputStream();
 			Document document = new SAXReader().read(settingXmlFile);
 			List<org.dom4j.Node> nodes = document.selectNodes("/setting/settingConfig");
 			for (org.dom4j.Node node : nodes) {
@@ -171,7 +167,9 @@ public final class SystemUtils {
 				outputFormat.setIndent(true);
 				outputFormat.setIndent("	");
 				outputFormat.setNewlines(true);
-				xmlWriter = new XMLWriter(new FileOutputStream(settingXmlFile), outputFormat);
+				File tempFile = new File(FileUtils.getTempDirectory(), UUID.randomUUID() + ".xml");
+				FileUtils.copyInputStreamToFile(settingXmlFile,tempFile);
+				xmlWriter = new XMLWriter(new FileOutputStream(tempFile), outputFormat);
 				xmlWriter.write(document);
 				xmlWriter.flush();
 			} catch (FileNotFoundException e) {
@@ -200,7 +198,7 @@ public final class SystemUtils {
 
 	/**
 	 * 获取模板配置
-	 * 
+	 *
 	 * @param id
 	 *            ID
 	 * @return 模板配置
@@ -214,7 +212,7 @@ public final class SystemUtils {
 		if (cacheElement == null) {
 			TemplateConfig templateConfig = null;
 			try {
-				File settingXmlFile = new ClassPathResource(CommonAttributes.SETTING_XML_PATH).getFile();
+				InputStream settingXmlFile = new ClassPathResource(CommonAttributes.SETTING_XML_PATH).getInputStream();
 				Document document = new SAXReader().read(settingXmlFile);
 				org.dom4j.Element element = (org.dom4j.Element) document.selectSingleNode("/setting/templateConfig[@id='" + id + "']");
 				if (element != null) {
@@ -233,7 +231,7 @@ public final class SystemUtils {
 
 	/**
 	 * 获取模板配置
-	 * 
+	 *
 	 * @param type
 	 *            类型
 	 * @return 模板配置
@@ -265,7 +263,7 @@ public final class SystemUtils {
 
 	/**
 	 * 获取所有模板配置
-	 * 
+	 *
 	 * @return 所有模板配置
 	 */
 	public static List<TemplateConfig> getTemplateConfigs() {
@@ -274,7 +272,7 @@ public final class SystemUtils {
 
 	/**
 	 * 获取模板配置
-	 * 
+	 *
 	 * @param element
 	 *            元素
 	 * @return 模板配置
