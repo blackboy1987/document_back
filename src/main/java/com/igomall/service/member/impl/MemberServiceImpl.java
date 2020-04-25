@@ -32,7 +32,7 @@ import java.util.regex.Pattern;
 
 /**
  * Service - 会员
- * 
+ *
  * @author IGOMALL  Team
  * @version 1.0
  */
@@ -64,13 +64,16 @@ public class MemberServiceImpl extends BaseServiceImpl<Member, Long> implements 
 		Assert.isInstanceOf(String.class, principal);
 
 		String value = (String) principal;
-		if (EMAIL_PRINCIPAL_PATTERN.matcher(value).matches()) {
-			return findByEmail(value);
-		} else if (MOBILE_PRINCIPAL_PATTERN.matcher(value).matches()) {
-			return findByMobile(value);
-		} else {
-			return findByUsername(value);
-		}
+
+		return findByUsername(value);
+
+//		if (EMAIL_PRINCIPAL_PATTERN.matcher(value).matches()) {
+//			return findByEmail(value);
+//		} else if (MOBILE_PRINCIPAL_PATTERN.matcher(value).matches()) {
+//			return findByMobile(value);
+//		} else {
+//			return findByUsername(value);
+//		}
 	}
 
 	@Transactional(readOnly = true)

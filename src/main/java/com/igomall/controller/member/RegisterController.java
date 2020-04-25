@@ -67,6 +67,15 @@ public class RegisterController extends BaseController {
 	 */
 	@PostMapping("/submit")
 	public Message submit(String username, String password, String mobile, HttpServletRequest request) {
+
+	  Member newMember = memberService.findByUsername(username);
+	  if(newMember!=null){
+      userService.login(new UserAuthenticationToken(Member.class, username, password, false, request.getRemoteAddr()));
+      return Message.success("注册成功");
+    }
+
+
+
 		Setting setting = SystemUtils.getSetting();
 		String email = username+"@qq.com";
 		if (!ArrayUtils.contains(setting.getAllowedRegisterTypes(), Setting.RegisterType.member)) {

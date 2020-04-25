@@ -22,7 +22,7 @@ import java.util.List;
  * @version 1.0
  */
 @RestController("adminResourceTagController")
-@RequestMapping("/api/resource_tag")
+@RequestMapping("/admin/api/resource_tag")
 public class ResourceTagController extends BaseController {
 
 	@Autowired

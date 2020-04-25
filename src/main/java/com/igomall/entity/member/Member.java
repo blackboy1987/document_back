@@ -100,7 +100,7 @@ public class Member extends User {
 	@JsonView(BaseView.class)
 	@NotEmpty(groups = Save.class)
 	@Length(min = 4, max = 20)
-	@Pattern.List({ @Pattern(regexp = "^[0-9a-zA-Z_\\u4e00-\\u9fa5]+$"), @Pattern(regexp = "^.*[^\\d].*$") })
+	// @Pattern.List({ @Pattern(regexp = "^[0-9a-zA-Z_\\u4e00-\\u9fa5]+$"), @Pattern(regexp = "^.*[^\\d].*$") })
 	@Column(nullable = false, updatable = false, unique = true)
 	private String username;
 

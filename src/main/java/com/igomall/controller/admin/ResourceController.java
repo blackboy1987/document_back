@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/resource")
+@RequestMapping("/admin/api/resource")
 public class ResourceController extends BaseController {
 
     @Autowired

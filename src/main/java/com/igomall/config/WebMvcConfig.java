@@ -3,10 +3,7 @@ package com.igomall.config;
 import com.igomall.audit.AuditLogMethodArgumentResolver;
 import com.igomall.entity.Admin;
 import com.igomall.entity.member.Member;
-import com.igomall.interceptor.AdminLoginInterceptor;
-import com.igomall.interceptor.CorsInterceptor;
-import com.igomall.interceptor.LoginInterceptor;
-import com.igomall.interceptor.ValidateLoginInterceptor;
+import com.igomall.interceptor.*;
 import com.igomall.security.CurrentUserHandlerInterceptor;
 import com.igomall.security.CurrentUserMethodArgumentResolver;
 import org.springframework.context.annotation.Bean;
@@ -41,6 +38,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
         return adminLoginInterceptor;
     }
 
+  @Bean
+  public ResourceLogInterceptor resourceLogInterceptor() {
+    ResourceLogInterceptor resourceLogInterceptor = new ResourceLogInterceptor();
+    return resourceLogInterceptor;
+  }
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(corsInterceptor())
@@ -48,11 +51,14 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
         registry.addInterceptor(loginInterceptor())
                 .addPathPatterns("/member/api/**")
-                .excludePathPatterns("/member/api/login","/member/api/logout");
+                .excludePathPatterns("/member/api/login","/member/api/logout","/member/api/register/**");
 
         registry.addInterceptor(adminLoginInterceptor())
                 .addPathPatterns("/admin/api/**")
                 .excludePathPatterns("/admin/api/login","/admin/api/logout");
+
+      registry.addInterceptor(resourceLogInterceptor())
+        .addPathPatterns("/member/api/resource/**");
 
 
         registry.addInterceptor(currentUserHandlerInterceptor())
