@@ -7,12 +7,15 @@ import com.igomall.entity.ResourceTag;
 import com.igomall.service.ResourceService;
 import com.igomall.service.ResourceTagService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController("apiResourceController")
 @RequestMapping("/member/api/resource")
@@ -40,5 +43,15 @@ public class ResourceController extends BaseController {
             }
         }
         return result;
+    }
+
+    /**
+     * 点击数
+     */
+    @PostMapping("/download_hits")
+    public Map<String,Object> hits(Long id) {
+        Map<String, Object> data = new HashMap<>();
+        data.put("downloadHits", resourceService.downloadHits(id));
+        return data;
     }
 }

@@ -26,7 +26,7 @@
 	<cache name="sitemap" maxElementsInMemory="1000" timeToIdleSeconds="3600" timeToLiveSeconds="86400" eternal="false" overflowToDisk="true" />
 	<cache name="commonJs" maxElementsInMemory="1000" timeToIdleSeconds="3600" timeToLiveSeconds="86400" eternal="false" overflowToDisk="true" />
 	<cache name="transitSteps" maxElementsInMemory="1000" timeToIdleSeconds="3600" timeToLiveSeconds="86400" eternal="false" overflowToDisk="true" />
-	<cache name="articleHits" maxElementsInMemory="1000" timeToIdleSeconds="3600" timeToLiveSeconds="86400" eternal="false" overflowToDisk="true" diskPersistent="true" />
+	<cache name="resourceDownloadHits" maxElementsInMemory="1000" timeToIdleSeconds="3600" timeToLiveSeconds="86400" eternal="false" overflowToDisk="true" diskPersistent="true" />
 	<cache name="courseHits" maxElementsInMemory="1000" timeToIdleSeconds="3600" timeToLiveSeconds="86400" eternal="false" overflowToDisk="true" diskPersistent="true" />
 	<cache name="orderLock" maxElementsInMemory="1000000" timeToLiveSeconds="60" eternal="false" overflowToDisk="true" />
 	<cache name="captcha" maxElementsInMemory="1000000" timeToIdleSeconds="600" timeToLiveSeconds="600" eternal="false" overflowToDisk="true" />

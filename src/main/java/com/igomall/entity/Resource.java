@@ -13,6 +13,11 @@ import java.util.Set;
 @Table(name = "document_resource")
 public class Resource extends BaseEntity<Long> {
 
+    /**
+     * 下载数缓存名称
+     */
+    public static final String DOWNLOAD_CACHE_NAME = "resourceDownloadHits";
+
     @Column(nullable = false,unique = true)
     @JsonView({ApiListView.class})
     private String name;
@@ -20,6 +25,13 @@ public class Resource extends BaseEntity<Long> {
     @Convert(converter = ResUrl.class)
     @Column(length = 2000)
     private List<String> resUrls = new ArrayList<>();
+
+    /**
+     * 下载数
+     */
+    @Column(nullable = false)
+    @JsonView({ApiListView.class})
+    private Long downloadHits;
 
     /**
      * 商品标签
@@ -63,6 +75,13 @@ public class Resource extends BaseEntity<Long> {
         this.resourceTags = resourceTags;
     }
 
+    public Long getDownloadHits() {
+        return downloadHits;
+    }
+
+    public void setDownloadHits(Long downloadHits) {
+        this.downloadHits = downloadHits;
+    }
 
     @Converter
     public static class ResUrl extends BaseAttributeConverter<List<String>> {
