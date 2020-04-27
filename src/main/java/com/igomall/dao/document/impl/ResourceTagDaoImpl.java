@@ -1,8 +1,9 @@
 
-package com.igomall.dao.impl;
+package com.igomall.dao.document.impl;
 
-import com.igomall.dao.ResourceTagDao;
-import com.igomall.entity.ResourceTag;
+import com.igomall.dao.document.ResourceTagDao;
+import com.igomall.dao.impl.BaseDaoImpl;
+import com.igomall.entity.document.ResourceTag;
 import org.springframework.stereotype.Repository;
 
 /**

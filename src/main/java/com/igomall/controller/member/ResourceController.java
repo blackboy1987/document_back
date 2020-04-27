@@ -2,12 +2,11 @@ package com.igomall.controller.member;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.igomall.entity.BaseEntity;
-import com.igomall.entity.Resource;
-import com.igomall.entity.ResourceTag;
-import com.igomall.service.ResourceService;
-import com.igomall.service.ResourceTagService;
+import com.igomall.entity.document.Resource;
+import com.igomall.entity.document.ResourceTag;
+import com.igomall.service.document.ResourceService;
+import com.igomall.service.document.ResourceTagService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

@@ -1,8 +1,13 @@
 
 package com.igomall.listener;
 
+import java.util.List;
+import java.util.Random;
 import java.util.logging.Logger;
 
+import com.igomall.entity.document.Resource;
+import com.igomall.service.document.ResourceService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -16,6 +21,9 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class InitListener {
+
+	@Autowired
+	private ResourceService resourceService;
 
 	/**
 	 * Logger

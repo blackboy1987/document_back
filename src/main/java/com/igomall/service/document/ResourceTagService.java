@@ -1,9 +1,10 @@
 
-package com.igomall.service;
+package com.igomall.service.document;
 
 import com.igomall.common.Filter;
 import com.igomall.common.Order;
-import com.igomall.entity.ResourceTag;
+import com.igomall.entity.document.ResourceTag;
+import com.igomall.service.BaseService;
 
 import java.util.List;
 

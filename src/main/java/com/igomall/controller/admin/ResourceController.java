@@ -1,7 +1,7 @@
 package com.igomall.controller.admin;
 
-import com.igomall.entity.Resource;
-import com.igomall.service.ResourceService;
+import com.igomall.entity.document.Resource;
+import com.igomall.service.document.ResourceService;
 import com.igomall.util.HanyuPinyinUtils;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,8 +1,9 @@
-package com.igomall.service.impl;
+package com.igomall.service.document.impl;
 
-import com.igomall.dao.ResourceDao;
-import com.igomall.entity.Resource;
-import com.igomall.service.ResourceService;
+import com.igomall.dao.document.ResourceDao;
+import com.igomall.entity.document.Resource;
+import com.igomall.service.document.ResourceService;
+import com.igomall.service.impl.BaseServiceImpl;
 import io.jsonwebtoken.lang.Assert;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;

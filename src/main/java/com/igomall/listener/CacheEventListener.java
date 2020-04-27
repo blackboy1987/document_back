@@ -1,8 +1,8 @@
 
 package com.igomall.listener;
 
-import com.igomall.entity.Resource;
-import com.igomall.service.ResourceService;
+import com.igomall.entity.document.Resource;
+import com.igomall.service.document.ResourceService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

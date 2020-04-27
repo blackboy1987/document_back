@@ -1,7 +1,8 @@
 
-package com.igomall.entity;
+package com.igomall.entity.document;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.igomall.entity.OrderedEntity;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;

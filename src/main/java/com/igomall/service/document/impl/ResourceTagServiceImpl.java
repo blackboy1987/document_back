@@ -1,11 +1,12 @@
 
-package com.igomall.service.impl;
+package com.igomall.service.document.impl;
 
 import com.igomall.common.Filter;
 import com.igomall.common.Order;
-import com.igomall.dao.ResourceTagDao;
-import com.igomall.entity.ResourceTag;
-import com.igomall.service.ResourceTagService;
+import com.igomall.dao.document.ResourceTagDao;
+import com.igomall.entity.document.ResourceTag;
+import com.igomall.service.document.ResourceTagService;
+import com.igomall.service.impl.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;

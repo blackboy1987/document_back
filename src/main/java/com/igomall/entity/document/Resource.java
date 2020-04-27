@@ -1,9 +1,11 @@
-package com.igomall.entity;
+package com.igomall.entity.document;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.igomall.common.BaseAttributeConverter;
+import com.igomall.entity.BaseEntity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -22,6 +24,12 @@ public class Resource extends BaseEntity<Long> {
     @JsonView({ApiListView.class})
     private String name;
 
+    @JsonView({ApiListView.class})
+    private String img;
+
+    @JsonView({ApiListView.class})
+    private String memo;
+
     @Convert(converter = ResUrl.class)
     @Column(length = 2000)
     private List<String> resUrls = new ArrayList<>();
@@ -32,6 +40,14 @@ public class Resource extends BaseEntity<Long> {
     @Column(nullable = false)
     @JsonView({ApiListView.class})
     private Long downloadHits;
+
+    /**
+     * 商品分类
+     */
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false)
+    private ResourceCategory resourceCategory;
 
     /**
      * 商品标签
@@ -48,12 +64,36 @@ public class Resource extends BaseEntity<Long> {
         this.name = name;
     }
 
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
+    }
+
     public List<String> getResUrls() {
         return resUrls;
     }
 
     public void setResUrls(List<String> resUrls) {
         this.resUrls = resUrls;
+    }
+
+    public ResourceCategory getResourceCategory() {
+        return resourceCategory;
+    }
+
+    public void setResourceCategory(ResourceCategory resourceCategory) {
+        this.resourceCategory = resourceCategory;
     }
 
     /**
@@ -64,6 +104,7 @@ public class Resource extends BaseEntity<Long> {
     public Set<ResourceTag> getResourceTags() {
         return resourceTags;
     }
+
 
     /**
      * 设置商品标签

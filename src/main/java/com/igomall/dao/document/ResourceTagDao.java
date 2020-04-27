@@ -1,7 +1,8 @@
 
-package com.igomall.dao;
+package com.igomall.dao.document;
 
-import com.igomall.entity.ResourceTag;
+import com.igomall.dao.BaseDao;
+import com.igomall.entity.document.ResourceTag;
 
 /**
  * Dao - 商品标签

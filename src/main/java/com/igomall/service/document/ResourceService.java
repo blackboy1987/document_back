@@ -1,6 +1,7 @@
-package com.igomall.service;
+package com.igomall.service.document;
 
-import com.igomall.entity.Resource;
+import com.igomall.entity.document.Resource;
+import com.igomall.service.BaseService;
 
 public interface ResourceService extends BaseService<Resource,Long> {
 
