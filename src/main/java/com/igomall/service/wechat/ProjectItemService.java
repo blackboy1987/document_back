@@ -69,4 +69,13 @@ public interface ProjectItemService extends BaseService<ProjectItem, Long> {
 	Page<ProjectItem> findPage(ProjectCategory bookCategory,String name, Boolean isPublication, Pageable pageable);
 
 
+	/**
+	 * 查看点击数
+	 *
+	 * @param id
+	 *            ID
+	 * @return 点击数
+	 */
+	long viewHits(Long id);
+
 }

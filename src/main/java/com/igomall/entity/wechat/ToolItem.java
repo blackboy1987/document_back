@@ -19,6 +19,11 @@ public class ToolItem extends OrderedEntity<Long> {
 
     public static final String QUERY_LIST = "select id,name,icon,site_url siteUrl,download_url downloadUrl,memo from edu_tool_item where is_publication=true and tool_category_id=? order by orders asc, created_date desc";
 
+    /**
+     * 点击数缓存名称
+     */
+    public static final String HITS_CACHE_NAME = "toolItemHits";
+
     @NotEmpty
     @Column(nullable = false)
     @JsonView({JsonApiView.class,ListView.class,EditView.class,ApiListView.class})
@@ -38,6 +43,11 @@ public class ToolItem extends OrderedEntity<Long> {
     @Pattern(regexp = "^(?i)(http:\\/\\/|https:\\/\\/|\\/).*$")
     @JsonView({JsonApiView.class,ListView.class,EditView.class})
     private String downloadUrl;
+
+    @NotNull
+    @JsonView({ApiListView.class})
+    @Column(nullable = false)
+    private Long downloadHits;
 
     @Length(max = 500)
     @Column(length = 500)
@@ -121,6 +131,13 @@ public class ToolItem extends OrderedEntity<Long> {
 
     public void setToolCategory(ToolCategory toolCategory) {
         this.toolCategory = toolCategory;
+    }
+    public Long getDownloadHits() {
+        return downloadHits;
+    }
+
+    public void setDownloadHits(Long downloadHits) {
+        this.downloadHits = downloadHits;
     }
 
     @Transient

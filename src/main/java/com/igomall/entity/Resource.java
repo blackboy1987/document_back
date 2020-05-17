@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.igomall.common.BaseAttributeConverter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -13,6 +14,11 @@ import java.util.Set;
 @Table(name = "document_resource")
 public class Resource extends BaseEntity<Long> {
 
+    /**
+     * 点击数缓存名称
+     */
+    public static final String HITS_CACHE_NAME = "resourceHits";
+
     @Column(nullable = false,unique = true)
     @JsonView({ApiListView.class})
     private String name;
@@ -21,6 +27,9 @@ public class Resource extends BaseEntity<Long> {
     @Column(length = 2000)
     private List<String> resUrls = new ArrayList<>();
 
+    @NotNull
+    @JsonView({ApiListView.class})
+    @Column(nullable = false)
     private Long downloadHits;
 
     private String img;

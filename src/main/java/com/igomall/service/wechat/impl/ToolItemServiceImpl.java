@@ -7,10 +7,15 @@ import com.igomall.common.Page;
 import com.igomall.common.Pageable;
 import com.igomall.dao.wechat.ToolCategoryDao;
 import com.igomall.dao.wechat.ToolItemDao;
+import com.igomall.entity.wechat.ProjectItem;
 import com.igomall.entity.wechat.ToolCategory;
 import com.igomall.entity.wechat.ToolItem;
 import com.igomall.service.impl.BaseServiceImpl;
 import com.igomall.service.wechat.ToolItemService;
+import io.jsonwebtoken.lang.Assert;
+import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Ehcache;
+import net.sf.ehcache.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -33,6 +38,8 @@ public class ToolItemServiceImpl extends BaseServiceImpl<ToolItem, Long> impleme
 	private ToolItemDao toolItemDao;
 	@Autowired
 	private ToolCategoryDao toolCategoryDao;
+	@Autowired
+	private CacheManager cacheManager;
 
 	@Transactional(readOnly = true)
 	public List<ToolItem> findList(ToolCategory toolCategory, Boolean isPublication, Integer count, List<Filter> filters, List<Order> orders) {
@@ -96,4 +103,28 @@ public class ToolItemServiceImpl extends BaseServiceImpl<ToolItem, Long> impleme
 		super.delete(toolItem);
 	}
 
+
+	@Override
+	public long viewHits(Long id) {
+		Assert.notNull(id,"");
+		Ehcache cache = cacheManager.getEhcache(ProjectItem.HITS_CACHE_NAME);
+		cache.acquireWriteLockOnKey(id);
+		try {
+			Element element = cache.get(id);
+			Long hits;
+			if (element != null) {
+				hits = (Long) element.getObjectValue() + 1;
+			} else {
+				ToolItem toolItem = toolItemDao.find(id);
+				if (toolItem == null) {
+					return 0L;
+				}
+				hits = (toolItem.getDownloadHits()==null?0:toolItem.getDownloadHits()) + 1;
+			}
+			cache.put(new Element(id, hits));
+			return hits;
+		} finally {
+			cache.releaseWriteLockOnKey(id);
+		}
+	}
 }

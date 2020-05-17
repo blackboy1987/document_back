@@ -19,6 +19,12 @@ public class ProjectItem extends OrderedEntity<Long> {
     
     public static final String QUERY_LIST = "select id,name,icon,site_url siteUrl,download_url downloadUrl,memo from edu_project_item where is_publication=true and project_category_id=? order by orders asc, created_date desc";
 
+
+    /**
+     * 点击数缓存名称
+     */
+    public static final String HITS_CACHE_NAME = "projectItemHits";
+
     @NotEmpty
     @Column(nullable = false)
     @JsonView({JsonApiView.class,ListView.class,EditView.class,ApiListView.class})
@@ -38,6 +44,11 @@ public class ProjectItem extends OrderedEntity<Long> {
     @Pattern(regexp = "^(?i)(http:\\/\\/|https:\\/\\/|\\/).*$")
     @JsonView({JsonApiView.class,ListView.class,EditView.class})
     private String downloadUrl;
+
+    @NotNull
+    @JsonView({ApiListView.class})
+    @Column(nullable = false)
+    private Long downloadHits;
 
     @Length(max = 500)
     @Column(length = 500)
@@ -121,6 +132,14 @@ public class ProjectItem extends OrderedEntity<Long> {
 
     public void setProjectCategory(ProjectCategory projectCategory) {
         this.projectCategory = projectCategory;
+    }
+
+    public Long getDownloadHits() {
+        return downloadHits;
+    }
+
+    public void setDownloadHits(Long downloadHits) {
+        this.downloadHits = downloadHits;
     }
 
     @Transient

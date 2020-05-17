@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController("apiResourceController")
 @RequestMapping("/member/api/resource")
@@ -35,11 +37,18 @@ public class ResourceController extends BaseController {
         Resource resource = resourceService.find(id);
         List<String> result = new ArrayList<>();
         if(resource!=null){
-            List<String> resUrls = resourceService.find(id).getResUrls();
+            List<String> resUrls = resource.getResUrls();
             if(resUrls!=null && resUrls.size()>0){
                 result.add(resUrls.get(0));
             }
         }
         return result;
+    }
+
+    @PostMapping("/download_hits")
+    public Map<String,Object> downloadHits(Long id){
+        Map<String, Object> data = new HashMap<>();
+        data.put("downloadHits", resourceService.viewHits(id));
+        return data;
     }
 }

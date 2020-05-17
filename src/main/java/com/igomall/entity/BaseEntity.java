@@ -125,7 +125,7 @@ public abstract class BaseEntity<ID extends Serializable> implements Serializabl
 	/**
 	 * ID
 	 */
-	@JsonView({BaseView.class,ListView.class,IdView.class,EditView.class,JsonApiView.class})
+	@JsonView({BaseView.class,ListView.class,IdView.class,EditView.class,JsonApiView.class,ApiListView.class})
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private ID id;

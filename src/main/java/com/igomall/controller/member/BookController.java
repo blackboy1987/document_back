@@ -3,18 +3,20 @@ package com.igomall.controller.member;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.igomall.controller.common.BaseController;
 import com.igomall.entity.BaseEntity;
+import com.igomall.entity.Resource;
 import com.igomall.entity.member.Member;
-import com.igomall.entity.wechat.BookCategory;
 import com.igomall.entity.wechat.BookItem;
 import com.igomall.security.CurrentUser;
 import com.igomall.service.wechat.BookCategoryService;
 import com.igomall.service.wechat.BookItemService;
-import org.omg.CORBA.OBJ_ADAPTER;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -45,5 +47,22 @@ public class BookController extends BaseController {
     @JsonView(BaseEntity.JsonApiView.class)
     public List<BookItem> item(@CurrentUser Member member, Long bookCategoryId){
         return bookItemService.findList(bookCategoryService.find(bookCategoryId),true,null,null,null);
+    }
+
+    @PostMapping("/download")
+    public List<String> download(Long id){
+        BookItem bookItem = bookItemService.find(id);
+        List<String> result = new ArrayList<>();
+        if(bookItem!=null&& StringUtils.isNoneEmpty(bookItem.getDownloadUrl())){
+            result.add(bookItem.getDownloadUrl());
+        }
+        return result;
+    }
+
+    @PostMapping("/download_hits")
+    public Map<String,Object> downloadHits(Long id){
+        Map<String, Object> data = new HashMap<>();
+        data.put("downloadHits", bookItemService.viewHits(id));
+        return data;
     }
 }
