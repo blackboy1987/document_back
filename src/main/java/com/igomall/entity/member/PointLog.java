@@ -42,7 +42,9 @@ public class PointLog extends BaseEntity<Long> {
 		/**
 		 * 积分调整
 		 */
-		adjustment
+		adjustment,
+
+		download
 	}
 
 	/**

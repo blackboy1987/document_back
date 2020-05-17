@@ -11,6 +11,7 @@ import com.igomall.service.BaseService;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
@@ -33,12 +34,15 @@ public abstract class BaseServiceImpl<T extends BaseEntity<ID>, ID extends Seria
 	/**
 	 * 更新忽略属性
 	 */
-	private static final String[] UPDATE_IGNORE_PROPERTIES = new String[] { BaseEntity.CREATE_DATE_PROPERTY_NAME, BaseEntity.MODIFY_DATE_PROPERTY_NAME };
+	private static final String[] UPDATE_IGNORE_PROPERTIES = new String[] { BaseEntity.CREATE_DATE_PROPERTY_NAME, BaseEntity.LAST_MODIFIED_DATE };
 
 	/**
 	 * BaseDao
 	 */
 	private BaseDao<T, ID> baseDao;
+
+	@Autowired
+	protected JdbcTemplate jdbcTemplate;
 
 	@Autowired
 	protected void setBaseDao(BaseDao<T, ID> baseDao) {

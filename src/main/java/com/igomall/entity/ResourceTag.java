@@ -2,6 +2,7 @@
 package com.igomall.entity;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.igomall.entity.wechat.BookItem;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -48,7 +49,6 @@ public class ResourceTag extends OrderedEntity<Long> {
 	 * 商品
 	 */
 	@ManyToMany(mappedBy = "resourceTags", fetch = FetchType.LAZY)
-	@JsonView({ApiListView.class})
 	private Set<Resource> resources = new HashSet<>();
 
 	/**
@@ -140,4 +140,9 @@ public class ResourceTag extends OrderedEntity<Long> {
 		}
 	}
 
+	@Transient
+	@JsonView({ApiListView.class})
+	public Set<Resource> getItems(){
+		return getResources();
+	}
 }

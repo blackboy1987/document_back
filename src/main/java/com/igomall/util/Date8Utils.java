@@ -91,6 +91,12 @@ public class Date8Utils {
         return convertLocalDateTimeToDate(localDateTime.plusDays(index));
     }
 
+    public static Date getNextSecond(Long index) {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        return convertLocalDateTimeToDate(localDateTime.plusSeconds(index));
+    }
+
+
 
     /**
      * 距离当前时间index天之后的0点0分0秒

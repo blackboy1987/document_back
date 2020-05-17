@@ -33,12 +33,12 @@ public abstract class BaseEntity<ID extends Serializable> implements Serializabl
 	/**
 	 * "创建日期"属性名称
 	 */
-	public static final String CREATE_DATE_PROPERTY_NAME = "createDate";
+	public static final String CREATE_DATE_PROPERTY_NAME = "createdDate";
 
 	/**
 	 * "最后修改日期"属性名称
 	 */
-	public static final String MODIFY_DATE_PROPERTY_NAME = "modifyDate";
+	public static final String LAST_MODIFIED_DATE = "lastModifiedDate";
 
 	/**
 	 * 保存验证组
@@ -96,6 +96,13 @@ public abstract class BaseEntity<ID extends Serializable> implements Serializabl
 	}
 
 	/**
+	 * 列表视图
+	 */
+	public interface JsonApiView {
+
+	}
+
+	/**
 	 * ID
 	 */
 	@JsonView({BaseView.class,IdView.class,ListView.class,EditView.class,ViewView.class,ApiListView.class})
@@ -111,7 +118,7 @@ public abstract class BaseEntity<ID extends Serializable> implements Serializabl
 	@Field(store = Store.YES, index = Index.YES, analyze = Analyze.NO)
 	@DateBridge(resolution = Resolution.SECOND)
 	@Column(nullable = false, updatable = false)
-	private Date createDate;
+	private Date createdDate;
 
 	/**
 	 * 最后修改日期
@@ -121,7 +128,7 @@ public abstract class BaseEntity<ID extends Serializable> implements Serializabl
 	@Field(store = Store.YES, index = Index.YES, analyze = Analyze.NO)
 	@DateBridge(resolution = Resolution.SECOND)
 	@Column(nullable = false)
-	private Date modifyDate;
+	private Date lastModifiedDate;
 
 	/**
 	 * 获取ID
@@ -147,18 +154,18 @@ public abstract class BaseEntity<ID extends Serializable> implements Serializabl
 	 *
 	 * @return 创建日期
 	 */
-	public Date getCreateDate() {
-		return createDate;
+	public Date getCreatedDate() {
+		return createdDate;
 	}
 
 	/**
 	 * 设置创建日期
 	 *
-	 * @param createDate
+	 * @param createdDate
 	 *            创建日期
 	 */
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
 	}
 
 	/**
@@ -166,18 +173,18 @@ public abstract class BaseEntity<ID extends Serializable> implements Serializabl
 	 *
 	 * @return 最后修改日期
 	 */
-	public Date getModifyDate() {
-		return modifyDate;
+	public Date getLastModifiedDate() {
+		return lastModifiedDate;
 	}
 
 	/**
 	 * 设置最后修改日期
 	 *
-	 * @param modifyDate
+	 * @param lastModifiedDate
 	 *            最后修改日期
 	 */
-	public void setModifyDate(Date modifyDate) {
-		this.modifyDate = modifyDate;
+	public void setLastModifiedDate(Date lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
 	}
 
 	/**

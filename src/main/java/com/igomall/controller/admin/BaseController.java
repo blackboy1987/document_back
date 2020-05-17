@@ -4,6 +4,7 @@ package com.igomall.controller.admin;
 import com.igomall.common.Message;
 import com.igomall.util.SpringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.util.Assert;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -42,6 +43,9 @@ public class BaseController {
 
 	@Autowired
 	private Validator validator;
+
+	@Autowired
+	protected JdbcTemplate jdbcTemplate;
 
 
 	protected Map<String,String> isValid1(Object target, Class<?>... groups) {

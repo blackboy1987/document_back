@@ -21,6 +21,12 @@ public class Resource extends BaseEntity<Long> {
     @Column(length = 2000)
     private List<String> resUrls = new ArrayList<>();
 
+    private Long downloadHits;
+
+    private String img;
+
+    private String memo;
+
     /**
      * 商品标签
      */
@@ -42,6 +48,30 @@ public class Resource extends BaseEntity<Long> {
 
     public void setResUrls(List<String> resUrls) {
         this.resUrls = resUrls;
+    }
+
+    public Long getDownloadHits() {
+        return downloadHits;
+    }
+
+    public void setDownloadHits(Long downloadHits) {
+        this.downloadHits = downloadHits;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
     }
 
     /**

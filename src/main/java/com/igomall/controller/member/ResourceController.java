@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController("apiResourceController")
-@RequestMapping("/api/resource")
+@RequestMapping("/member/api/resource")
 public class ResourceController extends BaseController {
 
     @Autowired
@@ -26,7 +26,8 @@ public class ResourceController extends BaseController {
     @PostMapping("/index")
     @JsonView(BaseEntity.ApiListView.class)
     public List<ResourceTag> index(){
-        return resourceTagService.findAll();
+        List<ResourceTag> resourceTags = resourceTagService.findAll();
+        return resourceTags;
     }
 
     @PostMapping("/download")
