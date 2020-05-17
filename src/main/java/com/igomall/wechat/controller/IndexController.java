@@ -143,7 +143,6 @@ public class IndexController {
     private String parseMessage(Map<String,String> map, WeChatMessage weChatMessage){
         String msgType = map.get("msgType");
         String content = map.get("content");
-        System.out.println("--------"+msgType);
         if(StringUtils.equalsAnyIgnoreCase(msgType, com.igomall.wechat.entity.MsgType.text.name())){
             TextMessage textMessage = null;
             if(StringUtils.equalsAnyIgnoreCase("?",content)||StringUtils.equalsAnyIgnoreCase("？",content)){

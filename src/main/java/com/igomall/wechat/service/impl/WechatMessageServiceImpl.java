@@ -45,8 +45,6 @@ public class WechatMessageServiceImpl extends BaseServiceImpl<WeChatMessage,Long
        StringBuffer sb = new StringBuffer();
        sb.append("请回复:课程+课程关键字 获取课程信息\n");
        sb.append("\n比如:课程html 获取包含html关键字的课程\n");
-       sb.append("\n回复“wyfx”获取分享文章");
-       sb.append("\n回复“xxsb”获取信息绑定操作");
        sb.append("\n回复“yzm”获取idea全家桶注册码");
 
        if(StringUtils.equalsAnyIgnoreCase("subscribe",type)){
@@ -59,6 +57,7 @@ public class WechatMessageServiceImpl extends BaseServiceImpl<WeChatMessage,Long
            sb.append("\n课程地址："+baiDuResources.get(index).getBaiDuUrl());
        }
 
+       sb.append("\n\n前后端解决方案，正式上线，入群：<a href=\"https://jq.qq.com/?_wv=1027&k=L5XvYIm0\">862870071</a> 免费获取");
        sb.append("\n\n回复“?”显示帮助菜单");
        return sb.toString();
     }

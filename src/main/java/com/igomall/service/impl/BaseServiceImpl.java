@@ -34,7 +34,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity<ID>, ID extends Seria
 	/**
 	 * 更新忽略属性
 	 */
-	private static final String[] UPDATE_IGNORE_PROPERTIES = new String[] { BaseEntity.CREATE_DATE_PROPERTY_NAME, BaseEntity.LAST_MODIFIED_DATE };
+	private static final String[] UPDATE_IGNORE_PROPERTIES = new String[] { BaseEntity.CREATED_DATE_PROPERTY_NAME, BaseEntity.LAST_MODIFIED_DATE_PROPERTY_NAME, BaseEntity.VERSION_PROPERTY_NAME };
 
 	/**
 	 * BaseDao
