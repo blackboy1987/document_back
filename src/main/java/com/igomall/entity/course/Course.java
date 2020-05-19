@@ -6,6 +6,8 @@ import com.igomall.entity.BaseEntity;
 import com.igomall.entity.OrderedEntity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -15,9 +17,15 @@ import java.util.Set;
 @Table(name = "edu_course")
 public class Course extends OrderedEntity<Long> {
 
+    /**
+     * 点击数缓存名称
+     */
+    public static final String HITS_CACHE_NAME = "lessonHits";
+
     public final static String QUERY_ALL = "select id,title from edu_course order by orders asc,created_date desc ";
 
-
+    @NotEmpty
+    @Column(nullable = false,unique = true)
     @JsonView({JsonApiView.class,EditView.class,BaseEntity.ApiListView.class})
     private String title;
 
@@ -36,15 +44,10 @@ public class Course extends OrderedEntity<Long> {
     @JsonView(BaseEntity.ApiListView.class)
     private Map<String,String> props = new HashMap<>();
 
-    /**
-     * 对应哔哩哔哩上的视频
-     */
-    private String aid;
-    /**
-     * 对应哔哩哔哩上的视频
-     */
-    private String bid;
-
+    @NotNull
+    @JsonView({ApiListView.class})
+    @Column(nullable = false)
+    private Long downloadHits;
 
     /**
      * 0: 待提交
@@ -121,20 +124,12 @@ public class Course extends OrderedEntity<Long> {
         this.courseTags = courseTags;
     }
 
-    public String getAid() {
-        return aid;
+    public Long getDownloadHits() {
+        return downloadHits;
     }
 
-    public void setAid(String aid) {
-        this.aid = aid;
-    }
-
-    public String getBid() {
-        return bid;
-    }
-
-    public void setBid(String bid) {
-        this.bid = bid;
+    public void setDownloadHits(Long downloadHits) {
+        this.downloadHits = downloadHits;
     }
 
     public interface IndexView extends ListView{

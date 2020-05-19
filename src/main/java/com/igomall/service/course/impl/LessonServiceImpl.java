@@ -7,6 +7,7 @@ import com.igomall.dao.course.LessonDao;
 import com.igomall.entity.course.Course;
 import com.igomall.entity.course.Folder;
 import com.igomall.entity.course.Lesson;
+import com.igomall.entity.wechat.ProjectItem;
 import com.igomall.service.course.LessonService;
 import com.igomall.service.impl.BaseServiceImpl;
 import net.sf.ehcache.CacheManager;
@@ -147,5 +148,30 @@ public class LessonServiceImpl extends BaseServiceImpl<Lesson, Long> implements 
         }
         return lessons;
 
+    }
+
+
+    @Override
+    public long viewHits(Long id) {
+        io.jsonwebtoken.lang.Assert.notNull(id,"");
+        Ehcache cache = cacheManager.getEhcache(Lesson.HITS_CACHE_NAME);
+        cache.acquireWriteLockOnKey(id);
+        try {
+            Element element = cache.get(id);
+            Long hits;
+            if (element != null) {
+                hits = (Long) element.getObjectValue() + 1;
+            } else {
+                Lesson lesson = lessonDao.find(id);
+                if (lesson == null) {
+                    return 0L;
+                }
+                hits = (lesson.getDownloadHits()==0?0:lesson.getDownloadHits()) + 1;
+            }
+            cache.put(new Element(id, hits));
+            return hits;
+        } finally {
+            cache.releaseWriteLockOnKey(id);
+        }
     }
 }

@@ -15,7 +15,7 @@ public class Page implements Serializable {
 
     private String part;
 
-    private Long duration;
+    private Integer duration;
 
     private String vid;
 
@@ -55,11 +55,11 @@ public class Page implements Serializable {
         this.part = part;
     }
 
-    public Long getDuration() {
+    public Integer getDuration() {
         return duration;
     }
 
-    public void setDuration(Long duration) {
+    public void setDuration(Integer duration) {
         this.duration = duration;
     }
 

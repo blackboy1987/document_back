@@ -23,6 +23,12 @@ import java.util.Map;
 @Table(name = "edu_lesson")
 public class Lesson extends OrderedEntity<Long> {
 
+
+    /**
+     * 点击数缓存名称
+     */
+    public static final String HITS_CACHE_NAME = "lessonHits";
+
     public final static String QUERY_ALL = "select id,title from edu_lesson orders asc,created_date desc ";
 
     public final static String QUERY_ALL_COURSE = "select id,title from edu_lesson where course_id=courseId order by orders asc,created_date desc ";
@@ -42,12 +48,13 @@ public class Lesson extends OrderedEntity<Long> {
     @JsonView({ListView.class,EditView.class})
     private String path;
 
-    @JsonView({ListView.class,EditView.class,JsonApiView.class})
+    @JsonView({ListView.class,EditView.class,JsonApiView.class,ApiListView.class})
     @NotEmpty
     private String title;
 
     @Column(length = 1000)
     @Convert(converter = ProsConverter.class)
+    @JsonView({ApiListView.class})
     private Map<String,String> props = new HashMap<>();
 
     @JsonView({EditView.class})
@@ -57,6 +64,15 @@ public class Lesson extends OrderedEntity<Long> {
 
     @JsonView({EditView.class})
     private String documentUrl;
+
+    @NotNull
+    @Column(nullable = false)
+    private Integer duration;
+
+    @NotNull
+    @JsonView({ApiListView.class})
+    @Column(nullable = false)
+    private Long downloadHits;
 
     public Course getCourse() {
         return course;
@@ -112,6 +128,22 @@ public class Lesson extends OrderedEntity<Long> {
 
     public void setDocumentUrl(String documentUrl) {
         this.documentUrl = documentUrl;
+    }
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
+
+    public Long getDownloadHits() {
+        return downloadHits;
+    }
+
+    public void setDownloadHits(Long downloadHits) {
+        this.downloadHits = downloadHits;
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)

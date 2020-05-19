@@ -20,4 +20,13 @@ public interface CourseService extends BaseService<Course, Long> {
     void removeCache();
 
     List<Map<String,Object>> findAllBySql();
+
+    /**
+     * 查看点击数
+     *
+     * @param id
+     *            ID
+     * @return 点击数
+     */
+    long viewHits(Long id);
 }

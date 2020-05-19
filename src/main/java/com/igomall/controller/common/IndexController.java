@@ -19,6 +19,7 @@ import com.igomall.service.course.LessonService;
 import com.igomall.service.member.LessonReadRecordService;
 import com.igomall.service.member.MemberService;
 import com.igomall.util.*;
+import com.igomall.util.bilibili.BilibiliUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,19 +49,24 @@ public class IndexController extends BaseController{
     private CourseTagService courseTagService;
 
     @GetMapping("/init123")
-    public String init123(String bid){
-        Course course = BilibiliUtils.getCourseInfo(bid);
-        Set<CourseTag> courseTags = course.getCourseTags();
-        Set<CourseTag> courseTags1 = new HashSet<>();
-        for (CourseTag courseTag:courseTags) {
-            CourseTag courseTag1 = courseTagService.findByName(courseTag.getName());
-            if(courseTag1==null){
-                courseTag1 = courseTagService.save(courseTag);
+    public String init123(String[] bids){
+        // BV1Cb411j7RA,BV16V411d76S,BV1zE41197bw,BV1mT4y137VP,BV17p4y197VC,BV1zt4y1172p,BV1YA411b7in,BV1yE411Z7AP,BV1Rx411876f,BV1fV411R7aK,BV1Yz411B7Lm,BV12K41157zb,BV1eA41147vG,BV1YJ411W7YA,BV1vE411D7KE,BV1oW411u75R,BV11t411S7iG,BV1G541147JY,BV1Zk4y1r756,BV1di4y1x75T,BV1Ct4y1274w,BV1HE411K7Pz,BV1Eg4y187XT,BV1hz411b7Ha,BV1Ye411p7xB,BV13C4y1W7Tf,BV1tz411q7c2,BV1VJ411X7xX,BV1yE411x7TY,BV1CJ411377B,BV1wZ4y1x7nr,BV1ri4y1x71A,BV1xE411d7hY,BV1y7411y7am,BV18K4y1b7DA,BV1b4411q7DX,BV1uT4y137vq,BV1aC4y1W7Rs,BV1Nt4y1m7qL,BV1Cz411B7qd,BV1Fp4y19729,BV1cJ411i7B1,BV1nJ411D71E
+        for (String bid:bids) {
+            Course course = BilibiliUtils.getCourseInfo(bid);
+            Set<CourseTag> courseTags = course.getCourseTags();
+            Set<CourseTag> courseTags1 = new HashSet<>();
+            for (CourseTag courseTag:courseTags) {
+                CourseTag courseTag1 = courseTagService.findByName(courseTag.getName());
+                if(courseTag1==null){
+                    courseTag1 = courseTagService.save(courseTag);
+                }
+                courseTags1.add(courseTag1);
             }
-            courseTags1.add(courseTag1);
+            course.setCourseTags(courseTags1);
+            courseService.save(course);
         }
-        course.setCourseTags(courseTags1);
-        courseService.save(course);
+
+
 
         /*List<Course> courses = courseService.findAll();
         for (Course course: courses) {

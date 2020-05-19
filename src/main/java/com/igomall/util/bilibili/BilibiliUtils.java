@@ -1,9 +1,11 @@
-package com.igomall.util;
+package com.igomall.util.bilibili;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.igomall.entity.course.CourseTag;
 import com.igomall.entity.course.Course;
 import com.igomall.entity.course.Lesson;
+import com.igomall.util.JsonUtils;
+import com.igomall.util.WebUtils;
 import com.igomall.util.bilibili.AidResponse;
 import com.igomall.util.bilibili.Page;
 import com.igomall.util.bilibili.PageListResponse;
@@ -23,18 +25,11 @@ public final class BilibiliUtils {
         System.out.println(course);
     }
 
-
-    public static Course getCourseInfo(String bid){
+    public static void getTags(Course course,String bid){
         String url = "https://www.bilibili.com/video/"+bid;
-        Course course = new Course();
         try {
             Document document = Jsoup.parse(new URL(url),2000);
             String title = document.getElementById("viewbox_report").getElementsByTag("h1").first().text();
-            course.setTitle(title);
-            course.setStatus(2);
-            course.setProps(new HashMap<>());
-            course.getProps().put("bid",bid);
-            course.getProps().put("aid",getAid(bid)+"");
             Elements elements = document.getElementById("v_tag").getElementsByTag("li");
             String tagName = elements.text();
             String[] tagNames = tagName.split(" ");
@@ -44,25 +39,28 @@ public final class BilibiliUtils {
                 courseTag.setMemo(tag);
                 course.getCourseTags().add(courseTag);
             }
-
-
-
+            System.out.println(title);
         }catch (Exception e){
             e.printStackTrace();
         }
-        course.setLessons(new HashSet<>(getCourseLesson(course,bid)));
-        return course;
     }
 
-
-    public static List<Lesson> getCourseLesson(Course course,String bid){
-        String url = "https://api.bilibili.com/x/player/pagelist?bvid="+bid;
-        List<Lesson> lessons = new ArrayList<>();
+    public static Course getCourseInfo(String bid){
+        String url = "https://api.bilibili.com/x/web-interface/view?bvid="+bid;
         String result = WebUtils.get(url,null);
-        PageListResponse pageListResponse = JsonUtils.toObject(result, new TypeReference<PageListResponse>() {});
-        for (Page page :pageListResponse.getData()) {
+        AidResponse aidResponse = JsonUtils.toObject(result, new TypeReference<AidResponse>() {});
+        AidResponse.Data data = aidResponse.getData();
+        Course course = new Course();
+        course.setTitle(data.getTitle());
+        course.setStatus(2);
+        course.setProps(new HashMap<>());
+        course.getProps().put("bid",bid);
+        course.getProps().put("aid",data.getAid()+"");
+        List<Lesson> lessons = new ArrayList<>();
+        for (Page page :data.getPages()) {
             Lesson lesson = new Lesson();
             lesson.setTitle(page.getPart());
+            lesson.setOrder(page.getPage());
             Lesson.PlayUrl playUrl = new Lesson.PlayUrl();
             playUrl.setName("哔哩哔哩");
             playUrl.setOrder(1);;
@@ -70,20 +68,13 @@ public final class BilibiliUtils {
             lesson.getPlayUrls().add(playUrl);
             lesson.getProps().put("duration", page.getDuration()+"");
             lesson.getProps().put("cid", page.getCid()+"");
+            lesson.setDuration(page.getDuration());
             lesson.setCourse(course);
             lessons.add(lesson);
         }
-        return lessons;
-
-
-    }
-
-    public static Long getAid(String bid){
-        String url = "https://api.bilibili.com/x/web-interface/view?bvid="+bid;
-        List<Lesson> lessons = new ArrayList<>();
-        String result = WebUtils.get(url,null);
-        AidResponse aidResponse = JsonUtils.toObject(result, new TypeReference<AidResponse>() {});
-       return aidResponse.getData().getAid();
+        course.setLessons(new HashSet<>(lessons));
+        getTags(course,bid);
+        return course;
 
 
     }

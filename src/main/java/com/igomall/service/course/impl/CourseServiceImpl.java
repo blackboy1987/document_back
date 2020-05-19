@@ -1,6 +1,7 @@
 
 package com.igomall.service.course.impl;
 
+import com.igomall.dao.course.CourseDao;
 import com.igomall.entity.course.Course;
 import com.igomall.entity.course.Lesson;
 import com.igomall.service.course.CourseService;
@@ -37,6 +38,9 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, Long> implements 
     private FolderService folderService;
     @Autowired
     private LessonService lessonService;
+
+    @Autowired
+    private CourseDao courseDao;
 
 
     @Override
@@ -141,4 +145,28 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, Long> implements 
         cacheManager.removeCache("course");
     }
 
+
+    @Override
+    public long viewHits(Long id) {
+        io.jsonwebtoken.lang.Assert.notNull(id,"");
+        Ehcache cache = cacheManager.getEhcache(Course.HITS_CACHE_NAME);
+        cache.acquireWriteLockOnKey(id);
+        try {
+            Element element = cache.get(id);
+            Long hits;
+            if (element != null) {
+                hits = (Long) element.getObjectValue() + 1;
+            } else {
+                Course course = courseDao.find(id);
+                if (course == null) {
+                    return 0L;
+                }
+                hits = (course.getDownloadHits()==0?0:course.getDownloadHits()) + 1;
+            }
+            cache.put(new Element(id, hits));
+            return hits;
+        } finally {
+            cache.releaseWriteLockOnKey(id);
+        }
+    }
 }

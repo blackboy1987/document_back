@@ -22,5 +22,16 @@ public interface LessonService extends BaseService<Lesson, Long> {
     List<Lesson> findList(Course course, Folder folder, Integer count, List<Filter> filters, List<Order> orders);
 
     List<Map<String,Object>> findAllBySql();
+
     List<Map<String,Object>> findAllBySql(Long courseId,Long folderId);
+
+
+    /**
+     * 查看点击数
+     *
+     * @param id
+     *            ID
+     * @return 点击数
+     */
+    long viewHits(Long id);
 }

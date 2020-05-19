@@ -51,6 +51,8 @@
 	<cache name="projectItemHits" maxElementsInMemory="1000" timeToIdleSeconds="3600" timeToLiveSeconds="86400" eternal="false" overflowToDisk="true" diskPersistent="true" />
 	<cache name="toolItemHits" maxElementsInMemory="1000" timeToIdleSeconds="3600" timeToLiveSeconds="86400" eternal="false" overflowToDisk="true" diskPersistent="true" />
 	<cache name="bookItemHits" maxElementsInMemory="1000" timeToIdleSeconds="3600" timeToLiveSeconds="86400" eternal="false" overflowToDisk="true" diskPersistent="true" />
+	<cache name="lesson" maxElementsInMemory="1000" timeToIdleSeconds="3600" timeToLiveSeconds="86400" eternal="false" overflowToDisk="true" diskPersistent="true" />
+	<cache name="lessonHits" maxElementsInMemory="1000" timeToIdleSeconds="3600" timeToLiveSeconds="86400" eternal="false" overflowToDisk="true" diskPersistent="true" />
 
 
 
