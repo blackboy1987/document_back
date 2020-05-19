@@ -14,8 +14,7 @@ public class PageListResponse implements Serializable {
 
     private Integer ttl;
 
-    private List<Data> data;
-
+    private List<Page> data;
 
     public Integer getCode() {
         return code;
@@ -41,11 +40,11 @@ public class PageListResponse implements Serializable {
         this.ttl = ttl;
     }
 
-    public List<Data> getData() {
+    public List<Page> getData() {
         return data;
     }
 
-    public void setData(List<Data> data) {
+    public void setData(List<Page> data) {
         this.data = data;
     }
 }

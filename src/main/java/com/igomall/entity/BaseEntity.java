@@ -1,31 +1,17 @@
 
 package com.igomall.entity;
 
-import java.io.Serializable;
-import java.util.Date;
-
-import javax.persistence.Column;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.TableGenerator;
-import javax.persistence.Transient;
-import javax.persistence.Version;
-import javax.validation.groups.Default;
-
-import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.DateBridge;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Index;
-import org.hibernate.search.annotations.Resolution;
-import org.hibernate.search.annotations.Store;
-
 import com.fasterxml.jackson.annotation.JsonView;
 import com.igomall.audit.AuditingEntityListener;
 import com.igomall.audit.CreatedDate;
 import com.igomall.audit.LastModifiedDate;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.*;
+
+import javax.persistence.*;
+import javax.validation.groups.Default;
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Entity - 基类

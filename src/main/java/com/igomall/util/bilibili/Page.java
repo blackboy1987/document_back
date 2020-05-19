@@ -2,11 +2,10 @@ package com.igomall.util.bilibili;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.io.Serializable;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Data implements Serializable {
+public class Page implements Serializable {
 
     private String cid;
 
@@ -22,7 +21,7 @@ public class Data implements Serializable {
 
     private String weblink;
 
-    private Dimension Dimension;
+    private Dimension dimension;
 
     public String getCid() {
         return cid;
@@ -80,45 +79,13 @@ public class Data implements Serializable {
         this.weblink = weblink;
     }
 
-    public Data.Dimension getDimension() {
-        return Dimension;
+    public Dimension getDimension() {
+        return dimension;
     }
 
-    public void setDimension(Data.Dimension dimension) {
-        Dimension = dimension;
+    public void setDimension(Dimension dimension) {
+        this.dimension = dimension;
     }
 
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class Dimension implements Serializable{
-        private Integer width;
 
-        private Integer height;
-
-        private Integer rotate;
-
-
-        public Integer getWidth() {
-            return width;
-        }
-
-        public void setWidth(Integer width) {
-            this.width = width;
-        }
-
-        public Integer getHeight() {
-            return height;
-        }
-
-        public void setHeight(Integer height) {
-            this.height = height;
-        }
-
-        public Integer getRotate() {
-            return rotate;
-        }
-
-        public void setRotate(Integer rotate) {
-            this.rotate = rotate;
-        }
-    }
 }

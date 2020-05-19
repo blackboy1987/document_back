@@ -37,6 +37,16 @@ public class Course extends OrderedEntity<Long> {
     private Map<String,String> props = new HashMap<>();
 
     /**
+     * 对应哔哩哔哩上的视频
+     */
+    private String aid;
+    /**
+     * 对应哔哩哔哩上的视频
+     */
+    private String bid;
+
+
+    /**
      * 0: 待提交
      * 1： 待审核
      * 2： 审核通过
@@ -109,6 +119,22 @@ public class Course extends OrderedEntity<Long> {
 
     public void setCourseTags(Set<CourseTag> courseTags) {
         this.courseTags = courseTags;
+    }
+
+    public String getAid() {
+        return aid;
+    }
+
+    public void setAid(String aid) {
+        this.aid = aid;
+    }
+
+    public String getBid() {
+        return bid;
+    }
+
+    public void setBid(String bid) {
+        this.bid = bid;
     }
 
     public interface IndexView extends ListView{

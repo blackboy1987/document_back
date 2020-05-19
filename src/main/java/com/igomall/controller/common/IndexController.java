@@ -49,20 +49,20 @@ public class IndexController extends BaseController{
 
     @GetMapping("/init123")
     public String init123(String bid){
-//        Course course = BilibiliUtils.getCourseInfo(bid);
-//        Set<CourseTag> courseTags = course.getCourseTags();
-//        Set<CourseTag> courseTags1 = new HashSet<>();
-//        for (CourseTag courseTag:courseTags) {
-//            CourseTag courseTag1 = courseTagService.findByName(courseTag.getName());
-//            if(courseTag1==null){
-//                courseTag1 = courseTagService.save(courseTag);
-//            }
-//            courseTags1.add(courseTag1);
-//        }
-//        course.setCourseTags(courseTags1);
-//        courseService.save(course);
+        Course course = BilibiliUtils.getCourseInfo(bid);
+        Set<CourseTag> courseTags = course.getCourseTags();
+        Set<CourseTag> courseTags1 = new HashSet<>();
+        for (CourseTag courseTag:courseTags) {
+            CourseTag courseTag1 = courseTagService.findByName(courseTag.getName());
+            if(courseTag1==null){
+                courseTag1 = courseTagService.save(courseTag);
+            }
+            courseTags1.add(courseTag1);
+        }
+        course.setCourseTags(courseTags1);
+        courseService.save(course);
 
-        List<Course> courses = courseService.findAll();
+        /*List<Course> courses = courseService.findAll();
         for (Course course: courses) {
             Set<Lesson> lessons = course.getLessons();
             Lesson lesson = lessons.iterator().next();
@@ -77,7 +77,7 @@ public class IndexController extends BaseController{
             course.getProps().put("bid",result);
             courseService.update(course);
 
-        }
+        }*/
 
 
 
