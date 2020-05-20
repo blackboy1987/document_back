@@ -20,7 +20,7 @@ public class Course extends OrderedEntity<Long> {
     /**
      * 点击数缓存名称
      */
-    public static final String HITS_CACHE_NAME = "lessonHits";
+    public static final String HITS_CACHE_NAME = "courseHits";
 
     public final static String QUERY_ALL = "select id,title from edu_course order by orders asc,created_date desc ";
 

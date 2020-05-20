@@ -32,12 +32,6 @@ public class CourseController extends BaseController {
     @PostMapping("/index")
     @JsonView(BaseEntity.ApiListView.class)
     public List<CourseTag> index(){
-        List<Lesson> lessons = lessonService.findAll();
-        for (Lesson lesson:lessons) {
-            lesson.setDuration(Integer.valueOf(lesson.getProps().get("duration")));
-            lessonService.update(lesson);
-        }
-
         return courseTagService.findAll();
     }
 

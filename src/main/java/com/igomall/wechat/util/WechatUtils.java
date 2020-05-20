@@ -45,14 +45,14 @@ import java.util.*;
 
 public final class WechatUtils {
 
-    //private static final String APPID = "wx51e92bcdcb5fc4d7";
+    private static final String APPID = "wx51e92bcdcb5fc4d7";
 
-    //private static final String APPSECRET = "8231f4390de7413d9d844220a09a8008";
+    private static final String APPSECRET = "8231f4390de7413d9d844220a09a8008";
 
 
-    private static final String APPID = "wx334733aa32708827";
+    //private static final String APPID = "wx334733aa32708827";
 
-    private static final String APPSECRET = "3eb62f47d6e23698c000da747ce5cede";
+    //private static final String APPSECRET = "3eb62f47d6e23698c000da747ce5cede";
 
     /**
      * PoolingHttpClientConnectionManager
