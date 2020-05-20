@@ -27,8 +27,12 @@ import java.util.Map;
 @RequestMapping("/member/api")
 public class IndexController extends BaseController {
 
+	@Autowired
+	private MemberService memberService;
+
 	@PostMapping("/currentUser")
-	public Map<String,Object> currentUser(@CurrentUser Member member){
+	public Map<String,Object> currentUser(){
+		Member member = memberService.getCurrent();
 		Map<String,Object> data = new HashMap<>();
 		data.put("username",member.getUsername());
 		data.put("avatar",member.getAvatar());
