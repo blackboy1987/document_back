@@ -8,6 +8,9 @@ import java.util.Set;
 import com.igomall.common.Page;
 import com.igomall.common.Pageable;
 import com.igomall.entity.*;
+import com.igomall.util.JWTUtils;
+import com.igomall.util.WebUtils;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.apache.commons.lang3.StringUtils;
@@ -18,6 +21,8 @@ import org.springframework.util.Assert;
 
 import com.igomall.dao.AdminDao;
 import com.igomall.service.AdminService;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Service - 管理员
@@ -139,5 +144,18 @@ public class AdminServiceImpl extends BaseServiceImpl<Admin, Long> implements Ad
 	@Override
 	public Page<Admin> findPage(Pageable pageable, String name, String username, String email, Department department, Date beginDate, Date endDate) {
 		return adminDao.findPage(pageable,name,username,email,department,beginDate,endDate);
+	}
+
+
+	@Override
+	public Admin getCurrent() {
+		HttpServletRequest request = WebUtils.getRequest();
+		try {
+			String authorizationToken = request.getHeader("Authorization");
+			Claims claims = JWTUtils.parseToken(authorizationToken);
+			return find(Long.valueOf(claims.getId()));
+		}catch (Exception e){
+			return null;
+		}
 	}
 }

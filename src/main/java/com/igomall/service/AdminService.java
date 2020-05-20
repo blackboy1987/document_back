@@ -66,4 +66,5 @@ public interface AdminService extends BaseService<Admin, Long>, AuthenticationPr
 
 	Page<Admin> findPage(Pageable pageable, String name, String username, String email, Department department, Date beginDate, Date endDate);
 
+	Admin getCurrent();
 }

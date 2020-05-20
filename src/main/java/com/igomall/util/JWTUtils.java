@@ -29,4 +29,10 @@ public class JWTUtils {
                 Jwts.parser().setSigningKey("wangmh").parseClaimsJws(token).getBody();
         return claims;
     }
+
+    public static void main(String[] args) {
+        Claims claims = parseToken("eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxIiwic3ViIjoi5bCP55m9IiwiaWF0IjoxNTg5NjQwNzgwLCJleHAiOjE1OTExMTIwMDgsImlkIjoxLCJ1c2VybmFtZSI6ImFkbWluMSJ9.rRchUdLxEzFBW9pGEoAQiV3TuklQsLF8_z-ZQHaR080");
+
+        System.out.println(claims);
+    }
 }

@@ -5,6 +5,7 @@ import com.igomall.entity.member.Member;
 import com.igomall.security.UserAuthenticationToken;
 import com.igomall.service.UserService;
 import com.igomall.service.member.MemberService;
+import com.igomall.util.JWTUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -64,6 +65,7 @@ public class LoginController extends BaseController {
 		user.put("id",member.getId());
 		user.put("username",member.getUsername());
 		data.put("user",user);
+		data.put("token", JWTUtils.create(member.getId()+"",user));
 		userService.login(new UserAuthenticationToken(Member.class, username, password, false, request.getRemoteAddr()));
 		return data;
 	}

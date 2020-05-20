@@ -5,8 +5,6 @@
  */
 package com.igomall.service.member;
 
-import java.math.BigDecimal;
-
 import com.igomall.common.Page;
 import com.igomall.common.Pageable;
 import com.igomall.entity.member.Member;
@@ -14,6 +12,8 @@ import com.igomall.entity.member.MemberDepositLog;
 import com.igomall.entity.member.PointLog;
 import com.igomall.security.AuthenticationProvider;
 import com.igomall.service.BaseService;
+
+import java.math.BigDecimal;
 
 /**
  * Service - 会员
@@ -147,5 +147,7 @@ public interface MemberService extends BaseService<Member, Long>, Authentication
 	 *            值
 	 */
 	void addAmount(Member member, BigDecimal amount);
+
+	Member getCurrent();
 
 }
