@@ -41,24 +41,21 @@ public class LoginController extends BaseController {
 		Map<String,Object> data = new HashMap<>();
 		data.put("type",type);
 		if(StringUtils.isEmpty(username) || StringUtils.isEmpty(password)){
-			data.put("type","error");
+			data.put("status","error");
 			data.put("content","请输入用户名或密码");
 			return data;
 		}
 		Member member = memberService.findByUsername(username);
 		if(member==null){
-			data.put("type","error");
 			data.put("status","error");
 			data.put("content","用户名或密码输入错误");
 			return data;
 		}
 		if(!member.isValidCredentials(password)){
-			data.put("type","error");
 			data.put("status","error");
 			data.put("content","用户名或密码输入错误");
 			return data;
 		}
-		data.put("type","success");
 		data.put("status","ok");
 		data.put("content","登陆成功");
 		Map<String,Object> user = new HashMap<>();
