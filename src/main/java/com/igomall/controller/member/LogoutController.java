@@ -16,7 +16,7 @@ import java.util.Map;
  * @author IGOMALL  Team
  * @version 1.0
  */
-@RestController("memberLoginController")
+@RestController("memberLogoutController")
 @RequestMapping("/member/api/logout")
 public class LogoutController extends BaseController {
 
