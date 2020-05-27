@@ -1,11 +1,7 @@
 package com.igomall.wechat.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlCData;
 import com.igomall.entity.BaseEntity;
-import com.vdurmont.emoji.EmojiParser;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,10 +14,24 @@ import javax.validation.constraints.NotEmpty;
 public class WeChatAutoReplyMessage extends BaseEntity<Long> {
 
     @NotEmpty
+    @Column(nullable = false,unique = true)
+    private String msgKey;
+
+    @NotEmpty
     @Column(nullable = false)
     private String content;
 
     private Boolean isEnabled;
+
+    private String callback;
+
+    public String getMsgKey() {
+        return msgKey;
+    }
+
+    public void setMsgKey(String msgKey) {
+        this.msgKey = msgKey;
+    }
 
     public String getContent() {
         return content;
@@ -37,5 +47,13 @@ public class WeChatAutoReplyMessage extends BaseEntity<Long> {
 
     public void setIsEnabled(Boolean isEnabled) {
         this.isEnabled = isEnabled;
+    }
+
+    public String getCallback() {
+        return callback;
+    }
+
+    public void setCallback(String callback) {
+        this.callback = callback;
     }
 }

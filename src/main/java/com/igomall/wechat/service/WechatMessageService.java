@@ -11,16 +11,12 @@ import java.util.Map;
 
 public interface WechatMessageService extends BaseService<WeChatMessage,Long> {
 
-    String getHelpMessage(String fromUserName, String type, WeChatUser weChatUser);
+    String getHelpMessage();
 
     WeChatMessage saveMessage(Map<String,String> map);
     WeChatMessage updateMessage(WeChatMessage weChatMessage,String receiveContent);
 
-
     String getCourseListInfo(String title);
-    String getShareUrl(String fromUserName);
-
-    String getXxsbInfo();
 
     Page<WeChatMessage> findPage(Pageable pageable, String content, String toUserName, String fromUserName, String msgType, Date beginDate, Date endDate);
 }
