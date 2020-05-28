@@ -5,6 +5,8 @@ import com.igomall.common.Page;
 import com.igomall.common.Pageable;
 import com.igomall.dao.active.ShareUrlDao;
 import com.igomall.dao.active.ShareUrlRecordDao;
+import com.igomall.entity.wechat.BaiDuTag;
+import com.igomall.service.wechat.BaiDuTagService;
 import com.igomall.wechat.dao.WechatMessageDao;
 import com.igomall.entity.activity.ShareUrl;
 import com.igomall.entity.activity.ShareUrlRecord;
@@ -34,6 +36,9 @@ public class WechatMessageServiceImpl extends BaseServiceImpl<WeChatMessage,Long
     private WechatUserService wechatUserService;
     @Autowired
     private WechatMessageDao wechatMessageDao;
+
+    @Autowired
+    private BaiDuTagService baiDuTagService;
 
     @Resource
     private WechatAutoReplyMessageService wechatAutoReplyMessageService;
@@ -83,6 +88,22 @@ public class WechatMessageServiceImpl extends BaseServiceImpl<WeChatMessage,Long
 
 
         sb.append("\n\n回复“?”显示帮助菜单");
+        return sb.toString();
+    }
+
+    @Override
+    public String getAllBaiDuTags(String content) {
+        List<BaiDuTag> baiDuTags = baiDuTagService.findAll();
+        StringBuffer sb = new StringBuffer();
+        if(!baiDuTags.isEmpty()){
+            sb.append("已为您找到如下分类：\n");
+            for (BaiDuTag baiDuTag:baiDuTags) {
+                sb.append("\n"+baiDuTag.getCode()+"  "+baiDuTag.getName());
+            }
+            sb.append("\n\n输入分类前面编号获取分类下面的资源");
+        }else{
+            sb.append("暂无资料。");
+        }
         return sb.toString();
     }
 

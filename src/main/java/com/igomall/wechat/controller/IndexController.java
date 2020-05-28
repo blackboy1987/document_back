@@ -1,9 +1,5 @@
 package com.igomall.wechat.controller;
 
-import com.igomall.entity.wechat.BaiDuResource;
-import com.igomall.entity.wechat.BaiDuTag;
-import com.igomall.service.wechat.BaiDuResourceService;
-import com.igomall.service.wechat.BaiDuTagService;
 import com.igomall.util.JsonUtils;
 import com.igomall.util.XmlUtils;
 import com.igomall.wechat.entity.WeChatMessage;
@@ -39,10 +35,6 @@ public class IndexController {
     private WechatUserLogService wechatUserLogService;
     @Autowired
     private WechatMessageService wechatMessageService;
-    @Autowired
-    private BaiDuTagService baiDuTagService;
-    @Autowired
-    private BaiDuResourceService baiDuResourceService;
     @Autowired
     private SubscribeLogService subscribeLogService;
 
@@ -152,42 +144,11 @@ public class IndexController {
             String regEx = "^\\d{3}$";
             String regEx1 = "^\\d{5}$";
             if (content.matches(regEx)) {
-                // 分类
-                BaiDuTag baiDuTag = baiDuTagService.findByCode(content);
-                if (baiDuTag == null || baiDuTag.getBaiDuResources().isEmpty()) {
-                    StringBuffer sb = new StringBuffer();
-                    // 关注就给回复消息
-                    textMessage.setContent("无相关课程");
-                    wechatMessageService.updateMessage(weChatMessage, JsonUtils.toJson(textMessage));
-                    return XmlUtils.toXml(textMessage);
-                }
-
-                StringBuffer sb = new StringBuffer();
-                sb.append("已为您找到如下课程：\n");
-                for (BaiDuResource baiDuResource : baiDuTag.getBaiDuResources()) {
-                    sb.append("\n" + baiDuResource.getCode() + "  " + baiDuResource.getTitle());
-                }
-                sb.append("\n\n输入课程前面编号获取课程地址");
-                sb.append("\n\n回复“?”显示帮助菜单");
-                // 关注就给回复消息
-                textMessage.setContent(sb.toString());
+                textMessage.setContent(wechatAutoReplyMessageService.autoReplyBaiDuTag(content));
             } else if (content.matches(regEx1)) {
-                // 课程
-                BaiDuResource baiDuResource = baiDuResourceService.findByCode(content);
-                if (baiDuResource == null) {
-                    StringBuffer sb = new StringBuffer();
-                    // 关注就给回复消息
-                    textMessage.setContent("无课程");
-                }
-
-                StringBuffer sb = new StringBuffer();
-                sb.append("课程信息如下：\n");
-                sb.append("\n课程名称：" + baiDuResource.getTitle());
-                sb.append("\n课程地址：" + baiDuResource.getBaiDuUrl());
-                sb.append("\n\n回复“?”显示帮助菜单");
                 // 关注就给回复消息
-                textMessage.setContent(sb.toString());
-            } else {
+                textMessage.setContent(wechatAutoReplyMessageService.autoReplyBaiDuResource(content));
+            }else{
                 String replyContent = wechatAutoReplyMessageService.autoReply(content);
                 if (StringUtils.isNotEmpty(replyContent)) {
                     textMessage.setContent(replyContent);
@@ -195,15 +156,13 @@ public class IndexController {
                     textMessage.setContent(wechatMessageService.getHelpMessage());
                 }
             }
-        } else if (StringUtils.equalsAnyIgnoreCase(msgType, com.igomall.wechat.entity.MsgType.video.name())) {
-            // 视频消息
-
-        }
-        String replyContent = wechatAutoReplyMessageService.autoReply(content);
-        if (StringUtils.isNotEmpty(replyContent)) {
-            textMessage.setContent(replyContent);
-        } else {
-            textMessage.setContent(wechatMessageService.getHelpMessage());
+        }else {
+            String replyContent = wechatAutoReplyMessageService.autoReply(content);
+            if (StringUtils.isNotEmpty(replyContent)) {
+                textMessage.setContent(replyContent);
+            } else {
+                textMessage.setContent(wechatMessageService.getHelpMessage());
+            }
         }
         wechatMessageService.updateMessage(weChatMessage, JsonUtils.toJson(textMessage));
         return XmlUtils.toXml(textMessage);

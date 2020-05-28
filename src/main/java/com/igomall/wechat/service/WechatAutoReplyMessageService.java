@@ -9,4 +9,7 @@ public interface WechatAutoReplyMessageService extends BaseService<WeChatAutoRep
 
     String autoReply(String msgKey);
 
+    String autoReplyBaiDuTag(String content);
+
+    String autoReplyBaiDuResource(String content);
 }

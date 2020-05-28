@@ -18,5 +18,7 @@ public interface WechatMessageService extends BaseService<WeChatMessage,Long> {
 
     String getCourseListInfo(String title);
 
+    String getAllBaiDuTags(String content);
+
     Page<WeChatMessage> findPage(Pageable pageable, String content, String toUserName, String fromUserName, String msgType, Date beginDate, Date endDate);
 }
